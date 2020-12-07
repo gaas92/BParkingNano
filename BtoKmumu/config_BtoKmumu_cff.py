@@ -255,7 +255,7 @@ countDimuons = cms.EDFilter("PATCandViewCountFilter",
 #######################################  B -> K* Mu Mu  ###############################################
 #######################################################################################################
 BToKmumu = cms.EDProducer(
-    'BToKMMBuilder',
+    'BToKMMBuilder_h',
     dileptons = cms.InputTag('muonPairsForKmumu'),
     leptonTransientTracks = muonPairsForKmumu.transientTracksSrc,
     ##HCL
