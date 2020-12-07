@@ -16,6 +16,9 @@
 #include <limits>
 #include <memory>
 
+#include "TVector3.h"
+#include "TMatrixD.h"
+
 typedef std::vector<reco::TransientTrack> TransientTrackCollection;
 
 constexpr float K_MASS = 0.493677;
