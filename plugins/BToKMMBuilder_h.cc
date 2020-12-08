@@ -535,17 +535,17 @@ void BToKMMBuilder_h::produce(edm::StreamID, edm::Event &evt, edm::EventSetup co
 
  
       // VARIABLES DE TABLA DE MUONES
-      // cand.addUserInt("l1_isPFMuon", l1_ptr->userInt("isPFMuon"));
-      // cand.addUserInt("l1_isGlobalMuon", l1_ptr->userInt("isGlobalMuon"));
-      // cand.addUserInt("l1_isTrackerMuon", l1_ptr->userInt("isTrackerMuon"));
-      // cand.addUserInt("l1_isTriggering", l1_ptr->userInt("isTriggering"));
-      // cand.addUserInt("l1_isSoft", l1_ptr->userInt("isSoft"));
+      cand.addUserInt("l1_isPFMuon", l1_ptr->userInt("isPFMuon"));
+      cand.addUserInt("l1_isGlobalMuon", l1_ptr->userInt("isGlobalMuon"));
+      cand.addUserInt("l1_isTrackerMuon", l1_ptr->userInt("isTrackerMuon"));
+      cand.addUserInt("l1_isTriggering", l1_ptr->userInt("isTriggering"));
+      cand.addUserInt("l1_isSoft", l1_ptr->userInt("isSoft"));
 
-      // cand.addUserInt("l2_isPFMuon", l2_ptr->userInt("isPFMuon"));
-      // cand.addUserInt("l2_isGlobalMuon", l2_ptr->userInt("isGlobalMuon"));
-      // cand.addUserInt("l2_isTrackerMuon", l2_ptr->userInt("isTrackerMuon"));
-      // cand.addUserInt("l2_isTriggering", l2_ptr->userInt("isTriggering"));
-      // cand.addUserInt("l2_isSoft", l2_ptr->userInt("isSoft"));
+      cand.addUserInt("l2_isPFMuon", l2_ptr->userInt("isPFMuon"));
+      cand.addUserInt("l2_isGlobalMuon", l2_ptr->userInt("isGlobalMuon"));
+      cand.addUserInt("l2_isTrackerMuon", l2_ptr->userInt("isTrackerMuon"));
+      cand.addUserInt("l2_isTriggering", l2_ptr->userInt("isTriggering"));
+      cand.addUserInt("l2_isSoft", l2_ptr->userInt("isSoft"));
 
 
 
