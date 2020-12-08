@@ -31,7 +31,7 @@ from PhysicsTools.BParkingNano.common_cff import *
 ############################################ Muons ###################################################
 ######################################################################################################
 
-muonTrgSelector = cms.EDProducer("MuonTriggerSelector",
+muonTrgSelector = cms.EDProducer("MuonTriggerSelector_h",
                                  muonCollection = cms.InputTag("slimmedMuons"), #same collection as in NanoAOD                                                           
                                  bits = cms.InputTag("TriggerResults","","HLT"),
                                  prescales = cms.InputTag("patTrigger"),
@@ -113,8 +113,8 @@ muonBParkTable = cms.EDProducer("SimpleCandidateFlatTableProducer",
         # triggerIdLoose = Var("passed('TriggerIdLoose')",bool,doc="TriggerIdLoose ID"),
         # # inTimeMuon = Var("passed('InTimeMuon')",bool,doc="inTimeMuon ID"),
         isTriggering = Var("userInt('isTriggering')", int,doc="flag the reco muon is also triggering"),
-        #isSoft = Var("userInt('isSoft')", int,doc="flag the reco muon is also Soft"),
-        isSoft = Var("passed('SoftCutBasedId')", bool,doc="flag the reco muon is also Soft"),
+        isSoft = Var("userInt('isSoft')", int,doc="flag the reco muon is also Soft"),
+        #isSoft = Var("passed('SoftCutBasedId')", bool,doc="Soft ID also in MuonTriggerSelector"),
     ),
 )
 
