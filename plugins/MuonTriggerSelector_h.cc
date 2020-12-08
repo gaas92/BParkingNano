@@ -35,13 +35,13 @@ using namespace std;
 
 constexpr bool debug = false;
 
-class MuonTriggerSelector : public edm::EDProducer {
+class MuonTriggerSelector_h : public edm::EDProducer {
     
 public:
     
-    explicit MuonTriggerSelector(const edm::ParameterSet &iConfig);
+    explicit MuonTriggerSelector_h(const edm::ParameterSet &iConfig);
     
-    ~MuonTriggerSelector() override {};
+    ~MuonTriggerSelector_h() override {};
     
     
 private:
@@ -66,7 +66,7 @@ private:
 }; 
 
  
-MuonTriggerSelector::MuonTriggerSelector(const edm::ParameterSet &iConfig):
+MuonTriggerSelector_h::MuonTriggerSelector_h(const edm::ParameterSet &iConfig):
   muonSrc_( consumes<std::vector<pat::Muon>> ( iConfig.getParameter<edm::InputTag>( "muonCollection" ) ) ),
   triggerBits_(consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("bits"))),
   triggerObjects_(consumes<std::vector<pat::TriggerObjectStandAlone>>(iConfig.getParameter<edm::InputTag>("objects"))),
@@ -86,7 +86,7 @@ MuonTriggerSelector::MuonTriggerSelector(const edm::ParameterSet &iConfig):
  
  
 
-void MuonTriggerSelector::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
+void MuonTriggerSelector_h::produce(edm::Event& iEvent, const edm::EventSetup& iSetup) {
     
     edm::ESHandle<MagneticField> bFieldHandle;
     iSetup.get<IdealMagneticFieldRecord>().get(bFieldHandle);
@@ -95,7 +95,7 @@ void MuonTriggerSelector::produce(edm::Event& iEvent, const edm::EventSetup& iSe
     iEvent.getByToken(vertexSrc_, vertexHandle);
     const reco::Vertex & PV = vertexHandle->front();
 
-    if(debug) std::cout << " MuonTriggerSelector::produce " << std::endl;
+    if(debug) std::cout << " MuonTriggerSelector_h::produce " << std::endl;
 
     // Not so clear
     // https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideEDMPathsAndTriggerBits
@@ -379,4 +379,4 @@ void MuonTriggerSelector::produce(edm::Event& iEvent, const edm::EventSetup& iSe
 
 
 
-DEFINE_FWK_MODULE(MuonTriggerSelector);
+DEFINE_FWK_MODULE(MuonTriggerSelector_h);
