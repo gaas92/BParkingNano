@@ -135,7 +135,7 @@ muonBParkTables = cms.Sequence(muonBParkTable)
 #######################################################################################################
 
 
-tracksBPark = cms.EDProducer('TrackMerger',
+tracksBPark = cms.EDProducer('TrackMerger_h',
                              beamSpot   = cms.InputTag("offlineBeamSpot"),
                              trgMuon    = cms.InputTag("muonTrgSelector:trgMuons"),
                              tracks     = cms.InputTag("packedPFCandidates"),
