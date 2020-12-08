@@ -195,6 +195,7 @@ process.FEVTDEBUGHLToutput = cms.OutputModule("PoolOutputModule",
 process.NANOAODoutput = cms.OutputModule("NanoAODOutputModule",
     compressionAlgorithm = cms.untracked.string('LZMA'),
     compressionLevel = cms.untracked.int32(9),
+    saveProvenance = cms.bool(False), # test
     dataset = cms.untracked.PSet(
         dataTier = cms.untracked.string('NANOAOD'),
         filterName = cms.untracked.string('')
