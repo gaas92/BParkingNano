@@ -114,7 +114,7 @@ muonBParkTable = cms.EDProducer("SimpleCandidateFlatTableProducer",
         # # inTimeMuon = Var("passed('InTimeMuon')",bool,doc="inTimeMuon ID"),
         isTriggering = Var("userInt('isTriggering')", int,doc="flag the reco muon is also triggering"),
         #isSoft = Var("userInt('isSoft')", int,doc="flag the reco muon is also Soft"),
-        isSoft = Var("isSoftMuon", int,doc="flag the reco muon is also Soft"),
+        isSoft = Var("isSoftMuon", bool,doc="flag the reco muon is also Soft"),
     ),
 )
 
