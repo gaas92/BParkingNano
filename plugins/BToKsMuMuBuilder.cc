@@ -54,6 +54,10 @@ public:
     isotracksToken_(consumes<pat::PackedCandidateCollection>(cfg.getParameter<edm::InputTag>("tracks"))),
     isolostTracksToken_(consumes<pat::PackedCandidateCollection>(cfg.getParameter<edm::InputTag>("lostTracks"))),
     isotrk_selection_{cfg.getParameter<std::string>("isoTracksSelection")},
+
+    //GAAS
+    v0PtrCollection_(consumes<reco::VertexCompositePtrCandidateCollection>(cfg.getParameter<edm::InputTag>("secundaryVerticesPtr"))),	       
+    
     beamspot_{consumes<reco::BeamSpot>( cfg.getParameter<edm::InputTag>("beamSpot") )} {
       produces<pat::CompositeCandidateCollection>("Bcollection");
       //HCL
@@ -86,6 +90,10 @@ private:
   const edm::EDGetTokenT<pat::PackedCandidateCollection> isotracksToken_;
   const edm::EDGetTokenT<pat::PackedCandidateCollection> isolostTracksToken_;
   const StringCutObjectSelector<pat::PackedCandidate> isotrk_selection_; 
+
+  //GAAS
+  const edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0PtrCollection_;
+
 
   const edm::EDGetTokenT<reco::BeamSpot> beamspot_;  
 };

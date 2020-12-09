@@ -285,7 +285,7 @@ countDimuons = cms.EDFilter("PATCandViewCountFilter",
 #)
 
 #######################################################################################################
-#######################################  B -> K*s Mu Mu  ###############################################
+#######################################  B -> Ks Mu Mu  ###############################################
 #######################################################################################################
 BToKmumu = cms.EDProducer(
     'BToKsMuMuBuilder',
@@ -303,6 +303,7 @@ BToKmumu = cms.EDProducer(
     lostTracks = cms.InputTag("lostTracks"),
     kaonSelection = cms.string(''),
     isoTracksSelection = cms.string('pt > 0.7 && abs(eta)<2.5'),
+    secundaryVerticesPtr = cms.InputTag("slimmedKshortVertices"), #GAAS
     # This in principle can be different between electrons and muons
     preVtxSelection = cms.string(
         'pt > 3. && userFloat("min_dr") > 0.03'
