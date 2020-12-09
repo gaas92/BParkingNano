@@ -212,8 +212,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    //opposite charge 
 	    if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue; // <-------------------------------------
   
-	    TrackRef glbTrackP;	  
-	    TrackRef glbTrackM;	  
+	    const reco::TrackRef glbTrackP;	  
+	    const reco::TrackRef glbTrackM;	  
 	    
 	    if(iMuon1->charge() == 1){glbTrackP = iMuon1->track();}
 	    if(iMuon1->charge() == -1){glbTrackM = iMuon1->track();}
