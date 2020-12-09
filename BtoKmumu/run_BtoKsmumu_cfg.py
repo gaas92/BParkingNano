@@ -132,7 +132,8 @@ process.load("Configuration.StandardSequences.MagneticField_cff")
 process.load('Configuration.StandardSequences.EndOfProcess_cff')
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 #process.load('PhysicsTools.BParkingNano.BToKMuMu_cff')
-process.load('config_BtoKmumu_cff')
+#process.load('config_BtoKmumu_cff')
+process.load('config_BtoKsmumu_cff')
  
 
 
