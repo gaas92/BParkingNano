@@ -142,7 +142,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   //GAAS Kinematic fit
   edm::ESHandle<TransientTrackBuilder> theB; 
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
-  edm::Handle< View<pat::PackedCandidate> > thePATTrackHandle;
+  edm::Handle<edm::View<pat::PackedCandidate> > thePATTrackHandle;
   evt.getByToken(tracksCollection_label,thePATTrackHandle);
 
   std::vector<float> vx,vy,vz, dzTrgMu;// ,dlenSig,pAngle;
