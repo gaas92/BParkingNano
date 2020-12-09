@@ -265,6 +265,16 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    //initial chi2 and ndf before kinematic fits.
 	    float chi = 0.;
 	    float ndf = 0.;
+	    vector<RefCountedKinematicParticle> muonParticles;
+	    try {
+	      muonParticles.push_back(pFactory.particle(muon1TT,muon_mass,chi,ndf,muon_sigma));
+	      muonParticles.push_back(pFactory.particle(muon2TT,muon_mass,chi,ndf,muon_sigma));
+	    }
+	    catch(...) { 
+	      std::cout<<" Exception caught ... continuing 1 "<<std::endl; 
+	      continue;
+	    }
+
         passmu++;
 
     }    
