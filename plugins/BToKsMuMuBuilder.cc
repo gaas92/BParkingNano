@@ -37,6 +37,8 @@
 #include "TrackingTools/Records/interface/TransientTrackRecord.h"
 #include <DataFormats/Common/interface/View.h>
 #include "TrackingTools/PatternTools/interface/ClosestApproachInRPhi.h"
+#include "RecoVertex/KinematicFitPrimitives/interface/KinematicParticleFactoryFromTransientTrack.h"
+
 
 
 class BToKsMuMuBuilder : public edm::global::EDProducer<> {
@@ -256,7 +258,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    ParticleMass psi_mass = 3.096916;
 	    float muon_sigma = muon_mass*1.e-6;
 	    //float psi_sigma = psi_mass*1.e-6;
-    
+
 	    //Creating a KinematicParticleFactory
 	    KinematicParticleFactoryFromTransientTrack pFactory;
     
