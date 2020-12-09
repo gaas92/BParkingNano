@@ -61,7 +61,7 @@ public:
 
     //GAAS
     v0PtrCollection_(consumes<reco::VertexCompositePtrCandidateCollection>(cfg.getParameter<edm::InputTag>("secundaryVerticesPtr"))),	       
-    tracksCollection_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("tracks"))),
+    tracksCollection_label(consumes<edm::View<pat::PackedCandidate>>(cfg.getParameter<edm::InputTag>("tracks"))),
 
     beamspot_{consumes<reco::BeamSpot>( cfg.getParameter<edm::InputTag>("beamSpot") )} {
       produces<pat::CompositeCandidateCollection>("Bcollection");
