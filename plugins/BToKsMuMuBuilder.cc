@@ -199,7 +199,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 
   std::vector<int> used_lep1_id, used_lep2_id, used_trk_id;
 
-  std::cout << "Kaons Size:  "<< kaons->size() << std::endl;
+  //std::cout << "Kaons Size:  "<< kaons->size() << std::endl;
   std::cout << "Dileptons Size:  "<< dileptons->size() << std::endl;
   // output
   std::unique_ptr<pat::CompositeCandidateCollection> ret_val(new pat::CompositeCandidateCollection());
@@ -208,7 +208,26 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   int passmu = 0;
   for(pat::MuonCollection::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
     for(pat::MuonCollection::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) {
+        if(iMuon1==iMuon2) continue;
+	    //opposite charge 
+	    if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue; // <-------------------------------------
+  
+	    TrackRef glbTrackP;	  
+	    TrackRef glbTrackM;	  
+	    
+	    if(iMuon1->charge() == 1){glbTrackP = iMuon1->track();}
+	    if(iMuon1->charge() == -1){glbTrackM = iMuon1->track();}
+	    
+	    if(iMuon2->charge() == 1) {glbTrackP = iMuon2->track();}
+	    if(iMuon2->charge() == -1){glbTrackM = iMuon2->track();}
+	    
+	    if( glbTrackP.isNull() || glbTrackM.isNull() ) 
+	      {
+	        //std::cout << "continue due to no track ref" << endl;
+	        continue;
+	      }
         passmu++;
+
     }    
   }  
   std::cout << "pass mu: "<< passmu <<std::endl;
