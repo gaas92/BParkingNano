@@ -64,6 +64,7 @@ public:
     //GAAS
     v0PtrCollection_(consumes<reco::VertexCompositePtrCandidateCollection>(cfg.getParameter<edm::InputTag>("secundaryVerticesPtr"))),	       
     tracksCollection_label(consumes<edm::View<pat::PackedCandidate>>(cfg.getParameter<edm::InputTag>("tracks"))),
+    muons_Label(consumes<pat::MuonCollection>(cfg.getParameter<edm::InputTag>("muons"))),
 
     beamspot_{consumes<reco::BeamSpot>( cfg.getParameter<edm::InputTag>("beamSpot") )} {
       produces<pat::CompositeCandidateCollection>("Bcollection");
@@ -101,6 +102,7 @@ private:
   //GAAS
   const edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0PtrCollection_;
   const edm::EDGetTokenT<edm::View<pat::PackedCandidate>> tracksCollection_label;
+  const edm::EDGetTokenT<pat::MuonCollection> muons_Label;
 
 
   const edm::EDGetTokenT<reco::BeamSpot> beamspot_;  
@@ -144,6 +146,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
   edm::Handle<edm::View<pat::PackedCandidate> > thePATTrackHandle;
   evt.getByToken(tracksCollection_label,thePATTrackHandle);
+  edm::Handle<pat::MuonCollection> thePATMuonHandle;
+  iEvent.getByToken(muons_Label ,thePATMuonHandle);
 
   std::vector<float> vx,vy,vz, dzTrgMu;// ,dlenSig,pAngle;
 
@@ -233,8 +237,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
       int l1_idx = ll_prt->userInt("l1_idx");
       int l2_idx = ll_prt->userInt("l2_idx");
     
-      const pat::Muon muon1 = dynamic_cast<const pat::Muon>(ll_prt->userCand("l1"));
-      const pat::Muon muon2 = dynamic_cast<const pat::Muon>(ll_prt->userCand("l2"));
+      //const pat::Muon muon1 = dynamic_cast<const pat::Muon>(ll_prt->userCand("l1"));
+      //const pat::Muon muon2 = dynamic_cast<const pat::Muon>(ll_prt->userCand("l2"));
 
       pat::CompositeCandidate cand;
       cand.setP4(ll_prt->p4() + k_p4);
