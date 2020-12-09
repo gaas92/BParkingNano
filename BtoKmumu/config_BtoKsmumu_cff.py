@@ -252,11 +252,43 @@ countDimuons = cms.EDFilter("PATCandViewCountFilter",
     maxNumber = cms.uint32(999999),
     src = cms.InputTag("muonPairsForKmumu")
 )
+########################################################################################################
+########################################  B -> K* Mu Mu  ###############################################
+########################################################################################################
+#BToKmumu = cms.EDProducer(
+#    'BToKMMBuilder_h',
+#    dileptons = cms.InputTag('muonPairsForKmumu'),
+#    leptonTransientTracks = muonPairsForKmumu.transientTracksSrc,
+#    ##HCL
+#    trgMuon = cms.InputTag("muonTrgSelector:trgMuons"),
+#    vertexCollection = cms.InputTag("offlineSlimmedPrimaryVertices"), 
+#    dzCut = cms.double(1.0),
+#    ##HCL
+#    kaons = cms.InputTag('tracksBPark', 'SelectedTracks'),
+#    kaonsTransientTracks = cms.InputTag('tracksBPark', 'SelectedTransientTracks'),
+#    beamSpot = cms.InputTag("offlineBeamSpot"),
+#    tracks = cms.InputTag("packedPFCandidates"),
+#    lostTracks = cms.InputTag("lostTracks"),
+#    kaonSelection = cms.string(''),
+#    isoTracksSelection = cms.string('pt > 0.7 && abs(eta)<2.5'),
+#    # This in principle can be different between electrons and muons
+#    preVtxSelection = cms.string(
+#        'pt > 3. && userFloat("min_dr") > 0.03'
+#        '&& mass < 7. && mass > 4.'
+#        ),
+#    postVtxSelection = cms.string(
+#        'userInt("sv_OK") == 1 && userFloat("sv_prob") > 0.001 '
+#        '&& userFloat("fitted_cos_theta_2D") >= 0'
+#        '&& userFloat("fitted_mass") > 4.8 && userFloat("fitted_mass") < 5.8')
+#    # preVtxSelection = cms.string(''),
+#    # postVtxSelection = cms.string(''),
+#)
+
 #######################################################################################################
-#######################################  B -> K* Mu Mu  ###############################################
+#######################################  B -> K*s Mu Mu  ###############################################
 #######################################################################################################
 BToKmumu = cms.EDProducer(
-    'BToKMMBuilder_h',
+    'BToKsMuMuBuilder',
     dileptons = cms.InputTag('muonPairsForKmumu'),
     leptonTransientTracks = muonPairsForKmumu.transientTracksSrc,
     ##HCL
@@ -283,7 +315,6 @@ BToKmumu = cms.EDProducer(
     # preVtxSelection = cms.string(''),
     # postVtxSelection = cms.string(''),
 )
-
 
 BToKmumuOriginal = cms.EDProducer(
     'BToKLLBuilder',
