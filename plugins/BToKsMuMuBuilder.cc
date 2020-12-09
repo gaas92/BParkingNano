@@ -248,6 +248,21 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    if( !cApp.status() ) continue;
 	    float dca = fabs( cApp.distance() );
 
+        // *****  end DCA for the 2 muons *********************
+
+	    //The mass of a muon and the insignificant mass sigma 
+	    //to avoid singularities in the covariance matrix.
+	    ParticleMass muon_mass = 0.10565837; //pdg mass
+	    ParticleMass psi_mass = 3.096916;
+	    float muon_sigma = muon_mass*1.e-6;
+	    //float psi_sigma = psi_mass*1.e-6;
+    
+	    //Creating a KinematicParticleFactory
+	    KinematicParticleFactoryFromTransientTrack pFactory;
+    
+	    //initial chi2 and ndf before kinematic fits.
+	    float chi = 0.;
+	    float ndf = 0.;
         passmu++;
 
     }    
