@@ -199,8 +199,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 
   std::vector<int> used_lep1_id, used_lep2_id, used_trk_id;
 
-  //std::cout << "Kaons Size:  "<< kaons->size() << std::endl;
-  //std::cout << "Dileptons Size:  "<< dileptons->size() << std::endl;
+  std::cout << "Kaons Size:  "<< kaons->size() << std::endl;
+  std::cout << "Dileptons Size:  "<< dileptons->size() << std::endl;
   // output
   std::unique_ptr<pat::CompositeCandidateCollection> ret_val(new pat::CompositeCandidateCollection());
   
