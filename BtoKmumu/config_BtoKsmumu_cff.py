@@ -299,7 +299,6 @@ BToKmumu = cms.EDProducer(
     kaons = cms.InputTag('tracksBPark', 'SelectedTracks'),
     kaonsTransientTracks = cms.InputTag('tracksBPark', 'SelectedTransientTracks'),
     beamSpot = cms.InputTag("offlineBeamSpot"),
-    tracks = cms.InputTag("packedPFCandidates"),
     lostTracks = cms.InputTag("lostTracks"),
     kaonSelection = cms.string(''),
     isoTracksSelection = cms.string('pt > 0.7 && abs(eta)<2.5'),

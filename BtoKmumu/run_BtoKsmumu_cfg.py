@@ -233,7 +233,8 @@ process.GlobalTag = GlobalTag(process.GlobalTag, globaltag, '')
 #####################################################################################################
 ################################### PATH, ENDPAT Y SCHEDULE #########################################
 #####################################################################################################
-from config_BtoKmumu_cff import *
+#from config_BtoKmumu_cff import *
+from config_BtoKsmumu_cff import *
 
 
 process.nanoAOD_KMuMu_step = cms.Path(nanoSequence  + nanoBKMuMuSequence + CountBToKmumu )
