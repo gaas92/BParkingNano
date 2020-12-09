@@ -35,6 +35,8 @@
 //GAAS
 #include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
 #include "TrackingTools/Records/interface/TransientTrackRecord.h"
+#include <DataFormats/Common/interface/View.h>
+
 
 class BToKsMuMuBuilder : public edm::global::EDProducer<> {
 
