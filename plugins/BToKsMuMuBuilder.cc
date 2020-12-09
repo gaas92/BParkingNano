@@ -32,6 +32,10 @@
 #include "RecoVertex/KinematicFitPrimitives/interface/RefCountedKinematicVertex.h"
 #include "DataFormats/Math/interface/deltaR.h"
  
+//GAAS
+#include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
+#include "TrackingTools/Records/interface/TransientTrackRecord.h"
+
 class BToKsMuMuBuilder : public edm::global::EDProducer<> {
 
   // perhaps we need better structure here (begin run etc)
@@ -126,7 +130,14 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 
   edm::Handle<pat::MuonCollection> trgMuons;
   evt.getByToken(trgMuonToken_, trgMuons);
-
+  
+  //GAAS
+  edm::Handle<std::vector<reco::VertexCompositePtrCandidate>> theV0PtrHandle;
+  iEvent.getByToken(v0PtrCollection_,  theV0PtrHandle);
+  //GAAS Kinematic fit
+  edm::ESHandle<TransientTrackBuilder> theB; 
+  iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
+  
   std::vector<float> vx,vy,vz, dzTrgMu;// ,dlenSig,pAngle;
 
   const reco::Vertex & vertex = vertexHandle->front(); 
