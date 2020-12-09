@@ -147,7 +147,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   edm::Handle<edm::View<pat::PackedCandidate> > thePATTrackHandle;
   evt.getByToken(tracksCollection_label,thePATTrackHandle);
   edm::Handle<pat::MuonCollection> thePATMuonHandle;
-  iEvent.getByToken(muons_Label ,thePATMuonHandle);
+  evt.getByToken(muons_Label ,thePATMuonHandle);
 
   std::vector<float> vx,vy,vz, dzTrgMu;// ,dlenSig,pAngle;
 
