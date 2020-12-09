@@ -38,6 +38,7 @@
 #include <DataFormats/Common/interface/View.h>
 #include "TrackingTools/PatternTools/interface/ClosestApproachInRPhi.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/KinematicParticleFactoryFromTransientTrack.h"
+#include "RecoVertex/KinematicFit/interface/KinematicParticleVertexFitter.h"
 
 
 
