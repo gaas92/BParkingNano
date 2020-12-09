@@ -236,6 +236,11 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    //Let's check the vertex and mass
 	    reco::TransientTrack muon1TT((*theB).build(glbTrackP));
 	    reco::TransientTrack muon2TT((*theB).build(glbTrackM));
+        // *****  Trajectory states to calculate DCA for the 2 muons *********************
+	    FreeTrajectoryState mu1State = muon1TT.impactPointTSCP().theState();
+	    FreeTrajectoryState mu2State = muon2TT.impactPointTSCP().theState();
+
+	    if( !muon1TT.impactPointTSCP().isValid() || !muon2TT.impactPointTSCP().isValid() ) continue;
 
         passmu++;
 
