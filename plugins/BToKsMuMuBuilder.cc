@@ -241,7 +241,12 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    FreeTrajectoryState mu2State = muon2TT.impactPointTSCP().theState();
 
 	    if( !muon1TT.impactPointTSCP().isValid() || !muon2TT.impactPointTSCP().isValid() ) continue;
-
+        // Measure distance between tracks at their closest approach
+	    ClosestApproachInRPhi cApp;
+	    cApp.calculate(mu1State, mu2State);
+	    if( !cApp.status() ) continue;
+	    float dca = fabs( cApp.distance() );
+        
         passmu++;
 
     }    
