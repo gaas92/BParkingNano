@@ -304,6 +304,7 @@ BToKmumu = cms.EDProducer(
     kaonSelection = cms.string(''),
     isoTracksSelection = cms.string('pt > 0.7 && abs(eta)<2.5'),
     secundaryVerticesPtr = cms.InputTag("slimmedKshortVertices"), #GAAS
+    tracks     = cms.InputTag("packedPFCandidates"),
     # This in principle can be different between electrons and muons
     preVtxSelection = cms.string(
         'pt > 3. && userFloat("min_dr") > 0.03'

@@ -61,7 +61,8 @@ public:
 
     //GAAS
     v0PtrCollection_(consumes<reco::VertexCompositePtrCandidateCollection>(cfg.getParameter<edm::InputTag>("secundaryVerticesPtr"))),	       
-    
+    tracksCollection_label(consumes<edm::View<pat::PackedCandidate>>(iConfig.getParameter<edm::InputTag>("tracks"))),
+
     beamspot_{consumes<reco::BeamSpot>( cfg.getParameter<edm::InputTag>("beamSpot") )} {
       produces<pat::CompositeCandidateCollection>("Bcollection");
       //HCL
@@ -97,6 +98,7 @@ private:
 
   //GAAS
   const edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0PtrCollection_;
+  const edm::EDGetTokenT<edm::View<pat::PackedCandidate>> tracksCollection_label;
 
 
   const edm::EDGetTokenT<reco::BeamSpot> beamspot_;  
@@ -138,6 +140,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   //GAAS Kinematic fit
   edm::ESHandle<TransientTrackBuilder> theB; 
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
+  edm::Handle< View<pat::PackedCandidate> > thePATTrackHandle;
+  evt.getByToken(tracksCollection_label,thePATTrackHandle);
 
   std::vector<float> vx,vy,vz, dzTrgMu;// ,dlenSig,pAngle;
 
