@@ -275,6 +275,32 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	      continue;
 	    }
 
+        KinematicParticleVertexFitter fitter;   
+
+	    RefCountedKinematicTree psiVertexFitTree;
+	    try {
+	        psiVertexFitTree = fitter.fit(muonParticles); 
+	    }
+	    catch (...) { 
+	        std::cout<<" Exception caught ... continuing 2 "<<std::endl; 
+	        continue;
+	    }
+  
+	    if (!psiVertexFitTree->isValid()){
+	        //std::cout << "caught an exception in the psi vertex fit" << std::endl;
+	        continue; 
+	    }
+  
+	    psiVertexFitTree->movePointerToTheTop();
+	    
+	    RefCountedKinematicParticle psi_vFit_noMC = psiVertexFitTree->currentParticle();//masa del J/psi
+	    RefCountedKinematicVertex psi_vFit_vertex_noMC = psiVertexFitTree->currentDecayVertex();//vertice del J/psi
+	    
+	    if( psi_vFit_vertex_noMC->chiSquared() < 0 ){
+	        //std::cout << "negative chisq from psi fit" << endl;
+	        continue;
+	    }
+          
         passmu++;
 
     }    
