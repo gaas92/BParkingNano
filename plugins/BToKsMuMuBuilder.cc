@@ -233,6 +233,9 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
       int l1_idx = ll_prt->userInt("l1_idx");
       int l2_idx = ll_prt->userInt("l2_idx");
     
+      const pat::Muon *muon1 = dynamic_cast<const pat::Muon*>(ll_prt->userCand("l1"));
+      const pat::Muon *muon2 = dynamic_cast<const pat::Muon*>(ll_prt->userCand("l2"));
+
       pat::CompositeCandidate cand;
       cand.setP4(ll_prt->p4() + k_p4);
       cand.setCharge(ll_prt->charge() + k_ptr->charge());
