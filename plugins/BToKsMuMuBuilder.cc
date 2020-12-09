@@ -36,6 +36,7 @@
 #include "TrackingTools/TransientTrack/interface/TransientTrackBuilder.h"
 #include "TrackingTools/Records/interface/TransientTrackRecord.h"
 #include <DataFormats/Common/interface/View.h>
+#include "TrackingTools/PatternTools/interface/ClosestApproachInRPhi.h"
 
 
 class BToKsMuMuBuilder : public edm::global::EDProducer<> {
@@ -246,7 +247,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    cApp.calculate(mu1State, mu2State);
 	    if( !cApp.status() ) continue;
 	    float dca = fabs( cApp.distance() );
-        
+
         passmu++;
 
     }    
