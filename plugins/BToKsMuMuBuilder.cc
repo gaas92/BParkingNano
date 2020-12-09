@@ -221,11 +221,22 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    if(iMuon2->charge() == 1) {glbTrackP = iMuon2->track();}
 	    if(iMuon2->charge() == -1){glbTrackM = iMuon2->track();}
 	    
-	    if( glbTrackP.isNull() || glbTrackM.isNull() ) 
-	      {
+	    if( glbTrackP.isNull() || glbTrackM.isNull() ){
 	        //std::cout << "continue due to no track ref" << endl;
 	        continue;
-	      }
+	    }
+        //no pT cuts in Dileptonbuilder neither MuonTriggerSelector
+        //if(iMuon1->track()->pt()<4.0) continue; 
+	    //if(iMuon2->track()->pt()<4.0) continue;
+
+        //no highPurity Cuts in DiLeptonBuilder neither in MuonTriggerSelector
+	    //if(!(glbTrackM->quality(reco::TrackBase::highPurity))) continue;
+	    //if(!(glbTrackP->quality(reco::TrackBase::highPurity))) continue;
+	  
+	    //Let's check the vertex and mass
+	    reco::TransientTrack muon1TT((*theB).build(glbTrackP));
+	    reco::TransientTrack muon2TT((*theB).build(glbTrackM));
+
         passmu++;
 
     }    
