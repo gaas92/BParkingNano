@@ -189,12 +189,6 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   //std::cout << "Pasamos el almacenamiento delos PVs\n\n" ;
   //HCL
 
-
-
-
-
-
-
   //for isolation
   edm::Handle<pat::PackedCandidateCollection> iso_tracks;
   evt.getByToken(isotracksToken_, iso_tracks);
@@ -209,6 +203,15 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   //std::cout << "Dileptons Size:  "<< dileptons->size() << std::endl;
   // output
   std::unique_ptr<pat::CompositeCandidateCollection> ret_val(new pat::CompositeCandidateCollection());
+  
+  //GAAS my reco, taken from Jhovanny
+  int passmu = 0;
+  for(pat::MuonCollection::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
+    for(pat::MuonCollection::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) {
+        passmu++;
+    }    
+  }  
+  std::cout << "pass mu: "<< passmu <<std::endl;
 
   for(size_t k_idx = 0; k_idx < kaons->size(); ++k_idx) {
     edm::Ptr<pat::CompositeCandidate> k_ptr(kaons, k_idx);
