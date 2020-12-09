@@ -102,7 +102,8 @@ private:
   const edm::EDGetTokenT<reco::BeamSpot> beamspot_;  
 };
 
-void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup const &) const {
+//void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup const & ) const {
+void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup const & iSetup) const {
 
   //input
   edm::Handle<pat::CompositeCandidateCollection> dileptons;
@@ -133,11 +134,11 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   
   //GAAS
   edm::Handle<std::vector<reco::VertexCompositePtrCandidate>> theV0PtrHandle;
-  iEvent.getByToken(v0PtrCollection_,  theV0PtrHandle);
+  evt.getByToken(v0PtrCollection_,  theV0PtrHandle);
   //GAAS Kinematic fit
   edm::ESHandle<TransientTrackBuilder> theB; 
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
-  
+
   std::vector<float> vx,vy,vz, dzTrgMu;// ,dlenSig,pAngle;
 
   const reco::Vertex & vertex = vertexHandle->front(); 
