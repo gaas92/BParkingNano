@@ -404,6 +404,15 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		            //std::cout << "caught an exception in the ks mass constraint fit" << std::endl;
 		            continue; 
 		        }
+                Ks0VertexFitTree->movePointerToTheTop();
+		        RefCountedKinematicParticle ks0_vFit_withMC = Ks0VertexFitTree->currentParticle();
+		     
+		        //Now we are ready to combine!
+		     
+		        std::vector<RefCountedKinematicParticle> vFitMCParticles;
+		        vFitMCParticles.push_back(pFactory.particle(muon1TT,muon_mass,chi,ndf,muon_sigma));
+		        vFitMCParticles.push_back(pFactory.particle(muon2TT,muon_mass,chi,ndf,muon_sigma));
+		        vFitMCParticles.push_back(ks0_vFit_withMC);
                 //no mass constrain 
 			    KinematicParticleVertexFitter kcvFitter;
 			    RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles);
