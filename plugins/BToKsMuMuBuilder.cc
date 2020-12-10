@@ -620,7 +620,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 //where the thetal is the angle between the
                 //direction of the m-(m+) lepton and the K+(K-)
                 //in this case we can calculate three anlges M-/Ks, M+/Ks, Dim/Ks
-
+                muonCM1 = cmboost( getTLV(mu1CandMC) );
+                muonCM2 = cmboost( getTLV(mu2CandMC) );
                 /*
                 if (l1_ptr->charge()==k_ptr->charge()){
                   muonCM1 = cmboost(fitter.daughter_p4(1)) ;
