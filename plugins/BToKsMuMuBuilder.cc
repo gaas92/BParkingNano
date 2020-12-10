@@ -519,24 +519,24 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        if ( T2CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi2KP;
 		        if ( T2CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi2KP;	 
 
-                b_cand.addUserInt("sv_OK" , bDecayVertexMC->vertexIsValid()); 
-                b_cand.addUserFloat("sv_chi2", bDecayVertexMC->chiSquared());
-                b_cand.addUserFloat("sv_ndof", bDecayVertexMC->degreesOfFreedom()); // float??
-                b_cand.addUserFloat("sv_prob", B_Prob_tmp);
+                b_cand.addUserInt("Bvtx_OK" , bDecayVertexMC->vertexIsValid()); //sv_OK
+                b_cand.addUserFloat("Bvtx_chi2", bDecayVertexMC->chiSquared()); //sv_chi2
+                b_cand.addUserFloat("Bvtx_ndof", bDecayVertexMC->degreesOfFreedom()); // sv_ndof
+                b_cand.addUserFloat("Bvtx_prob", B_Prob_tmp); // sv_prob
  
                 b_cand.addUserFloat("fitted_mll" , psi_vFit_noMC->currentState().mass());
                 b_cand.addUserFloat("fitted_pt_ll" , psi_vFit_noMC->currentState().globalMomentum().perp());
                 b_cand.addUserFloat("fitted_eta_ll" , psi_vFit_noMC->currentState().globalMomentum().eta());
                 b_cand.addUserFloat("fitted_phi_ll" , psi_vFit_noMC->currentState().globalMomentum().phi());
       
-                b_cand.addUserFloat("fitted_pt"  , bCandMC->currentState().globalMomentum().perp()); 
+                b_cand.addUserFloat("Bfitted_pt"  , bCandMC->currentState().globalMomentum().perp()); 
                 // cand.addUserFloat("fitted_px"  , fitter.fitted_candidate().globalMomentum().x()); 
                 // cand.addUserFloat("fitted_py"  , fitter.fitted_candidate().globalMomentum().y()); 
                 // cand.addUserFloat("fitted_pz"  , fitter.fitted_candidate().globalMomentum().z()); 
-                b_cand.addUserFloat("fitted_eta" , bCandMC->currentState().globalMomentum().eta());
-                b_cand.addUserFloat("fitted_phi" , bCandMC->currentState().globalMomentum().phi());
-                b_cand.addUserFloat("fitted_mass", bCandMC->currentState().mass());      
-                b_cand.addUserFloat("fitted_massErr", sqrt(bCandMC->currentState().kinematicParametersError().matrix()(6,6)));
+                b_cand.addUserFloat("Bfitted_eta" , bCandMC->currentState().globalMomentum().eta());
+                b_cand.addUserFloat("Bfitted_phi" , bCandMC->currentState().globalMomentum().phi());
+                b_cand.addUserFloat("Bfitted_mass", bCandMC->currentState().mass());      
+                b_cand.addUserFloat("Bfitted_massErr", sqrt(bCandMC->currentState().kinematicParametersError().matrix()(6,6)));
                 //std::cout << "cos2D: "<< cos_theta_2D(fitter, *beamspot, cand.p4()) << std::endl;
                 //TLorentzVector testVect;
                 auto B_vect = math::PtEtaPhiMLorentzVector(psi_vFit_noMC->currentState().globalMomentum().perp(),
@@ -545,19 +545,47 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                                                            psi_vFit_noMC->currentState().mass());
                 //testVect.SetPtEtaPhiM(cand.pt(), cand.eta(), cand.phi(), cand.mass());
                 GlobalPoint b_gp = bDecayVertexMC->position();
-                b_cand.addUserFloat("cos_theta_2D", (bDecayVertexMC->vertexIsValid()) ? : my_cos_theta_2D(b_gp, *beamspot, b_cand.p4()), -2 );
-                b_cand.addUserFloat("fitted_cos_theta_2D", (bDecayVertexMC->vertexIsValid()) ? : my_cos_theta_2D(b_gp, *beamspot, B_vect), -2 );
+                b_cand.addUserFloat("Bcos_theta_2D", (bDecayVertexMC->vertexIsValid()) ? : my_cos_theta_2D(b_gp, *beamspot, b_cand.p4()), -2 );
+                b_cand.addUserFloat("Bfitted_cos_theta_2D", (bDecayVertexMC->vertexIsValid()) ? : my_cos_theta_2D(b_gp, *beamspot, B_vect), -2 );
                 //std::cout << "my cos2D: "<< my_cos_theta_2D(gp, *beamspot, testVect) << std::endl;
-                if( !post_vtx_selection_(b_cand) ) continue;
+                //FIX
+                //if( !post_vtx_selection_(b_cand) ) continue;
+                
                 GlobalError b_gp_err = bDecayVertexMC->error();
                 auto lxy = my_l_xy(b_gp, b_gp_err, *beamspot);
-                b_cand.addUserFloat("l_xy", lxy.value());
-                b_cand.addUserFloat("l_xy_unc", lxy.error());
+                b_cand.addUserFloat("B_l_xy", lxy.value());
+                b_cand.addUserFloat("B_l_xy_unc", lxy.error());
 
-      // //Almacenemos la informacion del beamspot 
-      // reco::BeamSpot bs = *beamspot;
-      // cand.addUserFloat("beamSpot_x", bs.x(cand.vz()));
-      // cand.addUserFloat("beamSpot_y", bs.y(cand.vz()));        
+                b_cand.addUserFloat("Bvtx_x", b_cand.vx());
+                b_cand.addUserFloat("Bvtx_y", b_cand.vy());
+                b_cand.addUserFloat("Bvtx_z", b_cand.vz());
+                b_cand.addUserFloat("Bvtx_ex" , sqrt(b_gp_err.cxx()));
+                b_cand.addUserFloat("Bvtx_ey" , sqrt(b_gp_err.cyy()));
+                b_cand.addUserFloat("Bvtx_ez" , sqrt(b_gp_err.czz()));
+                try{
+                  b_cand.addUserFloat("Bvtx_eyx", b_gp_err.cyx());
+                  b_cand.addUserFloat("Bvtx_ezx", b_gp_err.czx());
+                  b_cand.addUserFloat("Bvtx_ezy", b_gp_err.czy());
+                }
+                catch(...){
+                  b_cand.addUserFloat("Bvtx_eyx", -1);
+                  b_cand.addUserFloat("Bvtx_ezx", -1);
+                  b_cand.addUserFloat("Bvtx_ezy", -1);
+                }
+                //b_cand.addUserFloat("Bfitted_l1_pt" , fitter.daughter_p4(0).pt()); 
+                //b_cand.addUserFloat("Bfitted_l1_eta", fitter.daughter_p4(0).eta());
+                //b_cand.addUserFloat("Bfitted_l1_phi", fitter.daughter_p4(0).phi());
+                //b_cand.addUserFloat("Bl1_charge", l1_ptr->charge());
+//
+                //b_cand.addUserFloat("Bfitted_l2_pt" , fitter.daughter_p4(1).pt()); 
+                //b_cand.addUserFloat("Bfitted_l2_eta", fitter.daughter_p4(1).eta());
+                //b_cand.addUserFloat("Bfitted_l2_phi", fitter.daughter_p4(1).phi());
+                //b_cand.addUserFloat("Bl2_charge", l2_ptr->charge());
+//
+                //b_cand.addUserFloat("Bfitted_ks_pt"  , fitter.daughter_p4(2).pt()); 
+                //b_cand.addUserFloat("Bfitted_ks_eta" , fitter.daughter_p4(2).eta());
+                //b_cand.addUserFloat("Bfitted_ks_phi" , fitter.daughter_p4(2).phi());
+                //b_cand.addUserFloat("Bks_charge", k_ptr->charge());            
 
 		        // fill candidate variables now                      
             }// en V0 Tracks
