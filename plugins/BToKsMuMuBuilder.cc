@@ -39,6 +39,7 @@
 #include "TrackingTools/PatternTools/interface/ClosestApproachInRPhi.h"
 #include "RecoVertex/KinematicFitPrimitives/interface/KinematicParticleFactoryFromTransientTrack.h"
 #include "RecoVertex/KinematicFit/interface/KinematicParticleVertexFitter.h"
+#include "DataFormats/TrackReco/interface/Track.h"
 
 
 
@@ -322,7 +323,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 
 	   //  ***************  
 	   if ( theV0PtrHandle->size()>0 && thePATMuonHandle->size()>=2 ){
-	        for ( vector<VertexCompositePtrCandidate>::const_iterator iVee = theV0PtrHandle->begin();   iVee != theV0PtrHandle->end(); ++iVee ){
+	        for ( std::vector<VertexCompositePtrCandidate>::const_iterator iVee = theV0PtrHandle->begin();   iVee != theV0PtrHandle->end(); ++iVee ){
                 //get Lam tracks from V0 candidate
 		        std::vector<pat::PackedCandidate> v0daughters;
 		        std::vector<Track> theDaughterTracks;
