@@ -479,6 +479,13 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
  		        GlobalVector Ks0p2vec(T2CandMC->currentState().globalMomentum().x(),
 				                      T2CandMC->currentState().globalMomentum().y(),
 					                  T2CandMC->currentState().globalMomentum().z());
+
+                if ( T1CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi1KP;
+		        if ( T1CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi1KP;
+		        if ( T2CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi2KP;
+		        if ( T2CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi2KP;	 
+
+		   // fill candidate variables now                      
             }// en V0 Tracks
         }// end if dimuon&& V0Tracks   
         passmu++;
