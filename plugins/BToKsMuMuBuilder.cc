@@ -572,11 +572,11 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                   b_cand.addUserFloat("Bvtx_ezx", -1);
                   b_cand.addUserFloat("Bvtx_ezy", -1);
                 }
-                //b_cand.addUserFloat("Bfitted_l1_pt" , fitter.daughter_p4(0).pt()); 
-                //b_cand.addUserFloat("Bfitted_l1_eta", fitter.daughter_p4(0).eta());
-                //b_cand.addUserFloat("Bfitted_l1_phi", fitter.daughter_p4(0).phi());
-                //b_cand.addUserFloat("Bl1_charge", l1_ptr->charge());
-//
+                b_cand.addUserFloat("Bfitted_l1_pt" , mu1CandMC.perp()); 
+                b_cand.addUserFloat("Bfitted_l1_eta", mu1CandMC.eta());
+                b_cand.addUserFloat("Bfitted_l1_phi", mu1CandMC.phi());
+                b_cand.addUserFloat("Bl1_charge", mu1CandMC.charge());
+
                 //b_cand.addUserFloat("Bfitted_l2_pt" , fitter.daughter_p4(1).pt()); 
                 //b_cand.addUserFloat("Bfitted_l2_eta", fitter.daughter_p4(1).eta());
                 //b_cand.addUserFloat("Bfitted_l2_phi", fitter.daughter_p4(1).phi());
