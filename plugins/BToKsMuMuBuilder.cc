@@ -463,6 +463,22 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        if ( mu1CandMC->currentState().particleCharge() < 0 ) psiMumKP = psiMu1KP;
 		        if ( mu2CandMC->currentState().particleCharge() > 0 ) psiMupKP = psiMu2KP;
 		        if ( mu2CandMC->currentState().particleCharge() < 0 ) psiMumKP = psiMu2KP;
+
+                GlobalVector Jp1vec(mu1CandMC->currentState().globalMomentum().x(),
+				                    mu1CandMC->currentState().globalMomentum().y(),
+ 				                    mu1CandMC->currentState().globalMomentum().z());
+
+ 		        GlobalVector Jp2vec(mu2CandMC->currentState().globalMomentum().x(),
+				                    mu2CandMC->currentState().globalMomentum().y(),
+ 				                    mu2CandMC->currentState().globalMomentum().z());
+
+ 		        GlobalVector Ks0p1vec(T1CandMC->currentState().globalMomentum().x(),
+				                      T1CandMC->currentState().globalMomentum().y(),
+ 				                      T1CandMC->currentState().globalMomentum().z());
+
+ 		        GlobalVector Ks0p2vec(T2CandMC->currentState().globalMomentum().x(),
+				                      T2CandMC->currentState().globalMomentum().y(),
+					                  T2CandMC->currentState().globalMomentum().z());
             }// en V0 Tracks
         }// end if dimuon&& V0Tracks   
         passmu++;
