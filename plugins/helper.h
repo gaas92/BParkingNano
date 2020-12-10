@@ -90,6 +90,16 @@ inline double getMuPFIso04(const pat::Muon& mu){
 return coriso;
 }
 
+inline math::PtEtaPhiMLorentzVector getTLV(RefCountedKinematicParticle &state) { 
+    //const auto& state = fitted_children_.at(i)->currentState();
+    return math::PtEtaPhiMLorentzVector(
+      state.globalMomentum().perp(), 
+      state.globalMomentum().eta() ,
+      state.globalMomentum().phi() ,
+      state.mass()
+      );
+  }
+
 template<typename FITTER>
 inline Measurement1D l_xy(const FITTER& fitter, const reco::BeamSpot &bs) {
   if(!fitter.success()) return {-2, -2};

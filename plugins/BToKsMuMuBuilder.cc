@@ -616,9 +616,11 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 ROOT::Math::Boost cmboost(dilep.BoostToCM());
                 
                 math::XYZTLorentzVector kaonCM(  cmboost( k0vec )  );
-                math::XYZTLorentzVector muonCM1, muonCM2;
+                math::XYZTLorentzVector muonCM1, muonCM2; 
                 //where the thetal is the angle between the
                 //direction of the m-(m+) lepton and the K+(K-)
+                //in this case we can calculate three anlges M-/Ks, M+/Ks, Dim/Ks
+
                 /*
                 if (l1_ptr->charge()==k_ptr->charge()){
                   muonCM1 = cmboost(fitter.daughter_p4(1)) ;
