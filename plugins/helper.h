@@ -62,7 +62,7 @@ inline double my_cos_theta_2D( GlobalPoint point, const reco::BeamSpot &bs, cons
   //GlobalPoint point = fitter.fitted_vtx();
   auto bs_pos = bs.position(point.z());
   math::XYZVector delta(point.x() - bs_pos.x(), point.y() - bs_pos.y(), 0.);
-  math::XYZVector pt(p4.px(), p4.py(), 0.);
+  math::XYZVector pt(p4.Px(), p4.Py(), 0.);
   double den = (delta.R() * pt.R());
   return (den != 0.) ? delta.Dot(pt)/den : -2;
 }
