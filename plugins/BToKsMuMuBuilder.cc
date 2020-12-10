@@ -369,6 +369,39 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 			        continue; 
 		        }
 		        Ks0VertexFitTree->movePointerToTheTop(); 
+                RefCountedKinematicParticle Ks0_vFit_noMC = Ks0VertexFitTree->currentParticle();
+		        RefCountedKinematicVertex Ks0_vFit_vertex_noMC = Ks0VertexFitTree->currentDecayVertex();
+    
+		        if( Ks0_vFit_vertex_noMC->chiSquared() < 0 ){ 
+			        //std::cout << "negative chisq from ks fit" << endl;
+			        continue;
+		        }
+    
+		        //some loose cuts go here
+		        if(Ks0_vFit_vertex_noMC->chiSquared()>50) continue;
+		        if(Ks0_vFit_noMC->currentState().mass()<0.45 || Ks0_vFit_noMC->currentState().mass()>0.55) continue;
+    
+		        Ks0VertexFitTree->movePointerToTheFirstChild();
+		        RefCountedKinematicParticle T1CandMC = Ks0VertexFitTree->currentParticle();
+    
+		        Ks0VertexFitTree->movePointerToTheNextChild();
+		        RefCountedKinematicParticle T2CandMC = Ks0VertexFitTree->currentParticle();
+    
+		        //  Ks0  mass constrain
+		        // do mass constrained vertex fit
+		        // creating the constraint with a small sigma to put in the resulting covariance 
+		        // matrix in order to avoid singularities
+		        // JPsi mass constraint is applied in the final B fit
+    
+		        KinematicParticleFitter csFitterKs;
+		        KinematicConstraint * ks_c = new MassKinematicConstraint(Ks0_mass,Ks0_sigma);
+		        // add mass constraint to the ks0 fit to do a constrained fit:  
+    
+		        Ks0VertexFitTree = csFitterKs.fit(ks_c,Ks0VertexFitTree);
+		        if (!Ks0VertexFitTree->isValid()){
+		            //std::cout << "caught an exception in the ks mass constraint fit" << std::endl;
+		            continue; 
+		        }
             }
         }   
         passmu++;
