@@ -94,10 +94,10 @@ return coriso;
 inline math::PtEtaPhiMLorentzVector getTLV(RefCountedKinematicParticle &state) { 
     //const auto& state = fitted_children_.at(i)->currentState();
     return math::PtEtaPhiMLorentzVector(
-      state.globalMomentum().perp(), 
-      state.globalMomentum().eta() ,
-      state.globalMomentum().phi() ,
-      state.mass()
+      state.currentState().globalMomentum().perp(), 
+      state.currentState().globalMomentum().eta() ,
+      state.currentState().globalMomentum().phi() ,
+      state.currentState().mass()
       );
   }
 
