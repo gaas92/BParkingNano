@@ -23,6 +23,7 @@
 #include "RecoVertex/KinematicFitPrimitives/interface/RefCountedKinematicVertex.h"
 #include "TLorentzVector.h"
 #include "DataFormats/PatCandidates/interface/Muon.h"
+#include "RecoVertex/KinematicFitPrimitives/interface/RefCountedKinematicParticle.h"
 
 
 typedef std::vector<reco::TransientTrack> TransientTrackCollection;
