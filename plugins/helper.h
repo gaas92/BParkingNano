@@ -59,7 +59,7 @@ inline double cos_theta_2D(const FITTER& fitter, const reco::BeamSpot &bs, const
 }
 
 inline double my_cos_theta_2D( RefCountedKinematicVertex* fitter, const reco::BeamSpot &bs, const TLorentzVector& p4) {
-  if(!fitter->vertexIsValid()) return -2;
+  if(!*(&fitter)->vertexIsValid()) return -2;
   //GlobalPoint point = fitter.fitted_vtx();
   auto bs_pos = bs.position(fitter->position().z());
   math::XYZVector delta(fitter->position().x() - bs_pos.x(), fitter->position().y() - bs_pos.y(), 0.);
