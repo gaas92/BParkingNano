@@ -551,8 +551,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 if( !post_vtx_selection_(b_cand) ) continue;
                 GlobalError b_gp_err = bDecayVertexMC->error();
                 auto lxy = my_l_xy(b_gp, b_gp_err, *beamspot);
-                cand.addUserFloat("l_xy", lxy.value());
-                cand.addUserFloat("l_xy_unc", lxy.error());
+                b_cand.addUserFloat("l_xy", lxy.value());
+                b_cand.addUserFloat("l_xy_unc", lxy.error());
 
       // //Almacenemos la informacion del beamspot 
       // reco::BeamSpot bs = *beamspot;
