@@ -226,7 +226,20 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    //opposite charge 
 	    if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue; 
         
-        if(!l1_selection_((iMuon1->pt() > iMuon2->pt() ? *iMuon1 : *iMuon2)));
+        //taken from DiLeptonBuilder
+        if(!l1_selection_((iMuon1->pt() > iMuon2->pt() ? *iMuon1 : *iMuon2))) continue;
+        if(!l2_selection_((iMuon1->pt() < iMuon2->pt() ? *iMuon1 : *iMuon2))) continue;
+        pat::CompositeCandidate lepton_pair;
+        lepton_pair.setP4(iMuon1->p4() + iMuon2->p4());
+        lepton_pair.setCharge(iMuon1->charge() + iMuon2->charge());
+        lepton_pair.addUserFloat("lep_deltaR", reco::deltaR(*iMuon1, *iMuon2));
+        
+        // Use UserCands as they should not use memory but keep the Ptr itself
+        lepton_pair.addUserCand("l1", iMuon1 );
+        lepton_pair.addUserCand("l2", iMuon2 );
+        if( !DLB_pre_vtx_selection_(lepton_pair) ) continue;
+
+
 
 	    reco::TrackRef glbTrackP;	  
 	    reco::TrackRef glbTrackM;	  
