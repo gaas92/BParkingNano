@@ -404,12 +404,40 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		            //std::cout << "caught an exception in the ks mass constraint fit" << std::endl;
 		            continue; 
 		        }
-            }
-        }   
+                //no mass constrain 
+			    KinematicParticleVertexFitter kcvFitter;
+			    RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles);
+		        if (!vertexFitTree->isValid()) {
+		            //std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
+		            continue;
+		        }
+                vertexFitTree->movePointerToTheTop();		     
+		     
+		        RefCountedKinematicParticle bCandMC = vertexFitTree->currentParticle();
+		        RefCountedKinematicVertex bDecayVertexMC = vertexFitTree->currentDecayVertex();
+		        if (!bDecayVertexMC->vertexIsValid()){
+		            //std::cout << "B MC fit vertex is not valid" << endl;
+		            continue;
+		        }
+    
+		        if(bCandMC->currentState().mass()<4.8 || bCandMC->currentState().mass()>6.0) continue;
+    
+		        //if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ){
+			    //    //std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
+			    //    continue;
+		        //}
+		        //std::cout << "pass 461 continues ... "<< std::endl;
+		        double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
+		        //if(B_Prob_tmp<0.01) //Jhovanny
+		        if(B_Prob_tmp<0.01){  //Horacio
+			        continue;
+		        }
+            }// en V0 Tracks
+        }// end if dimuon&& V0Tracks   
         passmu++;
 
     }    
-  }  
+  }// end muon loop   
   std::cout << "pass mu: "<< passmu <<std::endl;
 
   for(size_t k_idx = 0; k_idx < kaons->size(); ++k_idx) {
