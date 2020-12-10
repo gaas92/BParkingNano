@@ -524,10 +524,10 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 cand.addUserFloat("sv_ndof", bDecayVertexMC->degreesOfFreedom()); // float??
                 cand.addUserFloat("sv_prob", B_Prob_tmp);
  
-                cand.addUserFloat("fitted_mll" , psi_vFit_noMC->currentState().mass().mass());
-                cand.addUserFloat("fitted_pt_ll" , psi_vFit_noMC->currentState().mass().pt());
-                cand.addUserFloat("fitted_eta_ll" , psi_vFit_noMC->currentState().mass().eta());
-                cand.addUserFloat("fitted_phi_ll" , psi_vFit_noMC->currentState().mass().phi());
+                cand.addUserFloat("fitted_mll" , psi_vFit_noMC->currentState().mass());
+                cand.addUserFloat("fitted_pt_ll" , psi_vFit_noMC->currentState().pt());
+                cand.addUserFloat("fitted_eta_ll" , psi_vFit_noMC->currentState().eta());
+                cand.addUserFloat("fitted_phi_ll" , psi_vFit_noMC->currentState().phi());
       
                 cand.addUserFloat("fitted_pt"  , bCandMC->currentState().pt()); 
                 // cand.addUserFloat("fitted_px"  , fitter.fitted_candidate().globalMomentum().x()); 
