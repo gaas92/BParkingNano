@@ -616,12 +616,34 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 ROOT::Math::Boost cmboost(dilep.BoostToCM());
                 
                 math::XYZTLorentzVector kaonCM(  cmboost( k0vec )  );
-                math::XYZTLorentzVector muonCM1, muonCM2; 
+                math::XYZTLorentzVector dimuCM(cmboost(getTLV(psi_vFit_noMC)));
+                math::XYZTLorentzVector muonCMp, muonCMn; 
                 //where the thetal is the angle between the
                 //direction of the m-(m+) lepton and the K+(K-)
                 //in this case we can calculate three anlges M-/Ks, M+/Ks, Dim/Ks
-                muonCM1 = cmboost( getTLV(mu1CandMC) );
-                muonCM2 = cmboost( getTLV(mu2CandMC) );
+                if( mu1CandMC->currentState().particleCharge() > 0){ 
+                    muonCMp = cmboost( getTLV(mu1CandMC) );
+                    muonCMn = cmboost( getTLV(mu2CandMC) );
+                }
+                else {
+                    muonCMp = cmboost( getTLV(mu2CandMC) );
+                    muonCMn = cmboost( getTLV(mu1CandMC) );
+                }
+                float costhetaL = ( muonCMp.x()*muonCMn.x() 
+                                  + muonCMp.y()*muonCMn.y() 
+                                  + muonCMp.z()*muonCMn.z() ) / (muonCMp.P()*muonCMn.P() );
+
+                float costhetaLpKs = ( muonCMp.x()*kaonCM.x() 
+                                     + muonCMp.y()*kaonCM.y() 
+                                     + muonCMp.z()*kaonCM.z() ) / (muonCMp.P()*kaonCM.P() );
+
+                float costhetaLnKs = ( muonCMn.x()*kaonCM.x() 
+                                     + muonCMn.y()*kaonCM.y() 
+                                     + muonCMn.z()*kaonCM.z() ) / (muonCMn.P()*kaonCM.P() );
+
+                float costhetaKsDM = ( dimuCM.x()*kaonCM.x()
+                                     + dimuCM.y()*kaonCM.y()
+                                     + dimuCM.z()*kaonCM.z() ) / (dimuCM.P()*kaonCM.P() );
                 /*
                 if (l1_ptr->charge()==k_ptr->charge()){
                   muonCM1 = cmboost(fitter.daughter_p4(1)) ;
