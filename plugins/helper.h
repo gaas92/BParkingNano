@@ -67,7 +67,7 @@ inline double my_cos_theta_2D( GlobalPoint point, const reco::BeamSpot &bs, cons
   return (den != 0.) ? delta.Dot(pt)/den : -2;
 }
 
-inline Measurement1D my_l_xy(GloabalPoint point, GlobalError err, const reco::BeamSpot &bs) {
+inline Measurement1D my_l_xy(GlobalPoint point, GlobalError err, const reco::BeamSpot &bs) {
   //if(!fitter.success()) return {-2, -2};
   //GlobalPoint point = fitter.fitted_vtx();
   //GlobalError err = fitter.fitted_vtx_uncertainty();
