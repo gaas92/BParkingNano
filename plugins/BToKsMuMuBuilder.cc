@@ -305,7 +305,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    
 	    if( psi_vFit_vertex_noMC->chiSquared() < 0 ){
 	        //std::cout << "negative chisq from psi fit" << endl;
-	        continue;
+	        //continue;
 	    }
 
         double J_Prob_tmp   = TMath::Prob(psi_vFit_vertex_noMC->chiSquared(),(int)psi_vFit_vertex_noMC->degreesOfFreedom());
