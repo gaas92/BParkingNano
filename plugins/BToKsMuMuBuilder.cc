@@ -326,7 +326,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	        for ( std::vector<reco::VertexCompositePtrCandidate>::const_iterator iVee = theV0PtrHandle->begin();   iVee != theV0PtrHandle->end(); ++iVee ){
                 //get Lam tracks from V0 candidate
 		        std::vector<pat::PackedCandidate> v0daughters;
-		        std::vector<Track> theDaughterTracks;
+		        std::vector<reco::Track> theDaughterTracks;
 		        v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0))) );
 		        v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1))) );
 		     		     
