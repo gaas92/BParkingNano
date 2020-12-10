@@ -57,7 +57,7 @@ inline double cos_theta_2D(const FITTER& fitter, const reco::BeamSpot &bs, const
   double den = (delta.R() * pt.R());
   return (den != 0.) ? delta.Dot(pt)/den : -2;
 }
-
+template<typename LORENTZ_VEC>
 inline double my_cos_theta_2D( GlobalPoint point, const reco::BeamSpot &bs, const LORENTZ_VEC& p4) {
   //GlobalPoint point = fitter.fitted_vtx();
   auto bs_pos = bs.position(point.z());
