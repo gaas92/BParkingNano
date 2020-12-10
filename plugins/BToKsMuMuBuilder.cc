@@ -244,8 +244,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         // Use UserCands as they should not use memory but keep the Ptr itself
         lepton_pair.addUserCand("l1", l1_ptr);
         lepton_pair.addUserCand("l2", l2_ptr);
-        
-        if( !DLB_pre_vtx_selection_(lepton_pair) ) continue;
+
+        //if( !DLB_pre_vtx_selection_(lepton_pair) ) continue;
 
 
 
