@@ -344,7 +344,31 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		     
 		        //initial chi2 and ndf before kinematic fits.
 		        float chi = 0.;
-		        float ndf = 0.; 
+		        float ndf = 0.;
+                std::vector<RefCountedKinematicParticle> pionParticles;
+		        // vector<RefCountedKinematicParticle> muonParticles;
+		        try {
+		            pionParticles.push_back(pFactory.particle(pion1TT,pion_mass,chi,ndf,pion_sigma));
+		            pionParticles.push_back(pFactory.particle(pion2TT,pion_mass,chi,ndf,pion_sigma));
+		        }
+		        catch(...) {
+		            std::cout<<" Exception caught ... continuing 3 "<<std::endl;
+		            continue;
+		        }
+		        
+		        RefCountedKinematicTree Ks0VertexFitTree;
+		        try{
+		            Ks0VertexFitTree = fitter.fit(pionParticles); 
+		        }
+		        catch(...) {
+		            std::cout<<" Exception caught ... continuing 4 "<<std::endl;                   
+		            continue;
+		        }
+		        if (!Ks0VertexFitTree->isValid()) {
+			        //std::cout << "invalid vertex from the Ks0 vertex fit" << std::endl;
+			        continue; 
+		        }
+		        Ks0VertexFitTree->movePointerToTheTop(); 
             }
         }   
         passmu++;
