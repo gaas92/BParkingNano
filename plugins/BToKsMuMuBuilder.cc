@@ -254,7 +254,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    cApp.calculate(mu1State, mu2State);
 	    if( !cApp.status() ) continue;
 	    float dca = fabs( cApp.distance() );
-        if(dca < 1.5) continue; // abs(dz1 -dz2) < 1. in DiMuonBuilder preVtxSelection
+        //if(dca < 1.5) continue; // abs(dz1 -dz2) < 1. in DiMuonBuilder preVtxSelection
 
         
         // *****  end DCA for the 2 muons *********************
