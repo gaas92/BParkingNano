@@ -233,9 +233,9 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         //if(iMuon1->track()->pt()<4.0) continue; 
 	    //if(iMuon2->track()->pt()<4.0) continue;
         //pT cuts are in config_BtoKmumu_cff
-        //if (!(iMuon1->track()->pt()<1.4 || iMuon1->track()->pt()<1.4)) continue;  //at least one muon must have pT > 1.5 GeV
+        if (!(iMuon1->track()->pt()<1.4 || iMuon1->track()->pt()<1.4)) continue;  //at least one muon must have pT > 1.5 GeV
         float dRm1m2 = reco::deltaR(*iMuon1, *iMuon2);
-        if (dRm1m2 < 0.02) continue; // DiMuonBuilder cuts at 0.03
+        //if (dRm1m2 < 0.02) continue; // DiMuonBuilder cuts at 0.03
 
         //no highPurity Cuts in DiLeptonBuilder neither in MuonTriggerSelector
 	    //if(!(glbTrackM->quality(reco::TrackBase::highPurity))) continue;
