@@ -607,7 +607,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                                                      psi_vFit_noMC->currentState().globalMomentum().y(),
                                                      psi_vFit_noMC->currentState().globalMomentum().z(),
                                                      psi_vFit_noMC->currentState().mass());
-
+                /*
                 auto k0vec = math::XYZTLorentzVector(Ks0CandMC->currentState().globalMomentum().x()
                                                      Ks0CandMC->currentState().globalMomentum().y()
                                                      Ks0CandMC->currentState().globalMomentum().z()
@@ -618,7 +618,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 math::XYZTLorentzVector muonCM1, muonCM2;
                 //where the thetal is the angle between the
                 //direction of the m-(m+) lepton and the K+(K-)
-                /*
+                
                 if (l1_ptr->charge()==k_ptr->charge()){
                   muonCM1 = cmboost(fitter.daughter_p4(1)) ;
                   muonCM2 = cmboost(fitter.daughter_p4(0)) ;
