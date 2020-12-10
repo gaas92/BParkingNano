@@ -114,8 +114,8 @@ private:
   const edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0PtrCollection_;
   const edm::EDGetTokenT<edm::View<pat::PackedCandidate>> tracksCollection_label;
   const edm::EDGetTokenT<pat::MuonCollection> muons_Label;
-  const StringCutObjectSelector<Lepton> l1_selection_; // cut on leading lepton
-  const StringCutObjectSelector<Lepton> l2_selection_; // cut on sub-leading lepton
+  const StringCutObjectSelector<pat::Muon> l1_selection_; // cut on leading lepton
+  const StringCutObjectSelector<pat::Muon> l2_selection_; // cut on sub-leading lepton
   const StringCutObjectSelector<pat::CompositeCandidate> DLB_pre_vtx_selection_;  // cut on the di-lepton before the SV fit
   const StringCutObjectSelector<pat::CompositeCandidate> DLB_post_vtx_selection_; // cut on the di-lepton after the SV fit
 
