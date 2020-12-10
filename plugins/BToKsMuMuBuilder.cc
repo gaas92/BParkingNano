@@ -235,8 +235,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         lepton_pair.addUserFloat("lep_deltaR", reco::deltaR(*iMuon1, *iMuon2));
         
         // Use UserCands as they should not use memory but keep the Ptr itself
-        lepton_pair.addUserCand("l1", iMuon1 );
-        lepton_pair.addUserCand("l2", iMuon2 );
+        lepton_pair.addUserCand("l1", *iMuon1 );
+        lepton_pair.addUserCand("l2", *iMuon2 );
         if( !DLB_pre_vtx_selection_(lepton_pair) ) continue;
 
 
