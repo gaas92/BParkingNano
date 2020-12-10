@@ -220,12 +220,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   
   //GAAS my reco, taken from Jhovanny
   int passmu = 0;
-  size_t mu1_id = 0;
-  size_t mu2_id = 0;
   for(pat::MuonCollection::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
-    mu1_id++;  
     for(pat::MuonCollection::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) {
-        mu2_id++;
         if(iMuon1==iMuon2) continue;
 	    //opposite charge 
 	    if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue; 
@@ -242,10 +238,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         lepton_pair.addUserFloat("lep_deltaR", reco::deltaR(*iMuon1, *iMuon2));
         
         // Use UserCands as they should not use memory but keep the Ptr itself
-        lepton_pair.addUserCand("l1", l1_ptr);
-        lepton_pair.addUserCand("l2", l2_ptr);
-
-        if( !DLB_pre_vtx_selection_(lepton_pair) ) continue;
+        float dmz = (iMuon1->vz() - iMuon2->vz());
+        //if( !DLB_pre_vtx_selection_(lepton_pair) ) continue;
 
 
 
