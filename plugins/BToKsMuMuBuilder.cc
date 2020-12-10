@@ -232,6 +232,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	        //std::cout << "continue due to no track ref" << endl;
 	        continue;
 	    }
+        pat::CompositeCandidate new_cand;
+        new_cand.setP4(iMuon->p4());
         //no pT cuts in Dileptonbuilder neither MuonTriggerSelector
         //if(iMuon1->track()->pt()<4.0) continue; 
 	    //if(iMuon2->track()->pt()<4.0) continue;
