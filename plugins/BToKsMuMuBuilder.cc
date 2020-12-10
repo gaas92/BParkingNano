@@ -457,12 +457,12 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		     
 		        RefCountedKinematicParticle bCandMC = vertexFitTree->currentParticle();
 		        RefCountedKinematicVertex bDecayVertexMC = vertexFitTree->currentDecayVertex();
-		        if (!bDecayVertexMC->vertexIsValid()){
-		            //std::cout << "B MC fit vertex is not valid" << endl;
-		            continue;
-		        }
+		        //if (!bDecayVertexMC->vertexIsValid()){
+		        //    //std::cout << "B MC fit vertex is not valid" << endl;
+		        //    continue;
+		        //}
     
-		        if(bCandMC->currentState().mass()<4.8 || bCandMC->currentState().mass()>6.0) continue;
+		        //if(bCandMC->currentState().mass()<4.8 || bCandMC->currentState().mass()>6.0) continue;
     
 		        //if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ){
 			    //    //std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
@@ -471,9 +471,9 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        //std::cout << "pass 461 continues ... "<< std::endl;
 		        double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
 		        //if(B_Prob_tmp<0.01) //Jhovanny
-		        if(B_Prob_tmp<0.001){  //Horacio hardcoded
-			        continue;
-		        }
+		        //if(B_Prob_tmp<0.001){  //Horacio hardcoded
+			    //    continue;
+		        //}
                 // get children from final B fit
 		        vertexFitTree->movePointerToTheFirstChild();
 		        RefCountedKinematicParticle mu1CandMC = vertexFitTree->currentParticle();
@@ -519,7 +519,28 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        if ( T2CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi2KP;
 		        if ( T2CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi2KP;	 
 
-		   // fill candidate variables now                      
+                cand.addUserInt("sv_OK" , bDecayVertexMC->vertexIsValid()); 
+                cand.addUserFloat("sv_chi2", bDecayVertexMC->chiSquared());
+                cand.addUserFloat("sv_ndof", bDecayVertexMC->degreesOfFreedom()); // float??
+                cand.addUserFloat("sv_prob", B_Prob_tmp);
+ 
+                cand.addUserFloat("fitted_mll" , psi_vFit_noMC->currentState().mass().mass());
+                cand.addUserFloat("fitted_pt_ll" , psi_vFit_noMC->currentState().mass().pt());
+                cand.addUserFloat("fitted_eta_ll" , psi_vFit_noMC->currentState().mass().eta());
+                cand.addUserFloat("fitted_phi_ll" , psi_vFit_noMC->currentState().mass().phi());
+      
+                cand.addUserFloat("fitted_pt"  , bCandMC->currentState().pt()); 
+                // cand.addUserFloat("fitted_px"  , fitter.fitted_candidate().globalMomentum().x()); 
+                // cand.addUserFloat("fitted_py"  , fitter.fitted_candidate().globalMomentum().y()); 
+                // cand.addUserFloat("fitted_pz"  , fitter.fitted_candidate().globalMomentum().z()); 
+                cand.addUserFloat("fitted_eta" , bCandMC->currentState().eta());
+                cand.addUserFloat("fitted_phi" , bCandMC->currentState().phi());
+                cand.addUserFloat("fitted_mass", bCandMC->currentState().mass());      
+                cand.addUserFloat("fitted_massErr", sqrt(bCandMC->currentState().kinematicParametersError().matrix()(6,6)));
+
+                //if( !post_vtx_selection_(b_cand) ) continue;        
+
+		        // fill candidate variables now                      
             }// en V0 Tracks
         }// end if dimuon&& V0Tracks   
         passmu++;
