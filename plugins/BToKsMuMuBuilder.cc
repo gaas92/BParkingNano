@@ -220,8 +220,12 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   
   //GAAS my reco, taken from Jhovanny
   int passmu = 0;
+  int mu1_id = 0;
+  int mu2_id = 0;
   for(pat::MuonCollection::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
+    mu1_id++;  
     for(pat::MuonCollection::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) {
+        mu2_id++;
         if(iMuon1==iMuon2) continue;
 	    //opposite charge 
 	    if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue; 
@@ -229,7 +233,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         //taken from DiLeptonBuilder
         if(!l1_selection_((iMuon1->pt() > iMuon2->pt() ? *iMuon1 : *iMuon2))) continue;
         if(!l2_selection_((iMuon1->pt() < iMuon2->pt() ? *iMuon1 : *iMuon2))) continue;
-        pat::CompositeCandidate lepton_pair;
+        edm::Ptr<pat::Muon> l1ptr(thePATMuonHandle, mu1_id );
         lepton_pair.setP4(iMuon1->p4() + iMuon2->p4());
         lepton_pair.setCharge(iMuon1->charge() + iMuon2->charge());
         lepton_pair.addUserFloat("lep_deltaR", reco::deltaR(*iMuon1, *iMuon2));
