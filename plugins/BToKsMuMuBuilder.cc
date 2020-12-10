@@ -545,8 +545,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                                                            psi_vFit_noMC->currentState().mass());
                 //testVect.SetPtEtaPhiM(cand.pt(), cand.eta(), cand.phi(), cand.mass());
                 GlobalPoint b_gp = bDecayVertexMC->position();
-                b_cand.addUserFloat("Bcos_theta_2D", (bDecayVertexMC->vertexIsValid()) ? : my_cos_theta_2D(b_gp, *beamspot, b_cand.p4()), -2 );
-                b_cand.addUserFloat("Bfitted_cos_theta_2D", (bDecayVertexMC->vertexIsValid()) ? : my_cos_theta_2D(b_gp, *beamspot, B_vect), -2 );
+                b_cand.addUserFloat("Bcos_theta_2D", (bDecayVertexMC->vertexIsValid()) ?  my_cos_theta_2D(b_gp, *beamspot, b_cand.p4()) : -2 );
+                b_cand.addUserFloat("Bfitted_cos_theta_2D", (bDecayVertexMC->vertexIsValid()) ?  my_cos_theta_2D(b_gp, *beamspot, B_vect) : -2 );
                 //std::cout << "my cos2D: "<< my_cos_theta_2D(gp, *beamspot, testVect) << std::endl;
                 //FIX
                 //if( !post_vtx_selection_(b_cand) ) continue;
@@ -607,7 +607,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                                                      psi_vFit_noMC->currentState().globalMomentum().y(),
                                                      psi_vFit_noMC->currentState().globalMomentum().z(),
                                                      psi_vFit_noMC->currentState().mass());
-                                                     
+
                 auto k0vec = math::XYZTLorentzVector(Ks0CandMC->currentState().globalMomentum().x()
                                                      Ks0CandMC->currentState().globalMomentum().y()
                                                      Ks0CandMC->currentState().globalMomentum().z()
