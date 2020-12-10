@@ -233,7 +233,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         //if(iMuon1->track()->pt()<4.0) continue; 
 	    //if(iMuon2->track()->pt()<4.0) continue;
         //pT cuts are in config_BtoKmumu_cff
-        if (!(iMuon1->track()->pt()<1.4 || iMuon1->track()->pt()<1.4)) continue;  //at least one muon must have pT > 1.5 GeV
+        //if (!(iMuon1->track()->pt()<1.4 || iMuon1->track()->pt()<1.4)) continue;  //at least one muon must have pT > 1.5 GeV
         float dRm1m2 = reco::deltaR(*iMuon1, *iMuon2);
         //if (dRm1m2 < 0.02) continue; // DiMuonBuilder cuts at 0.03
 
@@ -254,7 +254,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    cApp.calculate(mu1State, mu2State);
 	    if( !cApp.status() ) continue;
 	    float dca = fabs( cApp.distance() );
-        if(dca < 1.5) continue; // abs(dz1 -dz2) < 1. in DiMuonBuilder preVtxSelection
+        //if(dca < 1.5) continue; // abs(dz1 -dz2) < 1. in DiMuonBuilder preVtxSelection
 
         
         // *****  end DCA for the 2 muons *********************
