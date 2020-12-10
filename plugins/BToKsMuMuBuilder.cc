@@ -525,11 +525,11 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("sv_prob", B_Prob_tmp);
  
                 b_cand.addUserFloat("fitted_mll" , psi_vFit_noMC->currentState().mass());
-                b_cand.addUserFloat("fitted_pt_ll" , psi_vFit_noMC->currentState().globalMomentum().pt());
+                b_cand.addUserFloat("fitted_pt_ll" , psi_vFit_noMC->currentState().globalMomentum().perp());
                 b_cand.addUserFloat("fitted_eta_ll" , psi_vFit_noMC->currentState().globalMomentum().eta());
                 b_cand.addUserFloat("fitted_phi_ll" , psi_vFit_noMC->currentState().globalMomentum().phi());
       
-                b_cand.addUserFloat("fitted_pt"  , bCandMC->currentState().globalMomentum().pt()); 
+                b_cand.addUserFloat("fitted_pt"  , bCandMC->currentState().globalMomentum().perp()); 
                 // cand.addUserFloat("fitted_px"  , fitter.fitted_candidate().globalMomentum().x()); 
                 // cand.addUserFloat("fitted_py"  , fitter.fitted_candidate().globalMomentum().y()); 
                 // cand.addUserFloat("fitted_pz"  , fitter.fitted_candidate().globalMomentum().z()); 
