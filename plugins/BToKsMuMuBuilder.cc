@@ -549,9 +549,9 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("fitted_cos_theta_2D", (bDecayVertexMC->vertexIsValid()) ? : my_cos_theta_2D(b_gp, *beamspot, B_vect), -2 );
                 //std::cout << "my cos2D: "<< my_cos_theta_2D(gp, *beamspot, testVect) << std::endl;
                 if( !post_vtx_selection_(b_cand) ) continue;
-                auto lxy = l_xy(fitter, *beamspot);
-                cand.addUserFloat("l_xy", lxy.value());
-                cand.addUserFloat("l_xy_unc", lxy.error());
+                //auto lxy = l_xy(fitter, *beamspot);
+                //cand.addUserFloat("l_xy", lxy.value());
+                //cand.addUserFloat("l_xy_unc", lxy.error());
 
       // //Almacenemos la informacion del beamspot 
       // reco::BeamSpot bs = *beamspot;
