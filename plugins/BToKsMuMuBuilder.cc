@@ -537,7 +537,17 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("fitted_phi" , bCandMC->currentState().globalMomentum().phi());
                 b_cand.addUserFloat("fitted_mass", bCandMC->currentState().mass());      
                 b_cand.addUserFloat("fitted_massErr", sqrt(bCandMC->currentState().kinematicParametersError().matrix()(6,6)));
-
+                //std::cout << "cos2D: "<< cos_theta_2D(fitter, *beamspot, cand.p4()) << std::endl;
+                //TLorentzVector testVect;
+                auto B_vect = math::PtEtaPhiMLorentzVector(psi_vFit_noMC->currentState().globalMomentum().perp(),
+                                                           psi_vFit_noMC->currentState().globalMomentum().eta(),
+                                                           psi_vFit_noMC->currentState().globalMomentum().phi(),
+                                                           psi_vFit_noMC->currentState().mass());
+                //testVect.SetPtEtaPhiM(cand.pt(), cand.eta(), cand.phi(), cand.mass());
+                GlobalPoint b_gp = bDecayVertexMC->position();
+                b_cand.addUserFloat("cos_theta_2D", cos_theta_2D(b_gp, *beamspot, b_cand.p4()));
+                b_cand.addUserFloat("fitted_cos_theta_2D", cos_theta_2D(b_gp, *beamspot, B_vect));
+                //std::cout << "my cos2D: "<< my_cos_theta_2D(gp, *beamspot, testVect) << std::endl;
                 //if( !post_vtx_selection_(b_cand) ) continue;        
 
 		        // fill candidate variables now                      
