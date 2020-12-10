@@ -607,13 +607,14 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                                                      psi_vFit_noMC->currentState().globalMomentum().y(),
                                                      psi_vFit_noMC->currentState().globalMomentum().z(),
                                                      psi_vFit_noMC->currentState().mass());
-                /*
-                auto k0vec = math::XYZTLorentzVector(Ks0CandMC->currentState().globalMomentum().x()
-                                                     Ks0CandMC->currentState().globalMomentum().y()
-                                                     Ks0CandMC->currentState().globalMomentum().z()
+                
+                auto k0vec = math::XYZTLorentzVector(Ks0CandMC->currentState().globalMomentum().x(),
+                                                     Ks0CandMC->currentState().globalMomentum().y(),
+                                                     Ks0CandMC->currentState().globalMomentum().z(),
                                                      Ks0CandMC->currentState().mass());
 
                 ROOT::Math::Boost cmboost(dilep.BoostToCM());
+                /*
                 math::XYZTLorentzVector kaonCM(  cmboost( k0vec )  );
                 math::XYZTLorentzVector muonCM1, muonCM2;
                 //where the thetal is the angle between the
