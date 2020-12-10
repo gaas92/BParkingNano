@@ -229,8 +229,6 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         //taken from DiLeptonBuilder
         if(!l1_selection_((iMuon1->pt() > iMuon2->pt() ? *iMuon1 : *iMuon2))) continue;
         if(!l2_selection_((iMuon1->pt() < iMuon2->pt() ? *iMuon1 : *iMuon2))) continue;
-        edm::Ptr<pat::Muon> l1_ptr(thePATMuonHandle, mu1_id );
-        edm::Ptr<pat::Muon> l2_ptr(thePATMuonHandle, mu2_id );
         
         pat::CompositeCandidate lepton_pair;
         lepton_pair.setP4(iMuon1->p4() + iMuon2->p4());

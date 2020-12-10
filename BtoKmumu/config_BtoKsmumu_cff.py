@@ -307,7 +307,7 @@ BToKmumu = cms.EDProducer(
     muons                = cms.InputTag('muonTrgSelector', 'SelectedMuons'),
     lep1Selection = cms.string('pt > 1.5'), #GAAS DiLeptonBuilder Filters 
     lep2Selection = cms.string(''),
-    DLB_preVtxSelection = cms.string('abs(userCand("l1").vz - userCand("l2").vz) <= 1. '
+    DLB_preVtxSelection = cms.string('abs(userFloat("lept_DZ")) <= 1. '
                                      '&& userFloat("lep_deltaR") > 0.03'),
     DLB_postVtxSelection = cms.string('userFloat("sv_chi2") < 998 && userFloat("sv_prob") > 1.e-5'),
     # This in principle can be different between electrons and muons
