@@ -19,6 +19,10 @@
 #include "TVector3.h"
 #include "TMatrixD.h"
 
+//GAAS
+#include "RecoVertex/KinematicFitPrimitives/interface/RefCountedKinematicVertex.h"
+
+
 typedef std::vector<reco::TransientTrack> TransientTrackCollection;
 
 constexpr float K_MASS = 0.493677;
