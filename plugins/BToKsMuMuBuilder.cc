@@ -343,11 +343,11 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    //}
 	  
 	   //some loose cuts go here
-       lepton_pair.addUserFloat("sv_chi2", psi_vFit_vertex_noMC->chiSquared(),);
+       lepton_pair.addUserFloat("sv_chi2", psi_vFit_vertex_noMC->chiSquared());
        lepton_pair.addUserFloat("sv_ndof", psi_vFit_vertex_noMC->degreesOfFreedom()); // float??
        lepton_pair.addUserFloat("sv_prob", J_Prob_tmp);
        lepton_pair.addUserFloat("fitted_mass", psiVertexFitTree->isValid() ? psi_vFit_noMC->currentState().mass() : -1);
-       lepton_pair.addUserFloat("fitted_massErr", siVertexFitTree->isValid()  ? sqrt(psi_vFit_noMC->currentState().kinematicParametersError().matrix()(6,6)) : -1);
+       lepton_pair.addUserFloat("fitted_massErr", psiVertexFitTree->isValid()  ? sqrt(psi_vFit_noMC->currentState().kinematicParametersError().matrix()(6,6)) : -1);
        if( !DLB_post_vtx_selection_(lepton_pair) ) continue;
 	   //if(psi_vFit_vertex_noMC->chiSquared()>999) continue; // DiMuonBuilder cuts at 998 
 	   //if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue; //no cut at all
