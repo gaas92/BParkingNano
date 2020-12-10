@@ -480,6 +480,11 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 				                      T2CandMC->currentState().globalMomentum().y(),
 					                  T2CandMC->currentState().globalMomentum().z());
 
+                KinematicParameters Ks0Pi1KP = T1CandMC->currentState().kinematicParameters();
+		        KinematicParameters Ks0Pi2KP = T2CandMC->currentState().kinematicParameters();
+		        KinematicParameters Ks0PipKP;
+		        KinematicParameters Ks0PimKP;
+
                 if ( T1CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi1KP;
 		        if ( T1CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi1KP;
 		        if ( T2CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi2KP;
