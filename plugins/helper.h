@@ -77,13 +77,13 @@ inline Measurement1D my_l_xy(GlobalPoint point, GlobalError err, const reco::Bea
   return {delta.perp(), sqrt(err.rerr(delta))};
 }
 
-inline double getMuIso03(const pat::Muon& mu){
+inline double getMuPFIso03(const pat::Muon& mu){
                 Float_t coriso = 99.0;
                 reco::MuonPFIsolation pfR03 = mu.pfIsolationR03();
                 coriso = pfR03.sumChargedHadronPt + std::max(0., pfR03.sumNeutralHadronEt+pfR03.sumPhotonEt-0.5*pfR03.sumPUPt);
 return coriso;
 }
-inline double getMuIso04(const pat::Muon& mu){
+inline double getMuPFIso04(const pat::Muon& mu){
                 Float_t coriso = 99.0;
                 reco::MuonPFIsolation pfR04 = mu.pfIsolationR04();
                 coriso = pfR04.sumChargedHadronPt + std::max(0., pfR04.sumNeutralHadronEt+pfR04.sumPhotonEt-0.5*pfR04.sumPUPt);

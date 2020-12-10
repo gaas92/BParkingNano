@@ -550,7 +550,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 //std::cout << "my cos2D: "<< my_cos_theta_2D(gp, *beamspot, testVect) << std::endl;
                 //FIX
                 //if( !post_vtx_selection_(b_cand) ) continue;
-                
+                // fill candidate variables now                      
+
                 GlobalError b_gp_err = bDecayVertexMC->error();
                 auto lxy = my_l_xy(b_gp, b_gp_err, *beamspot);
                 b_cand.addUserFloat("B_l_xy", lxy.value());
@@ -586,9 +587,24 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("Bfitted_ks_eta" , Ks0CandMC->currentState().globalMomentum().eta());
                 b_cand.addUserFloat("Bfitted_ks_phi" , Ks0CandMC->currentState().globalMomentum().phi());
                 b_cand.addUserFloat("Bks_charge", Ks0CandMC->currentState().particleCharge());            
+                //compute isolation
+                float l1_iso03 = iMuon1->trackIso();
+                float l2_iso03 = iMuon2->trackIso();
+                float l1_PFiso03 = getMuPFIso03(*iMuon1);
+                float l1_PFiso04 = getMuPFIso04(*iMuon1);
+                float l2_PFiso03 = getMuPFIso03(*iMuon2);
+                float l2_PFiso04 = getMuPFIso04(*iMuon2);
+                b_cand.addUserFloat("l1_iso03", l1_iso03);
+                b_cand.addUserFloat("l2_iso03", l2_iso03);
+                b_cand.addUserFloat("l1_PFiso03", l1_PFiso03);
+                b_cand.addUserFloat("l1_PFiso04", l1_PFiso04);
+                b_cand.addUserFloat("l2_iso03", l2_iso03);
+                b_cand.addUserFloat("l1_PFiso03", l2_PFiso03);
+                b_cand.addUserFloat("l1_PFiso04", l2_PFiso04);
 
-		        // fill candidate variables now                      
-            }// en V0 Tracks
+ 
+
+            }// end V0 Tracks
         }// end if dimuon&& V0Tracks   
         passmu++;
 
