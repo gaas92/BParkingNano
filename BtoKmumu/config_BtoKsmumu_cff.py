@@ -312,7 +312,7 @@ BToKmumu = cms.EDProducer(
     DLB_postVtxSelection = cms.string('userFloat("sv_chi2") < 998 && userFloat("sv_prob") > 1.e-5'),
     # This in principle can be different between electrons and muons
     preVtxSelection = cms.string(
-        'pt > 3. && userFloat("min_dr") > 0.03'
+        'pt > 3. '
         '&& mass < 7. && mass > 4.'
         ),
     postVtxSelection = cms.string(
