@@ -332,7 +332,19 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		     		     
 		        for(unsigned int j = 0; j < v0daughters.size(); ++j){
 			        theDaughterTracks.push_back(v0daughters[j].pseudoTrack());
-		        } 
+		        }
+                //Now let's see if these two tracks make a vertex
+		        reco::TransientTrack pion1TT((*theB).build(theDaughterTracks[0]));
+		        reco::TransientTrack pion2TT((*theB).build(theDaughterTracks[1]));		     
+		     
+		        ParticleMass pion_mass = 0.13957018;
+		        ParticleMass Ks0_mass = 0.497614;
+		        float pion_sigma = pion_mass*1.e-6;
+		        float Ks0_sigma = Ks0_mass*1.e-6;
+		     
+		        //initial chi2 and ndf before kinematic fits.
+		        float chi = 0.;
+		        float ndf = 0.; 
             }
         }   
         passmu++;
