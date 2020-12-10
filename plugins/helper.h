@@ -21,6 +21,7 @@
 
 //GAAS
 #include "RecoVertex/KinematicFitPrimitives/interface/RefCountedKinematicVertex.h"
+#include "TLorentzVector.h"
 
 
 typedef std::vector<reco::TransientTrack> TransientTrackCollection;
