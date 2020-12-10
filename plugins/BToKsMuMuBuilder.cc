@@ -545,8 +545,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                                                            psi_vFit_noMC->currentState().mass());
                 //testVect.SetPtEtaPhiM(cand.pt(), cand.eta(), cand.phi(), cand.mass());
                 GlobalPoint b_gp = bDecayVertexMC->position();
-                b_cand.addUserFloat("cos_theta_2D", cos_theta_2D(b_gp, *beamspot, b_cand.p4()));
-                b_cand.addUserFloat("fitted_cos_theta_2D", cos_theta_2D(b_gp, *beamspot, B_vect));
+                b_cand.addUserFloat("cos_theta_2D", my_cos_theta_2D(b_gp, *beamspot, b_cand.p4()));
+                b_cand.addUserFloat("fitted_cos_theta_2D", my_cos_theta_2D(b_gp, *beamspot, B_vect));
                 //std::cout << "my cos2D: "<< my_cos_theta_2D(gp, *beamspot, testVect) << std::endl;
                 //if( !post_vtx_selection_(b_cand) ) continue;        
 
