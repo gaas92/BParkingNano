@@ -680,6 +680,12 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         "fitted_cos_theta_2D", 
         cos_theta_2D(fitter, *beamspot, fit_p4)
         );
+
+      std::cout << "cos2D: "<< cos_theta_2D(fitter, *beamspot, cand.p4()) << std::endl;
+      TLorentzVector testVect;
+      testVect.SetPtEtaPhiM(cand.pt(), cand.eta(), cand.phi(), cand.mass());
+      float x_, y_, z_;
+      x_ = fitter.fitted_candidate().globalMomentum().x();
       auto lxy = l_xy(fitter, *beamspot);
       cand.addUserFloat("l_xy", lxy.value());
       cand.addUserFloat("l_xy_unc", lxy.error());
