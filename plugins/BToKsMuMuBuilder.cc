@@ -519,24 +519,24 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        if ( T2CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi2KP;
 		        if ( T2CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi2KP;	 
 
-                cand.addUserInt("sv_OK" , bDecayVertexMC->vertexIsValid()); 
-                cand.addUserFloat("sv_chi2", bDecayVertexMC->chiSquared());
-                cand.addUserFloat("sv_ndof", bDecayVertexMC->degreesOfFreedom()); // float??
-                cand.addUserFloat("sv_prob", B_Prob_tmp);
+                b_cand.addUserInt("sv_OK" , bDecayVertexMC->vertexIsValid()); 
+                b_cand.addUserFloat("sv_chi2", bDecayVertexMC->chiSquared());
+                b_cand.addUserFloat("sv_ndof", bDecayVertexMC->degreesOfFreedom()); // float??
+                b_cand.addUserFloat("sv_prob", B_Prob_tmp);
  
-                cand.addUserFloat("fitted_mll" , psi_vFit_noMC->currentState().mass());
-                cand.addUserFloat("fitted_pt_ll" , psi_vFit_noMC->currentState().pt());
-                cand.addUserFloat("fitted_eta_ll" , psi_vFit_noMC->currentState().eta());
-                cand.addUserFloat("fitted_phi_ll" , psi_vFit_noMC->currentState().phi());
+                b_cand.addUserFloat("fitted_mll" , psi_vFit_noMC->currentState().mass());
+                b_cand.addUserFloat("fitted_pt_ll" , psi_vFit_noMC->currentState().pt());
+                b_cand.addUserFloat("fitted_eta_ll" , psi_vFit_noMC->currentState().eta());
+                b_cand.addUserFloat("fitted_phi_ll" , psi_vFit_noMC->currentState().phi());
       
-                cand.addUserFloat("fitted_pt"  , bCandMC->currentState().pt()); 
+                b_cand.addUserFloat("fitted_pt"  , bCandMC->currentState().pt()); 
                 // cand.addUserFloat("fitted_px"  , fitter.fitted_candidate().globalMomentum().x()); 
                 // cand.addUserFloat("fitted_py"  , fitter.fitted_candidate().globalMomentum().y()); 
                 // cand.addUserFloat("fitted_pz"  , fitter.fitted_candidate().globalMomentum().z()); 
-                cand.addUserFloat("fitted_eta" , bCandMC->currentState().eta());
-                cand.addUserFloat("fitted_phi" , bCandMC->currentState().phi());
-                cand.addUserFloat("fitted_mass", bCandMC->currentState().mass());      
-                cand.addUserFloat("fitted_massErr", sqrt(bCandMC->currentState().kinematicParametersError().matrix()(6,6)));
+                b_cand.addUserFloat("fitted_eta" , bCandMC->currentState().eta());
+                b_cand.addUserFloat("fitted_phi" , bCandMC->currentState().phi());
+                b_cand.addUserFloat("fitted_mass", bCandMC->currentState().mass());      
+                b_cand.addUserFloat("fitted_massErr", sqrt(bCandMC->currentState().kinematicParametersError().matrix()(6,6)));
 
                 //if( !post_vtx_selection_(b_cand) ) continue;        
 
