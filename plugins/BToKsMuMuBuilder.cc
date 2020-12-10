@@ -548,7 +548,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("cos_theta_2D", my_cos_theta_2D(b_gp, *beamspot, b_cand.p4()));
                 b_cand.addUserFloat("fitted_cos_theta_2D", my_cos_theta_2D(b_gp, *beamspot, B_vect));
                 //std::cout << "my cos2D: "<< my_cos_theta_2D(gp, *beamspot, testVect) << std::endl;
-                //if( !post_vtx_selection_(b_cand) ) continue;        
+                if( !post_vtx_selection_(b_cand) ) continue;        
 
 		        // fill candidate variables now                      
             }// en V0 Tracks
