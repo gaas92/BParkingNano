@@ -683,7 +683,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 
       std::cout << "cos2D: "<< cos_theta_2D(fitter, *beamspot, cand.p4()) << std::endl;
       //TLorentzVector testVect;
-      auto testVect math::PtEtaPhiMLorentzVector(cand.perp(), cand.eta() ,cand.phi() ,cand.mass());
+      auto testVect = math::PtEtaPhiMLorentzVector(cand.perp(), cand.eta() ,cand.phi() ,cand.mass());
       //testVect.SetPtEtaPhiM(cand.pt(), cand.eta(), cand.phi(), cand.mass());
       GlobalPoint gp = fitter.fitted_vtx();
       std::cout << "my cos2D: "<< my_cos_theta_2D(gp, *beamspot, testVect) << std::endl;
