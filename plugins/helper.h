@@ -58,11 +58,10 @@ inline double cos_theta_2D(const FITTER& fitter, const reco::BeamSpot &bs, const
   return (den != 0.) ? delta.Dot(pt)/den : -2;
 }
 
-inline double my_cos_theta_2D( RefCountedKinematicVertex* fitter, const reco::BeamSpot &bs, const TLorentzVector& p4) {
-  if(!*(&fitter)->vertexIsValid()) return -2;
+inline double my_cos_theta_2D( float x, float y, float z, const reco::BeamSpot &bs, const TLorentzVector& p4) {
   //GlobalPoint point = fitter.fitted_vtx();
-  auto bs_pos = bs.position(fitter->position().z());
-  math::XYZVector delta(fitter->position().x() - bs_pos.x(), fitter->position().y() - bs_pos.y(), 0.);
+  auto bs_pos = bs.position(z);
+  math::XYZVector delta(x - bs_pos.x(), y - bs_pos.y(), 0.);
   math::XYZVector pt(p4.px(), p4.py(), 0.);
   double den = (delta.R() * pt.R());
   return (den != 0.) ? delta.Dot(pt)/den : -2;
