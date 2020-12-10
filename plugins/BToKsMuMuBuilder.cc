@@ -255,7 +255,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	        //std::cout << "continue due to no track ref" << endl;
 	        continue;
 	    }
-        pat::CompositeCandidate new_cand;
+        pat::CompositeCandidate b_cand;
         //no pT cuts in Dileptonbuilder neither MuonTriggerSelector
         //if(iMuon1->track()->pt()<4.0) continue; 
 	    //if(iMuon2->track()->pt()<4.0) continue;
@@ -364,8 +364,9 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        for(unsigned int j = 0; j < v0daughters.size(); ++j){
 			        theDaughterTracks.push_back(v0daughters[j].pseudoTrack());
 		        }
-                new_cand.setP4(iMuon1->p4() + iMuon2->p4() + iVee->daughter(0)->p4() + iVee->daughter(1)->p4());
-                new_cand.setCharge(iMuon1->charge() + iMuon2->charge() + iVee->daughter(0)->charge() + iVee->daughter(0)->charge());
+                b_cand.setP4(iMuon1->p4() + iMuon2->p4() + iVee->daughter(0)->p4() + iVee->daughter(1)->p4());
+                b_cand.setCharge(iMuon1->charge() + iMuon2->charge() + iVee->daughter(0)->charge() + iVee->daughter(0)->charge());
+                if( !pre_vtx_selection_(b_cand) ) continue;
 
                 //Now let's see if these two tracks make a vertex
 		        reco::TransientTrack pion1TT((*theB).build(theDaughterTracks[0]));
