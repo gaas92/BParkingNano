@@ -323,7 +323,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 
 	   //  ***************  
 	   if ( theV0PtrHandle->size()>0 && thePATMuonHandle->size()>=2 ){
-	        for ( std::vector<VertexCompositePtrCandidate>::const_iterator iVee = theV0PtrHandle->begin();   iVee != theV0PtrHandle->end(); ++iVee ){
+	        for ( std::vector<reco::VertexCompositePtrCandidate>::const_iterator iVee = theV0PtrHandle->begin();   iVee != theV0PtrHandle->end(); ++iVee ){
                 //get Lam tracks from V0 candidate
 		        std::vector<pat::PackedCandidate> v0daughters;
 		        std::vector<Track> theDaughterTracks;
