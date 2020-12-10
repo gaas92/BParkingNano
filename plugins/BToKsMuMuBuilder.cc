@@ -336,7 +336,9 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        for(unsigned int j = 0; j < v0daughters.size(); ++j){
 			        theDaughterTracks.push_back(v0daughters[j].pseudoTrack());
 		        }
-                new_cand.setP4(iMuon1->p4() + iMuon2->p4() + iVee->daughter(0)->p4() + iVee->daughter(1)->p4() );
+                new_cand.setP4(iMuon1->p4() + iMuon2->p4() + iVee->daughter(0)->p4() + iVee->daughter(1)->p4());
+                new_cand.setCharge(iMuon1->charge() + iMuon2->charge() + iVee->daugter(0)->charge() + iVee->daugter(0)->charge());
+
                 //Now let's see if these two tracks make a vertex
 		        reco::TransientTrack pion1TT((*theB).build(theDaughterTracks[0]));
 		        reco::TransientTrack pion2TT((*theB).build(theDaughterTracks[1]));		     
