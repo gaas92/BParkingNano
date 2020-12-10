@@ -320,8 +320,20 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	   if(psi_vFit_vertex_noMC->chiSquared()>999) continue; // DiMuonBuilder cuts at 998 
 	   //if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue; //no cut at all
 
-	   //  ***************
-
+	   //  ***************  
+	   if ( theV0PtrHandle->size()>0 && thePATMuonHandle->size()>=2 ){
+	        for ( vector<VertexCompositePtrCandidate>::const_iterator iVee = theV0PtrHandle->begin();   iVee != theV0PtrHandle->end(); ++iVee ){
+                //get Lam tracks from V0 candidate
+		        std::vector<pat::PackedCandidate> v0daughters;
+		        std::vector<Track> theDaughterTracks;
+		        v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(0))) );
+		        v0daughters.push_back( *(dynamic_cast<const pat::PackedCandidate *>(iVee->daughter(1))) );
+		     		     
+		        for(unsigned int j = 0; j < v0daughters.size(); ++j){
+			        theDaughterTracks.push_back(v0daughters[j].pseudoTrack());
+		        } 
+            }
+        }   
         passmu++;
 
     }    
