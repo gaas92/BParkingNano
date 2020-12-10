@@ -40,6 +40,7 @@
 #include "RecoVertex/KinematicFitPrimitives/interface/KinematicParticleFactoryFromTransientTrack.h"
 #include "RecoVertex/KinematicFit/interface/KinematicParticleVertexFitter.h"
 #include "DataFormats/TrackReco/interface/Track.h"
+#include "RecoVertex/KinematicFit/interface/KinematicParticleFitter.h"
 
 
 
@@ -394,7 +395,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        // JPsi mass constraint is applied in the final B fit
     
 		        KinematicParticleFitter csFitterKs;
-		        KinematicConstraint * ks_c = new MassKinematicConstraint(Ks0_mass,Ks0_sigma);
+		        KinematicConstraint * ks_c = new MassKinematicConstraint(Ks0_mass,Ks0_sigma); //remember to kill 
 		        // add mass constraint to the ks0 fit to do a constrained fit:  
     
 		        Ks0VertexFitTree = csFitterKs.fit(ks_c,Ks0VertexFitTree);
