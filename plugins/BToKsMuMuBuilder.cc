@@ -72,6 +72,10 @@ public:
     v0PtrCollection_(consumes<reco::VertexCompositePtrCandidateCollection>(cfg.getParameter<edm::InputTag>("secundaryVerticesPtr"))),	       
     tracksCollection_label(consumes<edm::View<pat::PackedCandidate>>(cfg.getParameter<edm::InputTag>("tracks"))),
     muons_Label(consumes<pat::MuonCollection>(cfg.getParameter<edm::InputTag>("muons"))),
+    l1_selection_{cfg.getParameter<std::string>("lep1Selection")},
+    l2_selection_{cfg.getParameter<std::string>("lep2Selection")},
+    DLB_pre_vtx_selection_{cfg.getParameter<std::string>("DLB_preVtxSelection")},
+    DLB_post_vtx_selection_{cfg.getParameter<std::string>("DLB_postVtxSelection")},
 
     beamspot_{consumes<reco::BeamSpot>( cfg.getParameter<edm::InputTag>("beamSpot") )} {
       produces<pat::CompositeCandidateCollection>("Bcollection");
@@ -110,7 +114,10 @@ private:
   const edm::EDGetTokenT<reco::VertexCompositePtrCandidateCollection> v0PtrCollection_;
   const edm::EDGetTokenT<edm::View<pat::PackedCandidate>> tracksCollection_label;
   const edm::EDGetTokenT<pat::MuonCollection> muons_Label;
-
+  const StringCutObjectSelector<Lepton> l1_selection_; // cut on leading lepton
+  const StringCutObjectSelector<Lepton> l2_selection_; // cut on sub-leading lepton
+  const StringCutObjectSelector<pat::CompositeCandidate> DLB_pre_vtx_selection_;  // cut on the di-lepton before the SV fit
+  const StringCutObjectSelector<pat::CompositeCandidate> DLB_post_vtx_selection_; // cut on the di-lepton after the SV fit
 
   const edm::EDGetTokenT<reco::BeamSpot> beamspot_;  
 };

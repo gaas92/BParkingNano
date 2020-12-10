@@ -305,6 +305,11 @@ BToKmumu = cms.EDProducer(
     secundaryVerticesPtr = cms.InputTag("slimmedKshortVertices"), #GAAS
     tracks               = cms.InputTag("packedPFCandidates"),
     muons                = cms.InputTag('muonTrgSelector', 'SelectedMuons'),
+    lep1Selection = cms.string('pt > 1.5'), #GAAS DiLeptonBuilder Filters 
+    lep2Selection = cms.string(''),
+    DLB_preVtxSelection = cms.string('abs(userCand("l1").vz - userCand("l2").vz) <= 1. && mass() < 5. '
+                                 '&& mass() > 0. && charge() == 0 && userFloat("lep_deltaR") > 0.03'),
+    DLB_postVtxSelection = cms.string('userFloat("sv_chi2") < 998 && userFloat("sv_prob") > 1.e-5'),
     # This in principle can be different between electrons and muons
     preVtxSelection = cms.string(
         'pt > 3. && userFloat("min_dr") > 0.03'
