@@ -224,8 +224,10 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
     for(pat::MuonCollection::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) {
         if(iMuon1==iMuon2) continue;
 	    //opposite charge 
-	    if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue; // <-------------------------------------
-  
+	    if( (iMuon1->charge())*(iMuon2->charge()) == 1) continue; 
+        
+        if(!l1_selection((iMuon1->pt() > iMuon2->pt() ? *iMuon1 : *iMuon2)));
+        
 	    reco::TrackRef glbTrackP;	  
 	    reco::TrackRef glbTrackM;	  
 	    
