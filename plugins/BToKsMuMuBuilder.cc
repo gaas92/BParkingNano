@@ -575,17 +575,17 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("Bfitted_l1_pt" , mu1CandMC->currentState().globalMomentum().perp()); 
                 b_cand.addUserFloat("Bfitted_l1_eta", mu1CandMC->currentState().globalMomentum().eta());
                 b_cand.addUserFloat("Bfitted_l1_phi", mu1CandMC->currentState().globalMomentum().phi());
-                //b_cand.addUserFloat("Bl1_charge", mu1CandMC->currentState().charge());
+                b_cand.addUserFloat("Bl1_charge", mu1CandMC->currentState().particleCharge());
 
-                //b_cand.addUserFloat("Bfitted_l2_pt" , fitter.daughter_p4(1).pt()); 
-                //b_cand.addUserFloat("Bfitted_l2_eta", fitter.daughter_p4(1).eta());
-                //b_cand.addUserFloat("Bfitted_l2_phi", fitter.daughter_p4(1).phi());
-                //b_cand.addUserFloat("Bl2_charge", l2_ptr->charge());
-//
-                //b_cand.addUserFloat("Bfitted_ks_pt"  , fitter.daughter_p4(2).pt()); 
-                //b_cand.addUserFloat("Bfitted_ks_eta" , fitter.daughter_p4(2).eta());
-                //b_cand.addUserFloat("Bfitted_ks_phi" , fitter.daughter_p4(2).phi());
-                //b_cand.addUserFloat("Bks_charge", k_ptr->charge());            
+                b_cand.addUserFloat("Bfitted_l2_pt" , mu2CandMC->currentState().globalMomentum().perp()); 
+                b_cand.addUserFloat("Bfitted_l2_eta", mu2CandMC->currentState().globalMomentum().eta());
+                b_cand.addUserFloat("Bfitted_l2_phi", mu2CandMC->currentState().globalMomentum().phi());
+                b_cand.addUserFloat("Bl2_charge", mu2CandMC->currentState().particleCharge());
+
+                b_cand.addUserFloat("Bfitted_ks_pt"  , Ks0CandMC->currentState().globalMomentum().perp());
+                b_cand.addUserFloat("Bfitted_ks_eta" , Ks0CandMC->currentState().globalMomentum().eta());
+                b_cand.addUserFloat("Bfitted_ks_phi" , Ks0CandMC->currentState().globalMomentum().phi());
+                b_cand.addUserFloat("Bks_charge", Ks0CandMC->currentState().particleCharge());            
 
 		        // fill candidate variables now                      
             }// en V0 Tracks
