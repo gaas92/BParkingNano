@@ -602,8 +602,40 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("l1_PFiso03", l2_PFiso03);
                 b_cand.addUserFloat("l1_PFiso04", l2_PFiso04);
 
- 
+                // Aqui creemos el boost al CM del dilepton
+                math::XYZTLorentzVector dilep = math::XYZTLorentzVector(psi_vFit_noMC->currentState().globalMomentum().x(),
+                                                                        psi_vFit_noMC->currentState().globalMomentum().y(),
+                                                                        psi_vFit_noMC->currentState().globalMomentum().z(),
+                                                                        psi_vFit_noMC->currentState().mass())
+                math::XYZTLorentzVector k0vec = math::XYZTLorentzVector(Ks0CandMC->currentState().globalMomentum().x()
+                                                                        Ks0CandMC->currentState().globalMomentum().y()
+                                                                        Ks0CandMC->currentState().globalMomentum().z()
+                                                                        Ks0CandMC->currentState().mass())
 
+                ROOT::Math::Boost cmboost(dilep.BoostToCM());
+                math::XYZTLorentzVector kaonCM(  cmboost( k0vec )  );
+                math::XYZTLorentzVector muonCM1, muonCM2;
+                //where the thetal is the angle between the
+                //direction of the m-(m+) lepton and the K+(K-)
+                /*
+                if (l1_ptr->charge()==k_ptr->charge()){
+                  muonCM1 = cmboost(fitter.daughter_p4(1)) ;
+                  muonCM2 = cmboost(fitter.daughter_p4(0)) ;
+                }
+                else {
+                  muonCM1 = cmboost(fitter.daughter_p4(0)) ;
+                  muonCM2 = cmboost(fitter.daughter_p4(1)) ;
+                        } 
+                float costhetaL = ( muonCM1.x()*muonCM2.x() 
+                                   + muonCM1.y()*muonCM2.y() 
+                                   + muonCM1.z()*muonCM2.z() ) / (muonCM1.P()*muonCM2.P() );
+                float costhetaKL = ( muonCM1.x()*kaonCM.x()
+                                   + muonCM1.y()*kaonCM.y()
+                                   + muonCM1.z()*kaonCM.z() ) / (muonCM1.P()*kaonCM.P() );
+                cand.addUserFloat("cosTheta_mm", costhetaL);
+                cand.addUserFloat("cosTheta_km", costhetaKL);
+                */
+               
             }// end V0 Tracks
         }// end if dimuon&& V0Tracks   
         passmu++;
