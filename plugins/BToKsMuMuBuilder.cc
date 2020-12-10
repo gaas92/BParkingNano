@@ -442,9 +442,27 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        //std::cout << "pass 461 continues ... "<< std::endl;
 		        double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
 		        //if(B_Prob_tmp<0.01) //Jhovanny
-		        if(B_Prob_tmp<0.01){  //Horacio
+		        if(B_Prob_tmp<0.001){  //Horacio hardcoded
 			        continue;
 		        }
+                // get children from final B fit
+		        vertexFitTree->movePointerToTheFirstChild();
+		        RefCountedKinematicParticle mu1CandMC = vertexFitTree->currentParticle();
+		        vertexFitTree->movePointerToTheNextChild();
+		        RefCountedKinematicParticle mu2CandMC = vertexFitTree->currentParticle();
+		        
+		        vertexFitTree->movePointerToTheNextChild();
+		        RefCountedKinematicParticle Ks0CandMC = vertexFitTree->currentParticle();
+		        
+		        KinematicParameters psiMu1KP = mu1CandMC->currentState().kinematicParameters();
+		        KinematicParameters psiMu2KP = mu2CandMC->currentState().kinematicParameters();
+		        KinematicParameters psiMupKP;
+		        KinematicParameters psiMumKP;
+	            
+		        if ( mu1CandMC->currentState().particleCharge() > 0 ) psiMupKP = psiMu1KP;
+		        if ( mu1CandMC->currentState().particleCharge() < 0 ) psiMumKP = psiMu1KP;
+		        if ( mu2CandMC->currentState().particleCharge() > 0 ) psiMupKP = psiMu2KP;
+		        if ( mu2CandMC->currentState().particleCharge() < 0 ) psiMumKP = psiMu2KP;
             }// en V0 Tracks
         }// end if dimuon&& V0Tracks   
         passmu++;
