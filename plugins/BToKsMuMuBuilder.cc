@@ -237,7 +237,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         
         // Use UserCands as they should not use memory but keep the Ptr itself
         float dmz = (iMuon1->vz() - iMuon2->vz());
-        //if( !DLB_pre_vtx_selection_(lepton_pair) ) continue;
+        lepton_pair.addUserFloat("lept_DZ", dmz);
+        if( !DLB_pre_vtx_selection_(lepton_pair) ) continue;
 
 
 
