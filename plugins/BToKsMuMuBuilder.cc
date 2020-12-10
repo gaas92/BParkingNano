@@ -322,7 +322,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   
 	    if (!psiVertexFitTree->isValid()){
 	        //std::cout << "caught an exception in the psi vertex fit" << std::endl;
-	        continue; 
+	        //continue; 
 	    }
   
 	    psiVertexFitTree->movePointerToTheTop();
@@ -337,14 +337,19 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 
         double J_Prob_tmp   = TMath::Prob(psi_vFit_vertex_noMC->chiSquared(),(int)psi_vFit_vertex_noMC->degreesOfFreedom());
 	    //if(J_Prob_tmp<0.01) //Jhovanny
-	    if(J_Prob_tmp<1.e-5) //DiMuonBuilder postVtxSelection
-	    {
-	       continue;
-	    }
+	    //if(J_Prob_tmp<1.e-5) //DiMuonBuilder postVtxSelection
+	    //{
+	    //   continue;
+	    //}
 	  
 	   //some loose cuts go here
-
-	   if(psi_vFit_vertex_noMC->chiSquared()>999) continue; // DiMuonBuilder cuts at 998 
+       lepton_pair.addUserFloat("sv_chi2", psi_vFit_vertex_noMC->chiSquared(),);
+       lepton_pair.addUserFloat("sv_ndof", psi_vFit_vertex_noMC->degreesOfFreedom()); // float??
+       lepton_pair.addUserFloat("sv_prob", J_Prob_tmp);
+       lepton_pair.addUserFloat("fitted_mass", psiVertexFitTree->isValid() ? psi_vFit_noMC->currentState().mass() : -1);
+       lepton_pair.addUserFloat("fitted_massErr", siVertexFitTree->isValid()  ? sqrt(psi_vFit_noMC->currentState().kinematicParametersError().matrix()(6,6)) : -1);
+       if( !DLB_post_vtx_selection_(lepton_pair) ) continue;
+	   //if(psi_vFit_vertex_noMC->chiSquared()>999) continue; // DiMuonBuilder cuts at 998 
 	   //if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue; //no cut at all
 
 	   //  ***************  
