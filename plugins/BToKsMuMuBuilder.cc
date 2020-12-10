@@ -232,6 +232,10 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         //no pT cuts in Dileptonbuilder neither MuonTriggerSelector
         //if(iMuon1->track()->pt()<4.0) continue; 
 	    //if(iMuon2->track()->pt()<4.0) continue;
+        //pT cuts are in config_BtoKmumu_cff
+        if (!(iMuon1->track()->pt()<1.4 || iMuon1->track()->pt()<1.4) continue;  //at least one muon must have pT > 1.5 GeV
+        float dRm1m2 = reco::deltaR(*iMuon1, *iMuon2);
+        if (dRm1m2 < 0.02) continue; // DiMuonBuilder cuts at 0.03
 
         //no highPurity Cuts in DiLeptonBuilder neither in MuonTriggerSelector
 	    //if(!(glbTrackM->quality(reco::TrackBase::highPurity))) continue;
@@ -250,7 +254,9 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    cApp.calculate(mu1State, mu2State);
 	    if( !cApp.status() ) continue;
 	    float dca = fabs( cApp.distance() );
+        if(dca < 1.5) continue; // abs(dz1 -dz2) < 1. in DiMuonBuilder preVtxSelection
 
+        
         // *****  end DCA for the 2 muons *********************
 
 	    //The mass of a muon and the insignificant mass sigma 
@@ -301,7 +307,21 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	        //std::cout << "negative chisq from psi fit" << endl;
 	        continue;
 	    }
-          
+
+        double J_Prob_tmp   = TMath::Prob(psi_vFit_vertex_noMC->chiSquared(),(int)psi_vFit_vertex_noMC->degreesOfFreedom());
+	    //if(J_Prob_tmp<0.01) //Jhovanny
+	    if(J_Prob_tmp<1.e-5) //DiMuonBuilder postVtxSelection
+	    {
+	       continue;
+	    }
+	  
+	   //some loose cuts go here
+
+	   if(psi_vFit_vertex_noMC->chiSquared()>999) continue; // DiMuonBuilder cuts at 998 
+	   //if(psi_vFit_noMC->currentState().mass()<2.9 || psi_vFit_noMC->currentState().mass()>3.3) continue; //no cut at all
+
+	   //  ***************
+
         passmu++;
 
     }    
