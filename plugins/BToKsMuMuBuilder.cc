@@ -739,27 +739,29 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("mu1_tight", iMuon1->isTightMuon(bestVtx));
                 b_cand.addUserFloat("mu1_PF", iMuon1->isPFMuon());
                 b_cand.addUserFloat("mu1_loose", muon::isLooseMuon(*iMuon1));
-                /*  mu1soft->push_back( );
-		        mu2soft->push_back(iMuon2->isSoftMuon(bestVtx) );
-		        mu1tight->push_back(iMuon1->isTightMuon(bestVtx) );
-		        mu2tight->push_back(iMuon2->isTightMuon(bestVtx) );
-		        mu1PF->push_back(iMuon1->isPFMuon());
-		        mu2PF->push_back(iMuon2->isPFMuon());
-		        mu1loose->push_back(muon::isLooseMuon(*iMuon1));
-		        mu2loose->push_back(muon::isLooseMuon(*iMuon2));
+                b_cand.addUserFloat("mu1_medium", muon::isMediumMuon(*iMuon1));
+                b_cand.addUserFloat("mu1_global", muon::isGlobalMuon(*iMuon1));
 
-		        mumC2->push_back( glbTrackM->normalizedChi2() );
-		        mumNHits->push_back( glbTrackM->numberOfValidHits() );
-		        mumNPHits->push_back( glbTrackM->hitPattern().numberOfValidPixelHits() );	       
-		        mupC2->push_back( glbTrackP->normalizedChi2() );
-		        mupNHits->push_back( glbTrackP->numberOfValidHits() );
-		        mupNPHits->push_back( glbTrackP->hitPattern().numberOfValidPixelHits() );
-                mumdxy->push_back(glbTrackM->dxy(bestVtx.position()) );
-		        mupdxy->push_back(glbTrackP->dxy(bestVtx.position()) );
-		        mumdz->push_back(glbTrackM->dz(bestVtx.position()) );
-		        mupdz->push_back(glbTrackP->dz(bestVtx.position()) );
-		        muon_dca->push_back(dca);
-                */
+                b_cand.addUserFloat("mu2_soft",  iMuon2->isSoftMuon(bestVtx)); 
+                b_cand.addUserFloat("mu2_tight", iMuon2->isTightMuon(bestVtx));
+                b_cand.addUserFloat("mu2_PF", iMuon2->isPFMuon());
+                b_cand.addUserFloat("mu2_loose", muon::isLooseMuon(*iMuon2));
+                b_cand.addUserFloat("mu2_medium", muon::isMediumMuon(*iMuon2));
+                b_cand.addUserFloat("mu2_global", muon::isGlobalMuon(*iMuon2));
+                 
+
+		        b_cand.addUserFloat("mum_C2", glbTrackM->normalizedChi2() );
+		        b_cand.addUserFloat("mum_nValidHits", glbTrackM->numberOfValidHits() );
+		        b_cand.addUserFloat("mum_nValidPixelHits", glbTrackM->hitPattern().numberOfValidPixelHits() );	       
+		        b_cand.addUserFloat("mup_C2", glbTrackP->normalizedChi2() );
+		        b_cand.addUserFloat("mup_nValidHits", glbTrackP->numberOfValidHits() );
+		        b_cand.addUserFloat("mup_nValidPixelHits", glbTrackP->hitPattern().numberOfValidPixelHits() );
+                b_cand.addUserFloat("mum_dxy", glbTrackM->dxy(bestVtx.position()) );
+		        b_cand.addUserFloat("mup_dxy", glbTrackP->dxy(bestVtx.position()) );
+		        b_cand.addUserFloat("mum_dz" , glbTrackM->dz(bestVtx.position()) );
+		        b_cand.addUserFloat("mup_dz" , glbTrackP->dz(bestVtx.position()) );
+		        b_cand.addUserFloat("dimuon_dca" , dca);
+                
                 //b_cand.addUserFloat("k_nValidHits", k_ptr->userInt("nValidHits") );
                 //b_cand.addUserInt("k_isMatchedToMuon", k_ptr->userInt("isMatchedToMuon") );
                 //b_cand.addUserInt("k_isMatchedToLooseMuon", k_ptr->userInt("isMatchedToLooseMuon") );
