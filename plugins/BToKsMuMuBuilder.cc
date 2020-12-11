@@ -660,7 +660,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         
                     //Para significancia:  
                     GlobalError err = b_gp_err;
-                    GlobalPoint delta(cand.vx()-vx.at(iPV), cand.vy()-vy.at(iPV), 0.);  
+                    GlobalPoint delta(b_gp.x()-vx.at(iPV), b_gp.y()-vy.at(iPV), 0.);  
 
                     lxy_pv[iPV] = delta.perp();
                     errP[iPV] = sqrt(err.rerr(delta));
