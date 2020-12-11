@@ -431,7 +431,7 @@ BToKmumuTable = cms.EDProducer(
         mup_dxy         = ufloat('mup_dxy'),  
         mum_dz          = ufloat('mum_dz'),  
         mup_dz          = ufloat('mup_dz'),  
-        dimuon_dca      = ufloat('dimuon_dca')
+        dimuon_dca      = ufloat('dimuon_dca'),
     )
 )
 
