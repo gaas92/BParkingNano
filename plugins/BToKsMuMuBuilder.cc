@@ -721,6 +721,22 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("K_PDL", Kct);
                 b_cand.addUserFloat("eK_PDL", Kect);
 
+                // Quality Vars 
+                b_cand.addUserFloat("pi1_nValidHits", theDaughterTracks[0].hitPattern().numberOfValidPixelHits() );
+
+                b_cand.addUserFloat("k_nValidHits", k_ptr->userInt("nValidHits") );
+                b_cand.addUserInt("k_isMatchedToMuon", k_ptr->userInt("isMatchedToMuon") );
+                b_cand.addUserInt("k_isMatchedToLooseMuon", k_ptr->userInt("isMatchedToLooseMuon") );
+                b_cand.addUserInt("k_isMatchedToSoftMuon", k_ptr->userInt("isMatchedToSoftMuon") );
+                b_cand.addUserInt("k_isMatchedToMediumMuon", k_ptr->userInt("isMatchedToMediumMuon") );
+                b_cand.addUserInt("k_isMatchedToEle", k_ptr->userInt("isMatchedToEle") ); 
+
+                b_cand.addUserInt("k_HighPurity", k_ptr->userInt("trackHighPurity") ); 
+                b_cand.addUserInt("k_numberOfHits", k_ptr->userInt("numberOfHits") ); 
+                b_cand.addUserInt("k_numberOfPixelHits", k_ptr->userInt("numberOfPixelHits") ); 
+                b_cand.addUserInt("k_lostInnerHits", k_ptr->userInt("lostInnerHits") ); 
+
+
             }// end V0 Tracks
         }// end if dimuon&& V0Tracks   
         passmu++;
