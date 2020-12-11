@@ -323,101 +323,7 @@ BToKmumu = cms.EDProducer(
     # postVtxSelection = cms.string(''),
 )
 
-BToKmumuOriginal = cms.EDProducer(
-    'BToKLLBuilder',
-    dileptons = cms.InputTag('muonPairsForKmumu'),
-    leptonTransientTracks = muonPairsForKmumu.transientTracksSrc,
-    kaons = cms.InputTag('tracksBPark', 'SelectedTracks'),
-    kaonsTransientTracks = cms.InputTag('tracksBPark', 'SelectedTransientTracks'),
-    beamSpot = cms.InputTag("offlineBeamSpot"),
-    tracks = cms.InputTag("packedPFCandidates"),
-    lostTracks = cms.InputTag("lostTracks"),
-    kaonSelection = cms.string(''),
-    isoTracksSelection = cms.string('pt > 0.7 && abs(eta)<2.5'),
-    # This in principle can be different between electrons and muons
-    preVtxSelection = cms.string(
-        'pt > 3. && userFloat("min_dr") > 0.03'
-        '&& mass < 7. && mass > 4.'
-        ),
-    postVtxSelection = cms.string(
-        'userInt("sv_OK") == 1 && userFloat("sv_prob") > 0.001 '
-        '&& userFloat("fitted_cos_theta_2D") >= 0'
-        '&& userFloat("fitted_mass") > 4.5 && userFloat("fitted_mass") < 6.'
-    )
-)
 
-
-BToKmumuTableOriginal = cms.EDProducer(
-    'SimpleCompositeCandidateFlatTableProducer',
-    src = cms.InputTag("BToKmumuOriginal"),
-    cut = cms.string(""),
-    name = cms.string("BToKMuMu"),
-    doc = cms.string("BToKMuMu Variable"),
-    singleton=cms.bool(False),
-    extension=cms.bool(False),
-    variables=cms.PSet(
-        # pre-fit quantities
-        CandVars,
-        l1Idx = uint('l1_idx'),
-        l2Idx = uint('l2_idx'),
-        #kIdx = uint('k_idx'),
-        minDR = ufloat('min_dr'),
-        maxDR = ufloat('max_dr'),
-        # fit and vtx info
-        #chi2 = ufloat('sv_chi2'),
-        svprob = ufloat('sv_prob'),
-        l_xy = ufloat('l_xy'),
-        l_xy_unc = ufloat('l_xy_unc'),
-        vtx_x = ufloat('vtx_x'),
-        vtx_y = ufloat('vtx_y'),
-        vtx_z = ufloat('vtx_z'),
-        vtx_ex = ufloat('vtx_ex'), ## only saving diagonal elements of the cov matrix
-        vtx_ey = ufloat('vtx_ey'),
-        vtx_ez = ufloat('vtx_ez'),
-        # Mll
-        mll_raw = Var('userCand("dilepton").mass()', float),
-        mll_llfit = Var('userCand("dilepton").userFloat("fitted_mass")', float), # this might not work
-        mllErr_llfit = Var('userCand("dilepton").userFloat("fitted_massErr")', float), # this might not work
-        mll_fullfit = ufloat('fitted_mll'),
-        # Cos(theta)
-        cos2D = ufloat('cos_theta_2D'),
-        fit_cos2D = ufloat('fitted_cos_theta_2D'),
-        # post-fit momentum
-        fit_mass = ufloat('fitted_mass'),
-        fit_massErr = ufloat('fitted_massErr'),
-        fit_pt = ufloat('fitted_pt'),
-        fit_eta = ufloat('fitted_eta'),
-        fit_phi = ufloat('fitted_phi'),
-
-        fit_l1_pt = ufloat('fitted_l1_pt'),
-        fit_l1_eta = ufloat('fitted_l1_eta'),
-        fit_l1_phi = ufloat('fitted_l1_phi'),
-        
-        fit_l2_pt = ufloat('fitted_l2_pt'),
-        fit_l2_eta = ufloat('fitted_l2_eta'),
-        fit_l2_phi = ufloat('fitted_l2_phi'),
-        
-        fit_k_pt = ufloat('fitted_k_pt'),
-        fit_k_eta = ufloat('fitted_k_eta'),
-        fit_k_phi = ufloat('fitted_k_phi'),
-        
-        l1_iso03 = ufloat('l1_iso03'),
-        l1_iso04 = ufloat('l1_iso04'),
-        
-        l2_iso03 = ufloat('l2_iso03'),
-        l2_iso04 = ufloat('l2_iso04'),
-        
-        k_iso03  = ufloat('k_iso03'),
-        k_iso04  = ufloat('k_iso04'),
-        
-        b_iso03  = ufloat('b_iso03'),
-        b_iso04  = ufloat('b_iso04'),
-        
-        n_k_used = uint('n_k_used'),
-        n_l1_used = uint('n_l1_used'),
-        n_l2_used = uint('n_l2_used'),
-    )
-)
 
 BToKmumuTable = cms.EDProducer(
     'SimpleCompositeCandidateFlatTableProducer',
@@ -430,127 +336,19 @@ BToKmumuTable = cms.EDProducer(
     variables=cms.PSet(
         # pre-fit quantities
         CandVars,
-        l1Idx = uint('l1_idx'),
-        l2Idx = uint('l2_idx'),
-        # kIdx = uint('k_idx'),
-        # minDR = ufloat('min_dr'),
-        # maxDR = ufloat('max_dr'),
-        # dr_l1 = ufloat('dr_l1'),
-        # dr_l2 = ufloat('dr_l2'),
-        # dz_l1 = ufloat('dz_l1'),
-        # dz_l2 = ufloat('dz_l2'),
-        # #HCL
-        # l1Vx = ufloat("l1_vx"),
-        # l1Vy = ufloat("l1_vy"),
-        # l1Vz = ufloat("l1_vz"),
-        # l2Vx = ufloat("l2_vx"),
-        # l2Vy = ufloat("l2_vy"),
-        # l2Vz = ufloat("l2_vz"),
-        # kVx = ufloat("k_vx"),
-        # kVy = ufloat("k_vy"),
-        # kVz = ufloat("k_vz"),
-        # dmuonVx = ufloat("dmuon_vx"),
-        # dmuonVy = ufloat("dmuon_vy"),
-        # dmuonVz = ufloat("dmuon_vz"),
-        # fit and vtx info
-        chi2 = ufloat('sv_chi2'),
-        svprob = ufloat('sv_prob'),
-        l_xy = ufloat('l_xy'),
-        l_xy_unc = ufloat('l_xy_unc'),
-        # beamspot_x = ufloat('beamSpot_x'),
-        # beamspot_y = ufloat('beamSpot_y'),
-        vtx_x = ufloat('vtx_x'),
-        vtx_y = ufloat('vtx_y'),
-        vtx_z = ufloat('vtx_z'),
-        vtx_ex = ufloat('vtx_ex'), ## only saving diagonal elements of the cov matrix
-        vtx_ey = ufloat('vtx_ey'),
-        vtx_ez = ufloat('vtx_ez'),
-        #vtx_exy = ufloat('vtx_exy'),
-        # vtx_eyx = ufloat('vtx_eyx'),
-        # vtx_ezy = ufloat('vtx_ezy'),
-        # vtx_ezx = ufloat('vtx_ezx'),
-
-        # Mll
-        mll_raw = Var('userCand("dilepton").mass()', float),
-        mll_llfit = Var('userCand("dilepton").userFloat("fitted_mass")', float), # this might not work
-        mllErr_llfit = Var('userCand("dilepton").userFloat("fitted_massErr")', float), # this might not work
-        mll_pt = ufloat("fitted_pt_ll"),
-        mll_eta = ufloat("fitted_eta_ll"),
-        mll_phi = ufloat("fitted_phi_ll"),
-        
-
-        # mll_fullfit = ufloat('fitted_mll'),
-        # Cos(theta)
-        cos2D = ufloat('cos_theta_2D'),
-        fit_cos2D = ufloat('fitted_cos_theta_2D'),
-
-        # post-fit momentum
-        fit_mass = ufloat('fitted_mass'),
-        fit_massErr = ufloat('fitted_massErr'),
-        fit_pt = ufloat('fitted_pt'),
-        fit_eta = ufloat('fitted_eta'),
-        fit_phi = ufloat('fitted_phi'),
-
-        fit_l1_pt = ufloat('fitted_l1_pt'),
-        fit_l1_eta = ufloat('fitted_l1_eta'),
-        fit_l1_phi = ufloat('fitted_l1_phi'),
-        l1_charge = ufloat('l1_charge'),
-
-        fit_l2_pt = ufloat('fitted_l2_pt'),
-        fit_l2_eta = ufloat('fitted_l2_eta'),
-        fit_l2_phi = ufloat('fitted_l2_phi'),
-        l2_charge = ufloat('l2_charge'),
-
-        fit_k_pt = ufloat('fitted_k_pt'),
-        fit_k_eta = ufloat('fitted_k_eta'),
-        fit_k_phi = ufloat('fitted_k_phi'),
-        k_charge = ufloat('k_charge'),
-
-        # l1_iso03 = ufloat('l1_iso03'),
-        # l1_iso04 = ufloat('l1_iso04'),
-        # l2_iso03 = ufloat('l2_iso03'),
-        # l2_iso04 = ufloat('l2_iso04'),
-        # k_iso03  = ufloat('k_iso03'),
-        # k_iso04  = ufloat('k_iso04'),
-        # b_iso03  = ufloat('b_iso03'),
-        # b_iso04  = ufloat('b_iso04'),
-        # n_k_used = uint('n_k_used'),
-        # n_l1_used = uint('n_l1_used'),
-        # n_l2_used = uint('n_l2_used'),
-        # cosThetaMuMu = ufloat("cosTheta_mm"),
-        cosThetaKMu = ufloat("cosTheta_km"),
-
-        cosAlpha_0 = ufloat("cosAlpha0"),
-        cosAlpha_1 = ufloat("cosAlpha1"),
-        cosAlpha_2 = ufloat("cosAlpha2"),
-        cosAlpha_3 = ufloat("cosAlpha3"),
-
-        lxy_pv0 = ufloat("lxy_pv0"),
-        lxy_pv1 = ufloat("lxy_pv1"),
-        lxy_pv2 = ufloat("lxy_pv2"),
-        lxy_pv3 = ufloat("lxy_pv3"),
-
-        significance0 = ufloat("significance0"),
-        significance1 = ufloat("significance1"),
-        significance2 = ufloat("significance2"),
-        significance3 = ufloat("significance3"),
- 
-        PDL = ufloat("PDL"),
-        ePDL = ufloat("ePDL"),
-
-        k_DCASig = ufloat("k_DCASig"),
-        k_nValidHits = ufloat("k_nValidHits"),
-        k_matchMuon = uint("k_isMatchedToMuon"),
-        k_matchLooseMuon = uint("k_isMatchedToLooseMuon"),
-        k_matchSoftMuon = uint("k_isMatchedToSoftMuon"),
-        k_matchMediumMuon = uint("k_isMatchedToMediumMuon"),
-
-
-        k_HighPurity = uint("k_HighPurity"),
-        k_numberOfHits = uint("k_numberOfHits"),
-        k_numberOfPixelHits = uint("k_numberOfPixelHits"),
-        k_lostInnerHits = uint("k_lostInnerHits"),
-
+        Bvtx_OK = uint('Bvtx_OK'),
+        Bvtx_chi2 = ufloat('Bvtx_chi2'),
+        Bvtx_ndof = ufloat('Bvtx_ndof'),
+        Bvtx_prob = ufloat('Bvtx_prob'),
+        fitted_mll = ufloat('fitted_mll'),        
+        fitted_pt_ll = ufloat('fitted_pt_ll'),
+        fitted_eta_ll = ufloat('fitted_eta_ll'),
+        fitted_phi_ll = ufloat('fitted_phi_ll'),
+        Bfitted_pt = ufloat('Bfitted_pt'),
+        Bfitted_eta = ufloat('Bfitted_eta'),
+        Bfitted_phi = ufloat('Bfitted_phi'),
+        Bfitted_mass = ufloat('Bfitted_mass'),
+      
     )
 )
 
