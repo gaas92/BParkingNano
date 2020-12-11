@@ -740,14 +740,14 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("mu1_PF", iMuon1->isPFMuon());
                 b_cand.addUserFloat("mu1_loose", muon::isLooseMuon(*iMuon1));
                 b_cand.addUserFloat("mu1_medium", muon::isMediumMuon(*iMuon1));
-                b_cand.addUserFloat("mu1_global", muon::isGlobalMuon(*iMuon1));
+                b_cand.addUserFloat("mu1_global", iMuon1->isGlobalMuon() );
 
                 b_cand.addUserFloat("mu2_soft",  iMuon2->isSoftMuon(bestVtx)); 
                 b_cand.addUserFloat("mu2_tight", iMuon2->isTightMuon(bestVtx));
                 b_cand.addUserFloat("mu2_PF", iMuon2->isPFMuon());
                 b_cand.addUserFloat("mu2_loose", muon::isLooseMuon(*iMuon2));
                 b_cand.addUserFloat("mu2_medium", muon::isMediumMuon(*iMuon2));
-                b_cand.addUserFloat("mu2_global", muon::isGlobalMuon(*iMuon2));
+                b_cand.addUserFloat("mu2_global", iMuon2->isGlobalMuon() );
                  
 
 		        b_cand.addUserFloat("mum_C2", glbTrackM->normalizedChi2() );
