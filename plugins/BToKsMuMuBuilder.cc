@@ -689,24 +689,37 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 Bvtx.SetXYZ(b_gp.x(), b_gp.y(), b_gp.z());
                 TMatrix ESV(3,3);
                 TMatrix EPV(3,3);
-
                 ESV(0,0) = bDecayVertexMC->error().cxx();
                 ESV(1,1) = bDecayVertexMC->error().cyy();
                 ESV(2,2) = bDecayVertexMC->error().czz();
                 ESV(0,1) = bDecayVertexMC->error().cyx();
                 ESV(0,2) = bDecayVertexMC->error().czx();
                 ESV(1,2) = bDecayVertexMC->error().czy();
-       
                 EPV(0,0) = vertexHandle->front().covariance(0,0);
                 EPV(1,1) = vertexHandle->front().covariance(1,1);
                 EPV(2,2) = vertexHandle->front().covariance(2,2);
                 EPV(0,1) = vertexHandle->front().covariance(0,1);
                 EPV(0,2) = vertexHandle->front().covariance(0,2);
                 EPV(1,2) = vertexHandle->front().covariance(1,2);
-                
                 double Bct, Bect;
                 V0_Lifetime(pv, Bvtx, EPV, ESV, 5.27961, BpT, Bct, Bect);
-
+                b_cand.addUserFloat("B_PDL", Bct);
+                b_cand.addUserFloat("eB_PDL", Bect);
+                
+                TVector3 Kvtx, KpT;
+                KpT.SetXYZ(Ks0CandMC->currentState().globalMomentum().x(), Ks0CandMC->currentState().globalMomentum().y(),0.0);
+                Kvtx.SetXYZ(Ks0CandMC->position().x(), Ks0CandMC->position().y(), Ks0CandMC->position().z());
+                TMatrix EKsV(3,3);
+                EKsV(0,0) = Ks0CandMC->error().cxx();
+                EKsV(1,1) = Ks0CandMC->error().cyy();
+                EKsV(2,2) = Ks0CandMC->error().czz();
+                EKsV(0,1) = Ks0CandMC->error().cyx();
+                EKsV(0,2) = Ks0CandMC->error().czx();
+                EKsV(1,2) = Ks0CandMC->error().czy();
+                double Kct, Kect;
+                V0_Lifetime(Bvtx, Kvtx, ESV, EKsV, 0.49761, KpT, Kct, Kect);
+                b_cand.addUserFloat("K_PDL", Kct);
+                b_cand.addUserFloat("eK_PDL", Kect);
 
             }// end V0 Tracks
         }// end if dimuon&& V0Tracks   
