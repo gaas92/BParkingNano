@@ -385,7 +385,29 @@ BToKmumuTable = cms.EDProducer(
         costhetaLnKs    = ufloat('costhetaLnKs'),
         costhetaKsDM    = ufloat('costhetaKsDM'),
         dRm1m2          = ufloat('dRm1m2'),
-
+        cosAlpha0       = ufloat('cosAlpha0'),
+        cosAlpha1       = ufloat('cosAlpha1'),
+        cosAlpha2       = ufloat('cosAlpha2'),
+        cosAlpha3       = ufloat('cosAlpha3'),
+        lxy_pv0         = ufloat('lxy_pv0'),
+        lxy_pv1         = ufloat('lxy_pv1'),
+        lxy_pv2         = ufloat('lxy_pv2'),
+        lxy_pv3         = ufloat('lxy_pv3'),
+        significance0   = ufloat('significance0'),
+        significance1   = ufloat('significance1'),
+        significance2   = ufloat('significance2'),
+        significance3   = ufloat('significance3'),
+        B_PDL           = ufloat('B_PDL'),
+        eB_PDL          = ufloat('eB_PDL'),        
+        K_PDL           = ufloat('K_PDL'),
+        eK_PDL          = ufloat('eK_PDL'),        
+        pi1_nValidPixelHits = ufloat('pi1_nValidPixelHits'),
+        pi1_nPixelLWM       = ufloat('pi1_nPixelLWM'),
+        pi1_nTrackerLWM     = ufloat('pi1_nTrackerLWM'),
+        pi2_nValidPixelHits = ufloat('pi2_nValidPixelHits'),
+        pi2_nPixelLWM       = ufloat('pi2_nPixelLWM'),
+        pi2_nTrackerLWM     = ufloat('pi2_nTrackerLWM'),
+        
     )
 )
 
