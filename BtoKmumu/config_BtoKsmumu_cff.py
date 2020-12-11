@@ -374,7 +374,12 @@ BToKmumuTable = cms.EDProducer(
         Bfitted_ks_pt   = ufloat('Bfitted_ks_eta'),
         Bfitted_ks_phi  = ufloat('Bfitted_ks_phi'),
         Bks_charge      = ufloat('Bks_charge'),
-        
+        l1_iso03        = ufloat('l1_iso03'),
+        l1_PFiso03      = ufloat('l1_PFiso03'),
+        l1_PFiso04      = ufloat('l1_PFiso04'),
+        l2_iso03        = ufloat('l2_iso03'),
+        l2_PFiso03      = ufloat('l2_PFiso03'),
+        l2_PFiso04      = ufloat('l2_PFiso04'),
 
 
     )

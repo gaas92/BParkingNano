@@ -599,12 +599,11 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 float l2_PFiso03 = getMuPFIso03(*iMuon2);
                 float l2_PFiso04 = getMuPFIso04(*iMuon2);
                 b_cand.addUserFloat("l1_iso03", l1_iso03);
-                b_cand.addUserFloat("l2_iso03", l2_iso03);
                 b_cand.addUserFloat("l1_PFiso03", l1_PFiso03);
                 b_cand.addUserFloat("l1_PFiso04", l1_PFiso04);
                 b_cand.addUserFloat("l2_iso03", l2_iso03);
-                b_cand.addUserFloat("l1_PFiso03", l2_PFiso03);
-                b_cand.addUserFloat("l1_PFiso04", l2_PFiso04);
+                b_cand.addUserFloat("l2_PFiso03", l2_PFiso03);
+                b_cand.addUserFloat("l2_PFiso04", l2_PFiso04);
 
                 // Aqui creemos el boost al CM del dilepton
                 auto dilep = math::XYZTLorentzVector(psi_vFit_noMC->currentState().globalMomentum().x(),
