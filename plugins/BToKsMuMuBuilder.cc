@@ -736,7 +736,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
    // std::cout << "K nValidHits : " <<k_ptr->userInt("nValidHits") << std::endl;
     
    // try {
-    if( !k_selection_(*k_ptr) ) continue;
+    //if( !k_selection_(*k_ptr) ) continue;
     
     math::PtEtaPhiMLorentzVector k_p4(
       k_ptr->pt(), 
@@ -804,7 +804,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
       // cand.addUserFloat("dmuon_vz", ll_prt->vz());
       
 
-      if( !pre_vtx_selection_(cand) ) continue;
+      //if( !pre_vtx_selection_(cand) ) continue;
     
       //HCL
       //std::cout << "BBB PreVertex Fitting    ";
@@ -908,7 +908,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
       cand.addUserFloat("k_charge", k_ptr->charge());
       
 
-      if( !post_vtx_selection_(cand) ) continue;        
+      //if( !post_vtx_selection_(cand) ) continue;        
 
       //compute isolation
       float l1_iso03 = 0;
