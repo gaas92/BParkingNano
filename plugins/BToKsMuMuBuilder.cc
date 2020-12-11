@@ -681,6 +681,32 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("significance2", lxy_pv[2]/errP[2]);
                 b_cand.addUserFloat("significance3", lxy_pv[3]/errP[3]);
                 
+                //life time
+                TVector3 pv, Bvtx, BpT;
+
+                BpT.SetXYZ(bCandMC->currentState().globalMomentum().px(), bCandMC->currentState().globalMomentum().py(),0.0);
+                pv.SetXYZ(vx.at(0),vy.at(0),vz.at(0));
+                Bvtx.SetXYZ(b_gp.x(), b_gp.y(), b_gp.z());
+                TMatrix ESV(3,3);
+                TMatrix EPV(3,3);
+
+                ESV(0,0) = bDecayVertexMC->error().cxx();
+                ESV(1,1) = bDecayVertexMC->error().cyy();
+                ESV(2,2) = bDecayVertexMC->error().czz();
+                ESV(0,1) = bDecayVertexMC->error().cyx();
+                ESV(0,2) = bDecayVertexMC->error().czx();
+                ESV(1,2) = bDecayVertexMC->error().czy();
+       
+                EPV(0,0) = vertexHandle->front().covariance(0,0);
+                EPV(1,1) = vertexHandle->front().covariance(1,1);
+                EPV(2,2) = vertexHandle->front().covariance(2,2);
+                EPV(0,1) = vertexHandle->front().covariance(0,1);
+                EPV(0,2) = vertexHandle->front().covariance(0,2);
+                EPV(1,2) = vertexHandle->front().covariance(1,2);
+                
+                double ct, ect;
+                V0_Lifetime(pv, Bvtx, EPV, ESV, 5.27961, pT, ct, ect);
+
 
             }// end V0 Tracks
         }// end if dimuon&& V0Tracks   
