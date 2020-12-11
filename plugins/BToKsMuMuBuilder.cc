@@ -173,11 +173,14 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   vz.push_back(vertex.position().z());  
   
   int nv = 0;
+  reco::Vertex bestVtx;
+  
   for (const reco::Vertex & vertex : *vertexHandle){
     for (const pat::Muon & trgmu : *trgMuons){
       if(nv==3) break;
       if(fabs(vertex.position().z()-trgmu.vz())<dzCut_) {
         dzTrgMu.push_back(fabs(vertex.position().z()-trgmu.vz()));
+        bestVtx = vertex;
         vx.push_back(vertex.position().x());
         vy.push_back(vertex.position().y());
         vz.push_back(vertex.position().z());
@@ -729,7 +732,31 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("pi2_nPixelLWM",       theDaughterTracks[1].hitPattern().pixelLayersWithMeasurement());
                 b_cand.addUserFloat("pi2_nTrackerLWM",     theDaughterTracks[1].hitPattern().trackerLayersWithMeasurement());
 
-                b_cand.addUserFloat("p1_HighPurity",     theDaughterTracks[1].quality(reco::TrackBase::highPurity));
+                b_cand.addUserFloat("p1_HighPurity",     theDaughterTracks[0].quality(reco::TrackBase::highPurity));
+                b_cand.addUserFloat("p2_HighPurity",     theDaughterTracks[1].quality(reco::TrackBase::highPurity));
+
+                b_cabd.addUserFloat("mu1_soft", iMuon1->isSoftMuon(bestVtx)); 
+                /*  mu1soft->push_back( );
+		        mu2soft->push_back(iMuon2->isSoftMuon(bestVtx) );
+		        mu1tight->push_back(iMuon1->isTightMuon(bestVtx) );
+		        mu2tight->push_back(iMuon2->isTightMuon(bestVtx) );
+		        mu1PF->push_back(iMuon1->isPFMuon());
+		        mu2PF->push_back(iMuon2->isPFMuon());
+		        mu1loose->push_back(muon::isLooseMuon(*iMuon1));
+		        mu2loose->push_back(muon::isLooseMuon(*iMuon2));
+
+		        mumC2->push_back( glbTrackM->normalizedChi2() );
+		        mumNHits->push_back( glbTrackM->numberOfValidHits() );
+		        mumNPHits->push_back( glbTrackM->hitPattern().numberOfValidPixelHits() );	       
+		        mupC2->push_back( glbTrackP->normalizedChi2() );
+		        mupNHits->push_back( glbTrackP->numberOfValidHits() );
+		        mupNPHits->push_back( glbTrackP->hitPattern().numberOfValidPixelHits() );
+                mumdxy->push_back(glbTrackM->dxy(bestVtx.position()) );
+		        mupdxy->push_back(glbTrackP->dxy(bestVtx.position()) );
+		        mumdz->push_back(glbTrackM->dz(bestVtx.position()) );
+		        mupdz->push_back(glbTrackP->dz(bestVtx.position()) );
+		        muon_dca->push_back(dca);
+                */
                 //b_cand.addUserFloat("k_nValidHits", k_ptr->userInt("nValidHits") );
                 //b_cand.addUserInt("k_isMatchedToMuon", k_ptr->userInt("isMatchedToMuon") );
                 //b_cand.addUserInt("k_isMatchedToLooseMuon", k_ptr->userInt("isMatchedToLooseMuon") );
