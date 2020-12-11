@@ -265,6 +265,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
         //pT cuts are in config_BtoKmumu_cff
         //if (!(iMuon1->track()->pt()<1.4 || iMuon1->track()->pt()<1.4)) continue;  //at least one muon must have pT > 1.5 GeV
         float dRm1m2 = reco::deltaR(*iMuon1, *iMuon2);
+
         //if (dRm1m2 < 0.02) continue; // DiMuonBuilder cuts at 0.03
 
         //no highPurity Cuts in DiLeptonBuilder neither in MuonTriggerSelector
@@ -292,7 +293,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	    //The mass of a muon and the insignificant mass sigma 
 	    //to avoid singularities in the covariance matrix.
 	    ParticleMass muon_mass = 0.10565837; //pdg mass
-	    ParticleMass psi_mass = 3.096916;
+	    //ParticleMass psi_mass = 3.096916;
 	    float muon_sigma = muon_mass*1.e-6;
 	    //float psi_sigma = psi_mass*1.e-6;
 
@@ -652,6 +653,11 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 std::vector<float> lxy_pv(4,-1);
                 std::vector<float> errP(4,-1);
                 
+                b_cand.addUserFloat("costhetaLep", costhetaL);
+                b_cand.addUserFloat("costhetaLpKs", costhetaLpKs);
+                b_cand.addUserFloat("costhetaLnKs", costhetaLnKs);
+                b_cand.addUserFloat("costhetaKsDM", costhetaKsDM);
+                b_cand.addUserFloat("dRm1m2", dRm1m2);
                 // CHEQUEMOS QUE EL CANDIDATO A "B" SATIFAGA LOS CORTES EN COS(ALPHA) Y SIGNIFICANCIA
                 for( unsigned int iPV=0; iPV<dzTrgMu.size(); ++iPV ){ 
                     //Debemos calcular el vector que une los vertices primario y el ajustado
