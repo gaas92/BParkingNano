@@ -735,7 +735,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("p1_HighPurity",     theDaughterTracks[0].quality(reco::TrackBase::highPurity));
                 b_cand.addUserFloat("p2_HighPurity",     theDaughterTracks[1].quality(reco::TrackBase::highPurity));
 
-                b_cabd.addUserFloat("mu1_soft", iMuon1->isSoftMuon(bestVtx)); 
+                b_cand.addUserFloat("mu1_soft", iMuon1->isSoftMuon(bestVtx)); 
                 /*  mu1soft->push_back( );
 		        mu2soft->push_back(iMuon2->isSoftMuon(bestVtx) );
 		        mu1tight->push_back(iMuon1->isTightMuon(bestVtx) );
