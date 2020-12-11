@@ -722,8 +722,14 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("eK_PDL", Kect);
 
                 // Quality Vars 
-                b_cand.addUserFloat("pi1_nValidHits", theDaughterTracks[0].hitPattern().numberOfValidPixelHits() );
+                b_cand.addUserFloat("pi1_nValidPixelHits", theDaughterTracks[0].hitPattern().numberOfValidPixelHits());
+                b_cand.addUserFloat("pi1_nPixelLWM",       theDaughterTracks[0].hitPattern().pixelLayersWithMeasurement());
+                b_cand.addUserFloat("pi1_nTrackerLWM",     theDaughterTracks[0].hitPattern().trackerLayersWithMeasurement());
+                b_cand.addUserFloat("pi2_nValidPixelHits", theDaughterTracks[1].hitPattern().numberOfValidPixelHits());
+                b_cand.addUserFloat("pi2_nPixelLWM",       theDaughterTracks[1].hitPattern().pixelLayersWithMeasurement());
+                b_cand.addUserFloat("pi2_nTrackerLWM",     theDaughterTracks[1].hitPattern().trackerLayersWithMeasurement());
 
+                b_cand.addUserFloat("p1_HighPurity",     theDaughterTracks[1].quality(reco::TrackBase::highPurity));
                 //b_cand.addUserFloat("k_nValidHits", k_ptr->userInt("nValidHits") );
                 //b_cand.addUserInt("k_isMatchedToMuon", k_ptr->userInt("isMatchedToMuon") );
                 //b_cand.addUserInt("k_isMatchedToLooseMuon", k_ptr->userInt("isMatchedToLooseMuon") );
