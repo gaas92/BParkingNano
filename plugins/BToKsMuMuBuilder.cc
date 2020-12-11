@@ -684,7 +684,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 //life time
                 TVector3 pv, Bvtx, BpT;
 
-                BpT.SetXYZ(bCandMC->currentState().globalMomentum().px(), bCandMC->currentState().globalMomentum().py(),0.0);
+                BpT.SetXYZ(bCandMC->currentState().globalMomentum().x(), bCandMC->currentState().globalMomentum().y(),0.0);
                 pv.SetXYZ(vx.at(0),vy.at(0),vz.at(0));
                 Bvtx.SetXYZ(b_gp.x(), b_gp.y(), b_gp.z());
                 TMatrix ESV(3,3);
@@ -704,8 +704,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 EPV(0,2) = vertexHandle->front().covariance(0,2);
                 EPV(1,2) = vertexHandle->front().covariance(1,2);
                 
-                double ct, ect;
-                V0_Lifetime(pv, Bvtx, EPV, ESV, 5.27961, pT, ct, ect);
+                double Bct, Bect;
+                V0_Lifetime(pv, Bvtx, EPV, ESV, 5.27961, BpT, Bct, Bect);
 
 
             }// end V0 Tracks
