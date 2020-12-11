@@ -777,8 +777,6 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
     }    
   }// end muon loop   
 
-  ret_val->push_back(cand);
-
   evt.put(std::move(pvTable), "VertexTable");
   evt.put(std::move(ret_val), "Bcollection");
 }
