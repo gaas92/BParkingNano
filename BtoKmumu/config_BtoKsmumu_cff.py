@@ -380,7 +380,11 @@ BToKmumuTable = cms.EDProducer(
         l2_iso03        = ufloat('l2_iso03'),
         l2_PFiso03      = ufloat('l2_PFiso03'),
         l2_PFiso04      = ufloat('l2_PFiso04'),
-
+        costhetaLep     = ufloat('costhetaLep'),
+        costhetaLpKs    = ufloat('costhetaLpKs'),
+        costhetaLnKs    = ufloat('costhetaLnKs'),
+        costhetaKsDM    = ufloat('costhetaKsDM'),
+        dRm1m2          = ufloat('dRm1m2'),
 
     )
 )
