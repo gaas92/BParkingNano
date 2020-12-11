@@ -708,14 +708,14 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 
                 TVector3 Kvtx, KpT;
                 KpT.SetXYZ(Ks0CandMC->currentState().globalMomentum().x(), Ks0CandMC->currentState().globalMomentum().y(),0.0);
-                Kvtx.SetXYZ(Ks0CandMC->position().x(), Ks0CandMC->position().y(), Ks0CandMC->position().z());
+                Kvtx.SetXYZ(Ks0_vFit_vertex_noMC->position().x(), Ks0_vFit_vertex_noMC->position().y(), Ks0_vFit_vertex_noMC->position().z());
                 TMatrix EKsV(3,3);
-                EKsV(0,0) = Ks0CandMC->error().cxx();
-                EKsV(1,1) = Ks0CandMC->error().cyy();
-                EKsV(2,2) = Ks0CandMC->error().czz();
-                EKsV(0,1) = Ks0CandMC->error().cyx();
-                EKsV(0,2) = Ks0CandMC->error().czx();
-                EKsV(1,2) = Ks0CandMC->error().czy();
+                EKsV(0,0) = Ks0_vFit_vertex_noMC->error().cxx();
+                EKsV(1,1) = Ks0_vFit_vertex_noMC->error().cyy();
+                EKsV(2,2) = Ks0_vFit_vertex_noMC->error().czz();
+                EKsV(0,1) = Ks0_vFit_vertex_noMC->error().cyx();
+                EKsV(0,2) = Ks0_vFit_vertex_noMC->error().czx();
+                EKsV(1,2) = Ks0_vFit_vertex_noMC->error().czy();
                 double Kct, Kect;
                 V0_Lifetime(Bvtx, Kvtx, ESV, EKsV, 0.49761, KpT, Kct, Kect);
                 b_cand.addUserFloat("K_PDL", Kct);
