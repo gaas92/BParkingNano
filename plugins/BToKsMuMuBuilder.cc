@@ -644,24 +644,43 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 float costhetaKsDM = ( dimuCM.x()*kaonCM.x()
                                      + dimuCM.y()*kaonCM.y()
                                      + dimuCM.z()*kaonCM.z() ) / (dimuCM.P()*kaonCM.P() );
-                /*
-                if (l1_ptr->charge()==k_ptr->charge()){
-                  muonCM1 = cmboost(fitter.daughter_p4(1)) ;
-                  muonCM2 = cmboost(fitter.daughter_p4(0)) ;
+                
+                std::vector<float> cosAlpha(4, -2);
+                std::vector<float> lxy_pv(4,-1);
+                std::vector<float> errP(4,-1);
+                
+                // CHEQUEMOS QUE EL CANDIDATO A "B" SATIFAGA LOS CORTES EN COS(ALPHA) Y SIGNIFICANCIA
+                for( unsigned int iPV=0; iPV<dzTrgMu.size(); ++iPV ){ 
+                    //Debemos calcular el vector que une los vertices primario y el ajustado
+                    math::XYZVector vPS(b_gp.x()-vx.at(iPV), b_gp.y()-vy.at(iPV), b_gp.z()-vz.at(iPV));
+                    //Momento espacial del candidato?????????
+                    math::XYZVector Bp(b_gp.x(), b_gp.y(), b_gp.z());
+                    //CosALPHA
+                    cosAlpha[iPV] = vPS.Dot(Bp)/(vPS.R()*Bp.R());
+        
+                    //Para significancia:  
+                    GlobalError err = b_gp_err;
+                    GlobalPoint delta(cand.vx()-vx.at(iPV), cand.vy()-vy.at(iPV), 0.);  
+
+                    lxy_pv[iPV] = delta.perp();
+                    errP[iPV] = sqrt(err.rerr(delta));
                 }
-                else {
-                  muonCM1 = cmboost(fitter.daughter_p4(0)) ;
-                  muonCM2 = cmboost(fitter.daughter_p4(1)) ;
-                        } 
-                float costhetaL = ( muonCM1.x()*muonCM2.x() 
-                                   + muonCM1.y()*muonCM2.y() 
-                                   + muonCM1.z()*muonCM2.z() ) / (muonCM1.P()*muonCM2.P() );
-                float costhetaKL = ( muonCM1.x()*kaonCM.x()
-                                   + muonCM1.y()*kaonCM.y()
-                                   + muonCM1.z()*kaonCM.z() ) / (muonCM1.P()*kaonCM.P() );
-                cand.addUserFloat("cosTheta_mm", costhetaL);
-                cand.addUserFloat("cosTheta_km", costhetaKL);
-                */
+
+                b_cand.addUserFloat("cosAlpha0", cosAlpha[0]);
+                b_cand.addUserFloat("cosAlpha1", cosAlpha[1]);
+                b_cand.addUserFloat("cosAlpha2", cosAlpha[2]);
+                b_cand.addUserFloat("cosAlpha3", cosAlpha[3]);
+
+                b_cand.addUserFloat("lxy_pv0", lxy_pv[0]);
+                b_cand.addUserFloat("lxy_pv1", lxy_pv[1]);
+                b_cand.addUserFloat("lxy_pv2", lxy_pv[2]);
+                b_cand.addUserFloat("lxy_pv3", lxy_pv[3]);
+
+                b_cand.addUserFloat("significance0", lxy_pv[0]/errP[0]);
+                b_cand.addUserFloat("significance1", lxy_pv[1]/errP[1]);
+                b_cand.addUserFloat("significance2", lxy_pv[2]/errP[2]);
+                b_cand.addUserFloat("significance3", lxy_pv[3]/errP[3]);
+                
 
             }// end V0 Tracks
         }// end if dimuon&& V0Tracks   
