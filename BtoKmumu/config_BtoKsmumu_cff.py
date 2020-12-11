@@ -407,7 +407,31 @@ BToKmumuTable = cms.EDProducer(
         pi2_nValidPixelHits = ufloat('pi2_nValidPixelHits'),
         pi2_nPixelLWM       = ufloat('pi2_nPixelLWM'),
         pi2_nTrackerLWM     = ufloat('pi2_nTrackerLWM'),
-        
+        p1_HighPurity   = ufloat('p1_HighPurity'),
+        p2_HighPurity   = ufloat('p2_HighPurity'),
+        mu1_soft        = ufloat('mu1_soft'),
+        mu1_tight       = ufloat('mu1_tight'),
+        mu1_PF          = ufloat('mu1_PF'),
+        mu1_loose       = ufloat('mu1_loose"'),
+        mu1_medium      = ufloat('mu1_medium'),
+        mu1_global      = ufloat('mu1_global'),
+        mu2_soft        = ufloat('mu2_soft'),
+        mu2_tight       = ufloat('mu2_tight'),
+        mu2_PF          = ufloat('mu2_PF'),
+        mu2_loose       = ufloat('mu2_loose"'),
+        mu2_medium      = ufloat('mu2_medium'),
+        mu2_global      = ufloat('mu2_global'),
+        mum_C2          = ufloat('mum_C2'),
+        mum_nValidHits  = ufloat('mum_nValidHits'), 
+        mum_nValidPixelHits = ufloat('mum_nValidPixelHits'),
+        mup_C2          = ufloat('mup_C2'),
+        mup_nValidHits  = ufloat('mup_nValidHits'), 
+        mup_nValidPixelHits = ufloat('mup_nValidPixelHits'),
+        mum_dxy         = ufloat('mum_dxy'),  
+        mup_dxy         = ufloat('mup_dxy'),  
+        mum_dz          = ufloat('mum_dz'),  
+        mup_dz          = ufloat('mup_dz'),  
+        dimuon_dca      = ufloat('dimuon_dca')
     )
 )
 
