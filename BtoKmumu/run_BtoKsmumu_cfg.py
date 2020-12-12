@@ -147,7 +147,8 @@ process.load('config_BtoKsmumu_cff')
 ################################ Input source
 process.source = cms.Source(
     "PoolSource",
-    fileNames = cms.untracked.vstring(options.inputFiles),
+    #fileNames = cms.untracked.vstring(options.inputFiles),
+    filenames = cms,untracked.vstring('/store/data/Run2018A/ParkingBPH1/MINIAOD/05May2019-v1/00000/0109D8A3-FF62-6245-9745-675EE9FD6243.root')
     secondaryFileNames = cms.untracked.vstring(),
     skipEvents=cms.untracked.uint32(options.skip),
 )
@@ -228,7 +229,7 @@ from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, globaltag, '')
 
 
-
+ 
 
 #####################################################################################################
 ################################### PATH, ENDPAT Y SCHEDULE #########################################
