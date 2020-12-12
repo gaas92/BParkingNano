@@ -328,9 +328,14 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 	        //std::cout << "caught an exception in the psi vertex fit" << std::endl;
 	        //continue; 
 	    }
-  
-	    psiVertexFitTree->movePointerToTheTop();
-	    
+      try{
+	      psiVertexFitTree->movePointerToTheTop();
+      }
+      catch (...){
+        std::cout<< "PsiVertexEmpty" << std::endl;
+        str::cout<< "muonParticles size: " << muonParticles.size() << std::endl;
+        continue;
+      }
 	    RefCountedKinematicParticle psi_vFit_noMC = psiVertexFitTree->currentParticle();//masa del J/psi
 	    RefCountedKinematicVertex psi_vFit_vertex_noMC = psiVertexFitTree->currentDecayVertex();//vertice del J/psi
 	    
@@ -407,7 +412,14 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 			        //std::cout << "invalid vertex from the Ks0 vertex fit" << std::endl;
 			        continue; 
 		        }
-		        Ks0VertexFitTree->movePointerToTheTop(); 
+            try{
+		          Ks0VertexFitTree->movePointerToTheTop();
+            }
+            catch (...){
+              std::cout<< "K0 vertex Failed!"<< std::endl;
+              std::cout<< "pionParticles size: "<<pionParticles.size() << std::endl; 
+              continue;
+            }   
                 RefCountedKinematicParticle Ks0_vFit_noMC = Ks0VertexFitTree->currentParticle();
 		        RefCountedKinematicVertex Ks0_vFit_vertex_noMC = Ks0VertexFitTree->currentDecayVertex();
     
@@ -441,8 +453,14 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		            //std::cout << "caught an exception in the ks mass constraint fit" << std::endl;
 		            continue; 
 		        }
-                Ks0VertexFitTree->movePointerToTheTop();
-		        RefCountedKinematicParticle ks0_vFit_withMC = Ks0VertexFitTree->currentParticle();
+            try{
+              Ks0VertexFitTree->movePointerToTheTop();
+            }
+            catch(...){
+              std::cout<< "Ks0Vertex Failed! (for MC)"<< std::endl;
+              continue;
+            }
+            RefCountedKinematicParticle ks0_vFit_withMC = Ks0VertexFitTree->currentParticle();
 		     
 		        //Now we are ready to combine!
 		     
@@ -451,14 +469,20 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        vFitMCParticles.push_back(pFactory.particle(muon2TT,muon_mass,chi,ndf,muon_sigma));
 		        vFitMCParticles.push_back(ks0_vFit_withMC);
                 //no mass constrain 
-			    KinematicParticleVertexFitter kcvFitter;
-			    RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles);
+			      KinematicParticleVertexFitter kcvFitter;
+			      RefCountedKinematicTree vertexFitTree = kcvFitter.fit(vFitMCParticles);
 		        if (!vertexFitTree->isValid()) {
 		            //std::cout << "caught an exception in the B vertex fit with MC" << std::endl;
 		            continue;
 		        }
-                vertexFitTree->movePointerToTheTop();		     
-		     
+            try{
+              vertexFitTree->movePointerToTheTop();		     
+            }
+            catch(...){
+              std::cout<< "VertexFitTree Failed!" << std::endl;
+              std::cout<< "vFitMCParticles size: "<<vFitMCParticles.size() << std::endl;
+              continue;
+            }
 		        RefCountedKinematicParticle bCandMC = vertexFitTree->currentParticle();
 		        RefCountedKinematicVertex bDecayVertexMC = vertexFitTree->currentDecayVertex();
 		        //if (!bDecayVertexMC->vertexIsValid()){
