@@ -333,7 +333,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
       }
       catch (...){
         std::cout<< "PsiVertexEmpty" << std::endl;
-        str::cout<< "muonParticles size: " << muonParticles.size() << std::endl;
+        std::cout<< "muonParticles size: " << muonParticles.size() << std::endl;
         continue;
       }
 	    RefCountedKinematicParticle psi_vFit_noMC = psiVertexFitTree->currentParticle();//masa del J/psi
