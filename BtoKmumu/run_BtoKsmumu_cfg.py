@@ -213,7 +213,7 @@ process.NANOAODoutput = cms.OutputModule("NanoAODOutputModule",
       #	 b'event'
       "keep nanoaodFlatTable_*_*_*",     # event data
       #Esta linea se encarga de agregar el tag (Tree)
-      "keep nanoaodUniqueString_nanoMetadata_*_*",   # basic metadata
+      #"keep nanoaodUniqueString_nanoMetadata_*_*",   # basic metadata
     )
 
 )
