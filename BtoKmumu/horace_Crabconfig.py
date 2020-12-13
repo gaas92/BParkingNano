@@ -25,7 +25,7 @@ config.General.transferLogs = True
 config.JobType.pluginName = 'Analysis'
 
 #The name of the CMSSW parameter-set configuration file that should be run via cmsRun.
-config.JobType.psetName = 'run_BToKsmumu_cfg.py'
+config.JobType.psetName = 'run_BtoKsmumu_cfg.py'
 
 #List of parameters to pass to the CMSSW parameter-set configuration file
 #['myOption','param1=value1','param2=value2']
