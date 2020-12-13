@@ -57,4 +57,4 @@ config.Data.publication = False
 config.Data.outputDatasetTag = 'BK0-mumu-all'
 
 #config.Site.storageSite = 'T3_MX_Cinvestav'
-config.Site.storageSite = 'T2_CH_CERNBOX'
+config.Site.storageSite = 'T3_CH_CERNBOX'
