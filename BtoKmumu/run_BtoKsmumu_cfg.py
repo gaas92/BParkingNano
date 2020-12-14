@@ -198,7 +198,7 @@ process.FEVTDEBUGHLToutput = cms.OutputModule("PoolOutputModule",
 process.NANOAODoutput = cms.OutputModule("NanoAODOutputModule",
     compressionAlgorithm = cms.untracked.string('LZMA'),
     compressionLevel = cms.untracked.int32(9),
-    saveProvenance = cms.untracked.bool(False), # test
+    #saveProvenance = cms.untracked.bool(False), # test
     dataset = cms.untracked.PSet(
         dataTier = cms.untracked.string('NANOAOD'),
         filterName = cms.untracked.string('')
@@ -213,7 +213,7 @@ process.NANOAODoutput = cms.OutputModule("NanoAODOutputModule",
       #	 b'event'
       "keep nanoaodFlatTable_*_*_*",     # event data
       #Esta linea se encarga de agregar el tag (Tree)
-      #"keep nanoaodUniqueString_nanoMetadata_*_*",   # basic metadata
+      "keep nanoaodUniqueString_nanoMetadata_*_*",   # basic metadata
     )
 
 )
