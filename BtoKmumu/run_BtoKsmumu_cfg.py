@@ -38,8 +38,8 @@ options.register('skip', 0,
     "skip first N events"
 )
 
-#options.register('maxE', 3000,
-options.register('maxE', -1,
+options.register('maxE', 3000,
+#options.register('maxE', -1,
     VarParsing.multiplicity.singleton,
     VarParsing.varType.int,
     "Maximum number of events"
