@@ -68,7 +68,7 @@ def main():
 
         config.General.requestName = None
         #config.General.workArea = 'ZMuondecay'
-        config.General.workArea = 'testParkedVSF'
+        config.General.workArea = 'testParkedVSF_f1'
 	config.General.transferOutputs = True
 	config.General.transferLogs = False
 
@@ -100,31 +100,31 @@ def main():
                           '/ParkingBPH5/Run2018A-05May2019-v1/MINIAOD',
                           '/ParkingBPH6/Run2018A-05May2019-v1/MINIAOD',
 
-                         # '/ParkingBPH1/Run2018B-05May2019-v2/MINIAOD',
-                         # '/ParkingBPH2/Run2018B-05May2019-v2/MINIAOD',
-                         # '/ParkingBPH3/Run2018B-05May2019-v2/MINIAOD',
-                         # '/ParkingBPH4/Run2018B-05May2019-v2/MINIAOD',
-                         # '/ParkingBPH5/Run2018B-05May2019-v2/MINIAOD',
-                         # '/ParkingBPH6/Run2018B-05May2019-v2/MINIAOD',
+                          '/ParkingBPH1/Run2018B-05May2019-v2/MINIAOD',
+                          '/ParkingBPH2/Run2018B-05May2019-v2/MINIAOD',
+                          '/ParkingBPH3/Run2018B-05May2019-v2/MINIAOD',
+                          '/ParkingBPH4/Run2018B-05May2019-v2/MINIAOD',
+                          '/ParkingBPH5/Run2018B-05May2019-v2/MINIAOD',
+                          '/ParkingBPH6/Run2018B-05May2019-v2/MINIAOD',
 
-                         # '/ParkingBPH1/Run2018C-05May2019-v1/MINIAOD',
-                         # '/ParkingBPH2/Run2018C-05May2019-v1/MINIAOD',
-                         # '/ParkingBPH3/Run2018C-05May2019-v1/MINIAOD',
-                         # '/ParkingBPH4/Run2018C-05May2019-v1/MINIAOD',
-                         # '/ParkingBPH5/Run2018C-05May2019-v1/MINIAOD',
+                          '/ParkingBPH1/Run2018C-05May2019-v1/MINIAOD',
+                          '/ParkingBPH2/Run2018C-05May2019-v1/MINIAOD',
+                          '/ParkingBPH3/Run2018C-05May2019-v1/MINIAOD',
+                          '/ParkingBPH4/Run2018C-05May2019-v1/MINIAOD',
+                          '/ParkingBPH5/Run2018C-05May2019-v1/MINIAOD',
 
-                         # '/ParkingBPH1/Run2018D-05May2019promptD-v1/MINIAOD',
-                         # '/ParkingBPH2/Run2018D-05May2019promptD-v1/MINIAOD',
-                         # '/ParkingBPH3/Run2018D-05May2019promptD-v1/MINIAOD',
-                         # '/ParkingBPH4/Run2018D-05May2019promptD-v1/MINIAOD',
-                         # '/ParkingBPH5/Run2018D-05May2019promptD-v1/MINIAOD'
+                          '/ParkingBPH1/Run2018D-05May2019promptD-v1/MINIAOD',
+                          '/ParkingBPH2/Run2018D-05May2019promptD-v1/MINIAOD',
+                          '/ParkingBPH3/Run2018D-05May2019promptD-v1/MINIAOD',
+                          '/ParkingBPH4/Run2018D-05May2019promptD-v1/MINIAOD',
+                          '/ParkingBPH5/Run2018D-05May2019promptD-v1/MINIAOD'
                  	]
  
         for inDS in inputDatasets:
              # inDS is of the form /A/B/C. Since B is unique for each inDS, use this in the CRAB request name.
             config.General.requestName = inDS.split('/')[1]+'-'+inDS.split('/')[2]
             config.Data.inputDataset = inDS
-            config.Data.outputDatasetTag = 'VSF'+'%s_%s' % (config.General.workArea, config.General.requestName)
+            config.Data.outputDatasetTag = 'VSF_f1'+'%s_%s' % (config.General.workArea, config.General.requestName)
             # Submit.
             try:
                 print "Submitting for input dataset %s" % (inDS)

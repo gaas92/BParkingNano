@@ -614,7 +614,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("Bfitted_ks_pt"  , Ks0CandMC->currentState().globalMomentum().perp());
                 b_cand.addUserFloat("Bfitted_ks_eta" , Ks0CandMC->currentState().globalMomentum().eta());
                 b_cand.addUserFloat("Bfitted_ks_phi" , Ks0CandMC->currentState().globalMomentum().phi());
-                b_cand.addUserFloat("Bfitted_ks_m" , Ks0CandMC->currentState().globalMomentum().mass());
+                b_cand.addUserFloat("Bfitted_ks_m" , Ks0CandMC->currentState().mass());
                 b_cand.addUserFloat("Bks_charge", Ks0CandMC->currentState().particleCharge());            
                 //compute isolation
                 float l1_iso03 = iMuon1->trackIso();
