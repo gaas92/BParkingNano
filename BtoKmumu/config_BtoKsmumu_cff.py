@@ -316,14 +316,14 @@ BToKmumu = cms.EDProducer(
         '&& mass < 7. && mass > 4.'
         ),
     postVtxSelection = cms.string(
-        'userInt("Bvtx_OK") == 1 && userFloat("Bvtx_prob") > 0.001 '
+        'userInt("Bvtx_OK") == 1 && userFloat("Bvtx_prob") > 0.0001 '
         '&& userFloat("Bfitted_cos_theta_2D") >= 0'
-        '&& userFloat("Bfitted_mass") > 4.8 && userFloat("Bfitted_mass") < 5.8')
+        '&& userFloat("Bfitted_mass") > 4.0 && userFloat("Bfitted_mass") < 6.0')
     # preVtxSelection = cms.string(''),
     # postVtxSelection = cms.string(''),
 )
 
-
+ 
 
 BToKmumuTable = cms.EDProducer(
     'SimpleCompositeCandidateFlatTableProducer',
@@ -336,6 +336,9 @@ BToKmumuTable = cms.EDProducer(
     variables=cms.PSet(
         # pre-fit quantities
         CandVars,
+        Bfitted_mass    = ufloat('Bfitted_mass'),
+        Bfitted_massErr = ufloat('Bfitted_massErr'),   
+
         Bvtx_OK         = uint('Bvtx_OK'),
         Bvtx_chi2       = ufloat('Bvtx_chi2'),
         Bvtx_ndof       = ufloat('Bvtx_ndof'),
@@ -347,8 +350,6 @@ BToKmumuTable = cms.EDProducer(
         Bfitted_pt      = ufloat('Bfitted_pt'),
         Bfitted_eta     = ufloat('Bfitted_eta'),
         Bfitted_phi     = ufloat('Bfitted_phi'),
-        Bfitted_mass    = ufloat('Bfitted_mass'),
-        Bfitted_massErr = ufloat('Bfitted_massErr'),   
         Bcos_theta_2D   = ufloat('Bcos_theta_2D'),
         Bfitted_cos_theta_2D = ufloat('Bfitted_cos_theta_2D'),
         B_l_xy          = ufloat('B_l_xy'),
@@ -373,6 +374,7 @@ BToKmumuTable = cms.EDProducer(
         Bfitted_ks_eta  = ufloat('Bfitted_ks_pt'),
         Bfitted_ks_pt   = ufloat('Bfitted_ks_eta'),
         Bfitted_ks_phi  = ufloat('Bfitted_ks_phi'),
+        Bfitted_ks_m    = ufloat('Bfitted_ks_m'),
         Bks_charge      = ufloat('Bks_charge'),
         l1_iso03        = ufloat('l1_iso03'),
         l1_PFiso03      = ufloat('l1_PFiso03'),
@@ -397,6 +399,33 @@ BToKmumuTable = cms.EDProducer(
         significance1   = ufloat('significance1'),
         significance2   = ufloat('significance2'),
         significance3   = ufloat('significance3'),
+        #Vertice primario y error GAAS
+        PV_x            = ufloat('PV_x'),
+        PV_y            = ufloat('PV_y'),
+        PV_z            = ufloat('PV_z'),
+        PV_ex           = ufloat('PV_ex'),
+        PV_ey           = ufloat('PV_ey'),
+        PV_ez           = ufloat('PV_ez'),
+        PV_eyx          = ufloat('PV_eyx'),
+        PV_ezx          = ufloat('PV_ezx'),
+        PV_ezy          = ufloat('PV_ezy'),
+        #info Ks0 y Piones
+        Ks0_px1         = ufloat('Ks0_px1'),
+        Ks0_pt1         = ufloat('Ks0_pt1'),
+        Ks0_py1         = ufloat('Ks0_py1'),
+        Ks0_pz1         = ufloat('Ks0_pz1'),
+        Ks0_px1_track   = ufloat('Ks0_px1_track'),
+        Ks0_py1_track   = ufloat('Ks0_py1_track'),
+        Ks0_pz1_track   = ufloat('Ks0_pz1_track'),
+        Ks0_p1_ch       = ufloat('Ks0_p1_ch'),
+        Ks0_px2         = ufloat('Ks0_px2'),
+        Ks0_pt2         = ufloat('Ks0_pt2'),
+        Ks0_py2         = ufloat('Ks0_py2'),
+        Ks0_pz2         = ufloat('Ks0_pz2'),
+        Ks0_px2_track   = ufloat('Ks0_px2_track'),
+        Ks0_py2_track   = ufloat('Ks0_py2_track'),
+        Ks0_pz2_track   = ufloat('Ks0_pz2_track'),
+        Ks0_p2_ch       = ufloat('Ks0_p2_ch'),
         B_PDL           = ufloat('B_PDL'),
         eB_PDL          = ufloat('eB_PDL'),        
         K_PDL           = ufloat('K_PDL'),

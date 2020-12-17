@@ -205,7 +205,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   pvTable->addColumn<float>("vz",vz,"vz in cm",nanoaod::FlatTable::FloatColumn,10);
   //std::cout << "Pasamos el almacenamiento delos PVs\n\n" ;
   //HCL
-
+ 
   //for isolation
   edm::Handle<pat::PackedCandidateCollection> iso_tracks;
   evt.getByToken(isotracksToken_, iso_tracks);
@@ -614,6 +614,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 b_cand.addUserFloat("Bfitted_ks_pt"  , Ks0CandMC->currentState().globalMomentum().perp());
                 b_cand.addUserFloat("Bfitted_ks_eta" , Ks0CandMC->currentState().globalMomentum().eta());
                 b_cand.addUserFloat("Bfitted_ks_phi" , Ks0CandMC->currentState().globalMomentum().phi());
+                b_cand.addUserFloat("Bfitted_ks_m" , Ks0CandMC->currentState().globalMomentum().mass());
                 b_cand.addUserFloat("Bks_charge", Ks0CandMC->currentState().particleCharge());            
                 //compute isolation
                 float l1_iso03 = iMuon1->trackIso();
@@ -733,6 +734,37 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
                 EPV(0,1) = vertexHandle->front().covariance(0,1);
                 EPV(0,2) = vertexHandle->front().covariance(0,2);
                 EPV(1,2) = vertexHandle->front().covariance(1,2);
+                //Vertice primario y error GAAS
+                b_cand.addUserFloat("PV_x", vertexHandle->front().x());
+                b_cand.addUserFloat("PV_y", vertexHandle->front().y());
+                b_cand.addUserFloat("PV_z", vertexHandle->front().z());
+
+                b_cand.addUserFloat("PV_ex",  vertexHandle->front().covariance(0,0));
+                b_cand.addUserFloat("PV_ey",  vertexHandle->front().covariance(1,1));
+                b_cand.addUserFloat("PV_ez",  vertexHandle->front().covariance(2,2));
+                b_cand.addUserFloat("PV_eyx", vertexHandle->front().covariance(0,1));
+                b_cand.addUserFloat("PV_ezx", vertexHandle->front().covariance(0,2));
+                b_cand.addUserFloat("PV_ezy", vertexHandle->front().covariance(1,2));
+                //info Ks0 y Piones
+                b_cand.addUserFloat("Ks0_pt1",  Ks0p1vec.perp());
+                b_cand.addUserFloat("Ks0_px1",  Ks0Pi1KP.momentum().x());
+                b_cand.addUserFloat("Ks0_py1",  Ks0Pi1KP.momentum().y());
+                b_cand.addUserFloat("Ks0_pz1",  Ks0Pi1KP.momentum().z());
+                b_cand.addUserFloat("Ks0_px1_track", v0daughters[0].px());
+                b_cand.addUserFloat("Ks0_py1_track", v0daughters[0].py());
+                b_cand.addUserFloat("Ks0_pz1_track", v0daughters[0].pz());
+                b_cand.addUserFloat("Ks0_p1_ch", T1CandMC->currentState().particleCharge());
+                
+                b_cand.addUserFloat("Ks0_pt2",  Ks0p2vec.perp());
+                b_cand.addUserFloat("Ks0_px2",  Ks0Pi2KP.momentum().x());
+                b_cand.addUserFloat("Ks0_py2",  Ks0Pi2KP.momentum().y());
+                b_cand.addUserFloat("Ks0_pz2",  Ks0Pi2KP.momentum().z());
+                b_cand.addUserFloat("Ks0_px2_track", v0daughters[1].px());
+                b_cand.addUserFloat("Ks0_py2_track", v0daughters[1].py());
+                b_cand.addUserFloat("Ks0_pz2_track", v0daughters[1].pz());
+                b_cand.addUserFloat("Ks0_p2_ch", T2CandMC->currentState().particleCharge());
+
+
                 double Bct, Bect;
                 V0_Lifetime(pv, Bvtx, EPV, ESV, 5.27961, BpT, Bct, Bect);
                 b_cand.addUserFloat("B_PDL", Bct);
