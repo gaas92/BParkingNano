@@ -570,7 +570,6 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
             b_cand.addUserFloat("Bfitted_cos_theta_2D", (bDecayVertexMC->vertexIsValid()) ?  my_cos_theta_2D(b_gp, *beamspot, B_vect) : -2 );
             //std::cout << "my cos2D: "<< my_cos_theta_2D(gp, *beamspot, testVect) << std::endl;
             //FIX
-            if( !post_vtx_selection_(b_cand) ) continue;
             // fill candidate variables now    
             nBs++;
             b_cand.addUserFloat("nB", nBs);
@@ -580,6 +579,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
             b_cand.addUserFloat("B_px"  , bCandMC->currentState().globalMomentum().x()); 
             b_cand.addUserFloat("B_py"  , bCandMC->currentState().globalMomentum().y()); 
             b_cand.addUserFloat("B_pz"  , bCandMC->currentState().globalMomentum().z());       
+            if( !post_vtx_selection_(b_cand) ) continue;
 
             b_cand.addUserFloat("B_Ks0_mass" , Ks0_vFit_noMC->currentState().mass());
             b_cand.addUserFloat("B_Ks0_px"   , Ks0_vFit_noMC->currentState().globalMomentum().x() );
