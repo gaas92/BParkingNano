@@ -640,7 +640,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
             b_cand.addUserFloat("priVtxXYE", vertexHandle->front().covariance(0,1));
             b_cand.addUserFloat("priVtxXZE", vertexHandle->front().covariance(0,2));
             b_cand.addUserFloat("priVtxYZE", vertexHandle->front().covariance(1,2));
-            double priVtxCL_ = ChiSquaredProbability((double)(vertexHandle->chi2()),(double)(vertexHandle->ndof())); 
+            double priVtxCL_ = ChiSquaredProbability((double)(vertexHandle->front().chi2()),(double)(vertexHandle->front().ndof())); 
             b_cand.addUserFloat("priVtxCL" , priVtxCL_);
 
             b_cand.addUserFloat("nVtx"     , vertexHandle->size() );
