@@ -667,6 +667,16 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
               b_cand.addUserFloat("bDecayVtxYZE", -1);
             }
 
+            b_cand.addUserFloat("VDecayVtxX"  ,Ks0_vFit_vertex_noMC->position().x() );
+            b_cand.addUserFloat("VDecayVtxY"  ,Ks0_vFit_vertex_noMC->position().y() );
+            b_cand.addUserFloat("VDecayVtxZ"  ,Ks0_vFit_vertex_noMC->position().z() );
+            b_cand.addUserFloat("VDecayVtxXE" ,Ks0_vFit_vertex_noMC->error().cxx() );
+            b_cand.addUserFloat("VDecayVtxYE" ,Ks0_vFit_vertex_noMC->error().cyy() );
+            b_cand.addUserFloat("VDecayVtxZE" ,Ks0_vFit_vertex_noMC->error().czz() );
+            b_cand.addUserFloat("VDecayVtxXYE",Ks0_vFit_vertex_noMC->error().cyx() );
+            b_cand.addUserFloat("VDecayVtxXZE",Ks0_vFit_vertex_noMC->error().czx() );
+            b_cand.addUserFloat("VDecayVtxYZE",Ks0_vFit_vertex_noMC->error().czy() );
+
             b_cand.addUserFloat("pi1dxy",v0daughters[0].dxy());
             b_cand.addUserFloat("pi2dxy",v0daughters[1].dxy());
             b_cand.addUserFloat("pi1dz", v0daughters[0].dz());
