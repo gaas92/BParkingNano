@@ -324,8 +324,151 @@ BToKmumu = cms.EDProducer(
 )
 
  
+BToKmumuTable = cms.EDProducer('SimpleCompositeCandidateFlatTableProducer',
+    src = cms.InputTag("BToKmumu:Bcollection"),
+    cut = cms.string(""),
+    name = cms.string(""), #test
+    doc = cms.string("BToKMuMu Variable"),
+    singleton=cms.bool(False),
+    extension=cms.bool(False),
+    variables=cms.PSet(
+        # pre-fit quantities
+        CandVars,
+        nB   = ufloat('nB'),
+        nMu  = ufloat("nMu"),
 
-BToKmumuTable = cms.EDProducer(
+        B_mass = ufloat("B_mass"),
+        B_px   = ufloat("B_px"),
+        B_py   = ufloat("B_py"),
+        B_pz   = ufloat("B_pz"),
+   
+        B_Ks0_mass = ufloat("B_Ks0_mass"),
+        B_Ks0_px   = ufloat("B_Ks0_px"), 
+        B_Ks0_py   = ufloat("B_Ks0_py"), 
+        B_Ks0_pz   = ufloat("B_Ks0_pz"), 
+    
+        B_J_mass = ufloat("B_J_mass"),
+        B_J_px   = ufloat("B_J_px"),
+        B_J_py   = ufloat("B_J_py"),
+        B_J_pz   = ufloat("B_J_pz"),
+   
+        B_Ks0_pt1       = ufloat("B_Ks0_pt1"),
+        B_Ks0_px1       = ufloat("B_Ks0_px1"),
+        B_Ks0_py1       = ufloat("B_Ks0_py1"),
+        B_Ks0_pz1       = ufloat("B_Ks0_pz1"),
+        B_Ks0_px1_track = ufloat("B_Ks0_px1_track"), 
+        B_Ks0_py1_track = ufloat("B_Ks0_py1_track"), 
+        B_Ks0_pz1_track = ufloat("B_Ks0_pz1_track"), 
+        B_Ks0_charge1   = ufloat("B_Ks0_charge1"), 
+    
+        B_Ks0_pt2       = ufloat("B_Ks0_pt2"),
+        B_Ks0_px2       = ufloat("B_Ks0_px2"),
+        B_Ks0_py2       = ufloat("B_Ks0_py2"),
+        B_Ks0_pz2       = ufloat("B_Ks0_pz2"),
+        B_Ks0_px2_track = ufloat("B_Ks0_px2_track"),
+        B_Ks0_py2_track = ufloat("B_Ks0_py2_track"),
+        B_Ks0_pz2_track = ufloat("B_Ks0_pz2_track"),
+        B_Ks0_charge2   = ufloat("B_Ks0_charge2"),
+   
+        B_J_pt1     = ufloat("B_J_pt1"),
+        B_J_px1     = ufloat("B_J_px1"),
+        B_J_py1     = ufloat("B_J_py1"),
+        B_J_pz1     = ufloat("B_J_pz1"),
+        B_J_charge1 = ufloat("B_J_charge1"),
+   
+        B_J_pt2     = ufloat("B_J_pt2"),
+        B_J_px2     = ufloat("B_J_px2"),
+        B_J_py2     = ufloat("B_J_py2"),
+        B_J_pz2     = ufloat("B_J_pz2"),
+        B_J_charge2 = ufloat("B_J_charge2"),
+   
+        B_chi2     = ufloat("B_chi2"),
+        B_Ks0_chi2 = ufloat("B_Ks0_chi2"),
+        B_J_chi2   = ufloat("B_J_chi2"),
+   
+        B_Prob     = ufloat("B_Prob"),
+        B_ks0_Prob = ufloat("B_ks0_Prob"),
+        B_J_Prob   = ufloat("B_J_Prob"),
+          
+        ########################
+   
+        priVtxX   = ufloat("priVtxX"),
+        priVtxY   = ufloat("priVtxY"),
+        priVtxZ   = ufloat("priVtxZ"),
+        priVtxXE  = ufloat("priVtxXE"),
+        priVtxYE  = ufloat("priVtxYE"),
+        priVtxZE  = ufloat("priVtxZE"),
+        priVtxXYE = ufloat("priVtxXYE"),
+        priVtxXZE = ufloat("priVtxXZE"),
+        priVtxYZE = ufloat("priVtxYZE"),
+        priVtxCL  = ufloat("priVtxCL"),
+   
+        nVtx      = ufloat("nVtx"),
+        run       = ufloat("run"),
+        event     = ufloat("event"),
+        lumiblock = ufloat("lumiblock"),
+	    trigger   = ufloat("trigger"),
+   
+        bDecayVtxX   = ufloat("bDecayVtxX"),
+        bDecayVtxY   = ufloat("bDecayVtxY"),
+        bDecayVtxZ   = ufloat("bDecayVtxZ"),
+        bDecayVtxXE  = ufloat("bDecayVtxXE"),
+        bDecayVtxYE  = ufloat("bDecayVtxYE"),
+        bDecayVtxZE  = ufloat("bDecayVtxZE"),
+        bDecayVtxXYE = ufloat("bDecayVtxXYE"),
+        bDecayVtxXZE = ufloat("bDecayVtxXZE"),
+        bDecayVtxYZE = ufloat("bDecayVtxYZE"),
+   
+        VDecayVtxX   = ufloat("VDecayVtxX"),
+        VDecayVtxY   = ufloat("VDecayVtxY"),
+        VDecayVtxZ   = ufloat("VDecayVtxZ"),
+        VDecayVtxXE  = ufloat("VDecayVtxXE"),
+        VDecayVtxYE  = ufloat("VDecayVtxYE"),
+        VDecayVtxZE  = ufloat("VDecayVtxZE"),
+        VDecayVtxXYE = ufloat("VDecayVtxXYE"),
+        VDecayVtxXZE = ufloat("VDecayVtxXZE"),
+        VDecayVtxYZE = ufloat("VDecayVtxYZE"),
+   
+        pi1dxy = ufloat("pi1dxy"),
+        pi2dxy = ufloat("pi2dxy"),
+        pi1dz  = ufloat("pi1dz"),
+        pi2dz  = ufloat("pi2dz"),
+   
+        pi1dxy_e = ufloat("pi1dxy_e"),
+        pi2dxy_e = ufloat("pi2dxy_e"),
+        pi1dz_e  = ufloat("pi1dz_e"),
+        pi2dz_e  = ufloat("pi2dz_e"),
+   
+        mumC2     = ufloat("mumC2"),  
+        mumNHits  = ufloat("mumNHits"),
+        mumNPHits = ufloat("mumNPHits"),
+        mupC2     = ufloat("mupC2"),  
+        mupNHits  = ufloat("mupNHits"),
+        mupNPHits = ufloat("mupNPHits"),
+        mumdxy    = ufloat("mumdxy"),
+        mupdxy    = ufloat("mupdxy"),
+        muon_dca  = ufloat("muon_dca"),
+    
+        mumdz    = ufloat("mumdz"),
+        mupdz    = ufloat("mupdz"),
+        mu1soft  = ufloat("mu1soft"),
+        mu2soft  = ufloat("mu2soft"),
+        mu1tight = ufloat("mu1tight"),
+        mu2tight = ufloat("mu2tight"),
+        mu1PF    = ufloat("mu1PF"),
+        mu2PF    = ufloat("mu2PF"),
+        mu1loose = ufloat("mu1loose"),
+        mu2loose = ufloat("mu2loose"), 
+        # end jhov extra shit
+        l1_iso03        = ufloat('l1_iso03'),
+        l1_PFiso03      = ufloat('l1_PFiso03'),
+        l1_PFiso04      = ufloat('l1_PFiso04'),
+        l2_iso03        = ufloat('l2_iso03'),
+        l2_PFiso03      = ufloat('l2_PFiso03'),
+        l2_PFiso04      = ufloat('l2_PFiso04'),
+    )
+)
+BToKmumuTablePre = cms.EDProducer(
     'SimpleCompositeCandidateFlatTableProducer',
     src = cms.InputTag("BToKmumu:Bcollection"),
     cut = cms.string(""),

@@ -222,6 +222,8 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
   std::unique_ptr<pat::CompositeCandidateCollection> ret_val(new pat::CompositeCandidateCollection());
   
   //GAAS my reco, taken from Jhovanny
+  int nMuons = thePATMuonHandle->size();
+  int nBs = 0;
   int passmu = 0;
   for(pat::MuonCollection::const_iterator iMuon1 = thePATMuonHandle->begin(); iMuon1 != thePATMuonHandle->end(); ++iMuon1) {
     for(pat::MuonCollection::const_iterator iMuon2 = iMuon1+1; iMuon2 != thePATMuonHandle->end(); ++iMuon2) {
@@ -493,14 +495,15 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        //if(bCandMC->currentState().mass()<4.8 || bCandMC->currentState().mass()>6.0) continue;
     
 		        //if(bDecayVertexMC->chiSquared()<0 || bDecayVertexMC->chiSquared()>50 ){
-			    //    //std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
-			    //    continue;
+			      //    //std::cout << " continue from negative chi2 = " << bDecayVertexMC->chiSquared() << endl;
+			      //    continue;
 		        //}
 		        //std::cout << "pass 461 continues ... "<< std::endl;
 		        double B_Prob_tmp       = TMath::Prob(bDecayVertexMC->chiSquared(),(int)bDecayVertexMC->degreesOfFreedom());
+            double ks0_Prob_tmp  = TMath::Prob(Ks0_vFit_vertex_noMC->chiSquared(),(int)Ks0_vFit_vertex_noMC->degreesOfFreedom());
 		        //if(B_Prob_tmp<0.01) //Jhovanny
 		        //if(B_Prob_tmp<0.001){  //Horacio hardcoded
-			    //    continue;
+			      //    continue;
 		        //}
                 // get children from final B fit
 		        vertexFitTree->movePointerToTheFirstChild();
@@ -521,7 +524,7 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 		        if ( mu2CandMC->currentState().particleCharge() > 0 ) psiMupKP = psiMu2KP;
 		        if ( mu2CandMC->currentState().particleCharge() < 0 ) psiMumKP = psiMu2KP;
 
-                GlobalVector Jp1vec(mu1CandMC->currentState().globalMomentum().x(),
+            GlobalVector Jp1vec(mu1CandMC->currentState().globalMomentum().x(),
 				                    mu1CandMC->currentState().globalMomentum().y(),
  				                    mu1CandMC->currentState().globalMomentum().z());
 
@@ -537,294 +540,333 @@ void BToKsMuMuBuilder::produce(edm::StreamID, edm::Event &evt, edm::EventSetup c
 				                      T2CandMC->currentState().globalMomentum().y(),
 					                  T2CandMC->currentState().globalMomentum().z());
 
-                KinematicParameters Ks0Pi1KP = T1CandMC->currentState().kinematicParameters();
+            KinematicParameters Ks0Pi1KP = T1CandMC->currentState().kinematicParameters();
 		        KinematicParameters Ks0Pi2KP = T2CandMC->currentState().kinematicParameters();
 		        KinematicParameters Ks0PipKP;
 		        KinematicParameters Ks0PimKP;
 
-                if ( T1CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi1KP;
+            if ( T1CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi1KP;
 		        if ( T1CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi1KP;
 		        if ( T2CandMC->currentState().particleCharge() > 0 ) Ks0PipKP = Ks0Pi2KP;
 		        if ( T2CandMC->currentState().particleCharge() < 0 ) Ks0PimKP = Ks0Pi2KP;	 
 
-                b_cand.addUserInt("Bvtx_OK" , bDecayVertexMC->vertexIsValid()); //sv_OK
-                b_cand.addUserFloat("Bvtx_chi2", bDecayVertexMC->chiSquared()); //sv_chi2
-                b_cand.addUserFloat("Bvtx_ndof", bDecayVertexMC->degreesOfFreedom()); // sv_ndof
-                b_cand.addUserFloat("Bvtx_prob", B_Prob_tmp); // sv_prob
- 
-                b_cand.addUserFloat("fitted_mll" , psi_vFit_noMC->currentState().mass());
-                b_cand.addUserFloat("fitted_pt_ll" , psi_vFit_noMC->currentState().globalMomentum().perp());
-                b_cand.addUserFloat("fitted_eta_ll" , psi_vFit_noMC->currentState().globalMomentum().eta());
-                b_cand.addUserFloat("fitted_phi_ll" , psi_vFit_noMC->currentState().globalMomentum().phi());
+            b_cand.addUserInt("Bvtx_OK" , bDecayVertexMC->vertexIsValid()); //sv_OK
+            b_cand.addUserFloat("Bvtx_ndof", bDecayVertexMC->degreesOfFreedom()); // sv_ndof
+            b_cand.addUserFloat("Bvtx_prob", B_Prob_tmp); // sv_prob
       
-                b_cand.addUserFloat("Bfitted_pt"  , bCandMC->currentState().globalMomentum().perp()); 
-                // cand.addUserFloat("fitted_px"  , fitter.fitted_candidate().globalMomentum().x()); 
-                // cand.addUserFloat("fitted_py"  , fitter.fitted_candidate().globalMomentum().y()); 
-                // cand.addUserFloat("fitted_pz"  , fitter.fitted_candidate().globalMomentum().z()); 
-                b_cand.addUserFloat("Bfitted_eta" , bCandMC->currentState().globalMomentum().eta());
-                b_cand.addUserFloat("Bfitted_phi" , bCandMC->currentState().globalMomentum().phi());
-                b_cand.addUserFloat("Bfitted_mass", bCandMC->currentState().mass());      
-                b_cand.addUserFloat("Bfitted_massErr", sqrt(bCandMC->currentState().kinematicParametersError().matrix()(6,6)));
-                //std::cout << "cos2D: "<< cos_theta_2D(fitter, *beamspot, cand.p4()) << std::endl;
-                //TLorentzVector testVect;
-                auto B_vect = math::PtEtaPhiMLorentzVector(psi_vFit_noMC->currentState().globalMomentum().perp(),
-                                                           psi_vFit_noMC->currentState().globalMomentum().eta(),
-                                                           psi_vFit_noMC->currentState().globalMomentum().phi(),
-                                                           psi_vFit_noMC->currentState().mass());
-                //testVect.SetPtEtaPhiM(cand.pt(), cand.eta(), cand.phi(), cand.mass());
-                GlobalPoint b_gp = bDecayVertexMC->position();
-                b_cand.addUserFloat("Bcos_theta_2D", (bDecayVertexMC->vertexIsValid()) ?  my_cos_theta_2D(b_gp, *beamspot, b_cand.p4()) : -2 );
-                b_cand.addUserFloat("Bfitted_cos_theta_2D", (bDecayVertexMC->vertexIsValid()) ?  my_cos_theta_2D(b_gp, *beamspot, B_vect) : -2 );
-                //std::cout << "my cos2D: "<< my_cos_theta_2D(gp, *beamspot, testVect) << std::endl;
-                //FIX
-                if( !post_vtx_selection_(b_cand) ) continue;
-                // fill candidate variables now                      
+            // cand.addUserFloat("fitted_px"  , fitter.fitted_candidate().globalMomentum().x()); 
+            // cand.addUserFloat("fitted_py"  , fitter.fitted_candidate().globalMomentum().y()); 
+            // cand.addUserFloat("fitted_pz"  , fitter.fitted_candidate().globalMomentum().z()); 
+            b_cand.addUserFloat("Bfitted_massErr", sqrt(bCandMC->currentState().kinematicParametersError().matrix()(6,6)));
+            //std::cout << "cos2D: "<< cos_theta_2D(fitter, *beamspot, cand.p4()) << std::endl;
+            //TLorentzVector testVect;
+            auto B_vect = math::PtEtaPhiMLorentzVector(psi_vFit_noMC->currentState().globalMomentum().perp(),
+                                                       psi_vFit_noMC->currentState().globalMomentum().eta(),
+                                                       psi_vFit_noMC->currentState().globalMomentum().phi(),
+                                                       psi_vFit_noMC->currentState().mass());
+            //testVect.SetPtEtaPhiM(cand.pt(), cand.eta(), cand.phi(), cand.mass());
+            GlobalPoint b_gp = bDecayVertexMC->position();
+            b_cand.addUserFloat("Bcos_theta_2D", (bDecayVertexMC->vertexIsValid()) ?  my_cos_theta_2D(b_gp, *beamspot, b_cand.p4()) : -2 );
+            b_cand.addUserFloat("Bfitted_cos_theta_2D", (bDecayVertexMC->vertexIsValid()) ?  my_cos_theta_2D(b_gp, *beamspot, B_vect) : -2 );
+            //std::cout << "my cos2D: "<< my_cos_theta_2D(gp, *beamspot, testVect) << std::endl;
+            //FIX
+            if( !post_vtx_selection_(b_cand) ) continue;
+            // fill candidate variables now    
+            nBs++;
+            b_cand.addUserFloat("nB", nBs);
+            b_cand.addUserFloat("nMu", nMuons);
 
-                GlobalError b_gp_err = bDecayVertexMC->error();
-                auto lxy = my_l_xy(b_gp, b_gp_err, *beamspot);
-                b_cand.addUserFloat("B_l_xy", lxy.value());
-                b_cand.addUserFloat("B_l_xy_unc", lxy.error());
+            b_cand.addUserFloat("B_mass", bCandMC->currentState().mass());      
+            b_cand.addUserFloat("B_px"  , bCandMC->currentState().globalMomentum().x()); 
+            b_cand.addUserFloat("B_py"  , bCandMC->currentState().globalMomentum().y()); 
+            b_cand.addUserFloat("B_pz"  , bCandMC->currentState().globalMomentum().z());       
 
-                b_cand.addUserFloat("Bvtx_x", b_cand.vx());
-                b_cand.addUserFloat("Bvtx_y", b_cand.vy());
-                b_cand.addUserFloat("Bvtx_z", b_cand.vz());
-                b_cand.addUserFloat("Bvtx_ex" , sqrt(b_gp_err.cxx()));
-                b_cand.addUserFloat("Bvtx_ey" , sqrt(b_gp_err.cyy()));
-                b_cand.addUserFloat("Bvtx_ez" , sqrt(b_gp_err.czz()));
-                try{
-                  b_cand.addUserFloat("Bvtx_eyx", b_gp_err.cyx());
-                  b_cand.addUserFloat("Bvtx_ezx", b_gp_err.czx());
-                  b_cand.addUserFloat("Bvtx_ezy", b_gp_err.czy());
-                }
-                catch(...){
-                  b_cand.addUserFloat("Bvtx_eyx", -1);
-                  b_cand.addUserFloat("Bvtx_ezx", -1);
-                  b_cand.addUserFloat("Bvtx_ezy", -1);
-                }
-                b_cand.addUserFloat("Bfitted_l1_pt" , mu1CandMC->currentState().globalMomentum().perp()); 
-                b_cand.addUserFloat("Bfitted_l1_eta", mu1CandMC->currentState().globalMomentum().eta());
-                b_cand.addUserFloat("Bfitted_l1_phi", mu1CandMC->currentState().globalMomentum().phi());
-                b_cand.addUserFloat("Bl1_charge", mu1CandMC->currentState().particleCharge());
+            b_cand.addUserFloat("B_Ks0_mass" , Ks0_vFit_noMC->currentState().mass());
+            b_cand.addUserFloat("B_Ks0_px"   , Ks0_vFit_noMC->currentState().globalMomentum().x() );
+            b_cand.addUserFloat("B_Ks0_py"   , Ks0_vFit_noMC->currentState().globalMomentum().y() );
+            b_cand.addUserFloat("B_Ks0_pz"   , Ks0_vFit_noMC->currentState().globalMomentum().z() );
 
-                b_cand.addUserFloat("Bfitted_l2_pt" , mu2CandMC->currentState().globalMomentum().perp()); 
-                b_cand.addUserFloat("Bfitted_l2_eta", mu2CandMC->currentState().globalMomentum().eta());
-                b_cand.addUserFloat("Bfitted_l2_phi", mu2CandMC->currentState().globalMomentum().phi());
-                b_cand.addUserFloat("Bl2_charge", mu2CandMC->currentState().particleCharge());
-
-                b_cand.addUserFloat("Bfitted_ks_pt"  , Ks0CandMC->currentState().globalMomentum().perp());
-                b_cand.addUserFloat("Bfitted_ks_eta" , Ks0CandMC->currentState().globalMomentum().eta());
-                b_cand.addUserFloat("Bfitted_ks_phi" , Ks0CandMC->currentState().globalMomentum().phi());
-                b_cand.addUserFloat("Bfitted_ks_m" , Ks0_vFit_noMC->currentState().mass());
-                b_cand.addUserFloat("Bks_charge", Ks0CandMC->currentState().particleCharge());            
-                //compute isolation
-                float l1_iso03 = iMuon1->trackIso();
-                float l2_iso03 = iMuon2->trackIso();
-                float l1_PFiso03 = getMuPFIso03(*iMuon1);
-                float l1_PFiso04 = getMuPFIso04(*iMuon1);
-                float l2_PFiso03 = getMuPFIso03(*iMuon2);
-                float l2_PFiso04 = getMuPFIso04(*iMuon2);
-                b_cand.addUserFloat("l1_iso03", l1_iso03);
-                b_cand.addUserFloat("l1_PFiso03", l1_PFiso03);
-                b_cand.addUserFloat("l1_PFiso04", l1_PFiso04);
-                b_cand.addUserFloat("l2_iso03", l2_iso03);
-                b_cand.addUserFloat("l2_PFiso03", l2_PFiso03);
-                b_cand.addUserFloat("l2_PFiso04", l2_PFiso04);
-
-                // Aqui creemos el boost al CM del dilepton
-                auto dilep = math::XYZTLorentzVector(psi_vFit_noMC->currentState().globalMomentum().x(),
-                                                     psi_vFit_noMC->currentState().globalMomentum().y(),
-                                                     psi_vFit_noMC->currentState().globalMomentum().z(),
-                                                     psi_vFit_noMC->currentState().mass());
+            b_cand.addUserFloat("B_J_mass" , psi_vFit_noMC->currentState().mass());
+            b_cand.addUserFloat("B_J_px"   , psi_vFit_noMC->currentState().globalMomentum().x() );
+            b_cand.addUserFloat("B_J_py"   , psi_vFit_noMC->currentState().globalMomentum().y() );
+            b_cand.addUserFloat("B_J_pz"   , psi_vFit_noMC->currentState().globalMomentum().z() );
+            
+            //info Ks0 y Piones
+            b_cand.addUserFloat("B_Ks0_pt1",  Ks0p1vec.perp());
+            b_cand.addUserFloat("B_Ks0_px1",  Ks0Pi1KP.momentum().x());
+            b_cand.addUserFloat("B_Ks0_py1",  Ks0Pi1KP.momentum().y());
+            b_cand.addUserFloat("B_Ks0_pz1",  Ks0Pi1KP.momentum().z());
+            b_cand.addUserFloat("B_Ks0_px1_track", v0daughters[0].px());
+            b_cand.addUserFloat("B_Ks0_py1_track", v0daughters[0].py());
+            b_cand.addUserFloat("B_Ks0_pz1_track", v0daughters[0].pz());
+            b_cand.addUserFloat("B_Ks0_charge1", T1CandMC->currentState().particleCharge());
                 
-                auto k0vec = math::XYZTLorentzVector(Ks0CandMC->currentState().globalMomentum().x(),
-                                                     Ks0CandMC->currentState().globalMomentum().y(),
-                                                     Ks0CandMC->currentState().globalMomentum().z(),
-                                                     Ks0CandMC->currentState().mass());
+            b_cand.addUserFloat("B_Ks0_pt2",  Ks0p2vec.perp());
+            b_cand.addUserFloat("B_Ks0_px2",  Ks0Pi2KP.momentum().x());
+            b_cand.addUserFloat("B_Ks0_py2",  Ks0Pi2KP.momentum().y());
+            b_cand.addUserFloat("B_Ks0_pz2",  Ks0Pi2KP.momentum().z());
+            b_cand.addUserFloat("B_Ks0_px2_track", v0daughters[1].px());
+            b_cand.addUserFloat("B_Ks0_py2_track", v0daughters[1].py());
+            b_cand.addUserFloat("B_Ks0_pz2_track", v0daughters[1].pz());
+            b_cand.addUserFloat("B_Ks0_charge2", T2CandMC->currentState().particleCharge());
 
-                ROOT::Math::Boost cmboost(dilep.BoostToCM());
+            b_cand.addUserFloat("B_J_pt1" , Jp1vec.perp() ); 
+            b_cand.addUserFloat("B_J_px1" , psiMu1KP.momentum().x() );
+            b_cand.addUserFloat("B_J_py1" , psiMu1KP.momentum().y() );
+            b_cand.addUserFloat("B_J_pz1" , psiMu1KP.momentum().z() );
+            b_cand.addUserFloat("B_J_charge1", mu1CandMC->currentState().particleCharge());
+
+            b_cand.addUserFloat("B_J_pt2" , Jp2vec.perp() ); 
+            b_cand.addUserFloat("B_J_px2" , psiMu2KP.momentum().x() );
+            b_cand.addUserFloat("B_J_py2" , psiMu2KP.momentum().y() );
+            b_cand.addUserFloat("B_J_pz2" , psiMu2KP.momentum().z() );
+            b_cand.addUserFloat("B_J_charge2", mu2CandMC->currentState().particleCharge());
+
+            b_cand.addUserFloat("B_chi2"    , bDecayVertexMC->chiSquared() );
+            b_cand.addUserFloat("B_Ks0_chi2", Ks0_vFit_vertex_noMC->chiSquared() );
+            b_cand.addUserFloat("B_J_chi2"  , psi_vFit_vertex_noMC->chiSquared() );
+            
+            b_cand.addUserFloat("B_Prob"     , B_Prob_tmp );
+            b_cand.addUserFloat("B_ks0_Prob" , J_Prob_tmp );
+            b_cand.addUserFloat("B_J_Prob"   , ks0_Prob_tmp );
+
+            //Vertice primario y error GAAS
+            b_cand.addUserFloat("priVtxX", vertexHandle->front().x());
+            b_cand.addUserFloat("priVtxY", vertexHandle->front().y());
+            b_cand.addUserFloat("priVtxZ", vertexHandle->front().z());
+            b_cand.addUserFloat("priVtxXE",  vertexHandle->front().covariance(0,0));
+            b_cand.addUserFloat("priVtxYE",  vertexHandle->front().covariance(1,1));
+            b_cand.addUserFloat("priVtxZE",  vertexHandle->front().covariance(2,2));
+            b_cand.addUserFloat("priVtxXYE", vertexHandle->front().covariance(0,1));
+            b_cand.addUserFloat("priVtxXZE", vertexHandle->front().covariance(0,2));
+            b_cand.addUserFloat("priVtxYZE", vertexHandle->front().covariance(1,2));
+            double priVtxCL_ = ChiSquaredProbability((double)(vertexHandle->chi2()),(double)(vertexHandle->ndof())); 
+            b_cand.addUserFloat("priVtxCL" , priVtxCL_);
+
+            b_cand.addUserFloat("nVtx"     , vertexHandle->size() );
+            b_cand.addUserFloat("run"      , evt.id().run());
+            b_cand.addUserFloat("event"    , evt.id().event());
+            b_cand.addUserFloat("lumiblock", evt.id().luminosityBlock());
+	          b_cand.addUserFloat("trigger"  , 0.0);
+
+            GlobalError b_gp_err = bDecayVertexMC->error();
+            b_cand.addUserFloat("bDecayVtxX", (*bDecayVertexMC).position().x() );
+            b_cand.addUserFloat("bDecayVtxY", (*bDecayVertexMC).position().y() );
+            b_cand.addUserFloat("bDecayVtxZ", (*bDecayVertexMC).position().z() );
+            b_cand.addUserFloat("bDecayVtxXE" , bDecayVertexMC->error().cxx() );
+            b_cand.addUserFloat("bDecayVtxYE" , bDecayVertexMC->error().cyy() );
+            b_cand.addUserFloat("bDecayVtxZE" , bDecayVertexMC->error().czz() );
+            try{
+              b_cand.addUserFloat("bDecayVtxXYE", bDecayVertexMC->error().cyx() );
+              b_cand.addUserFloat("bDecayVtxXZE", bDecayVertexMC->error().czx() );
+              b_cand.addUserFloat("bDecayVtxYZE", bDecayVertexMC->error().czy() );
+            }
+            catch(...){
+              b_cand.addUserFloat("bDecayVtxXYE", -1);
+              b_cand.addUserFloat("bDecayVtxXZE", -1);
+              b_cand.addUserFloat("bDecayVtxYZE", -1);
+            }
+
+            b_cand.addUserFloat("pi1dxy",v0daughters[0].dxy());
+            b_cand.addUserFloat("pi2dxy",v0daughters[1].dxy());
+            b_cand.addUserFloat("pi1dz", v0daughters[0].dz());
+            b_cand.addUserFloat("pi2dz", v0daughters[1].dz());
+   
+            b_cand.addUserFloat("pi1dxy_e", v0daughters[0].dxyError());
+            b_cand.addUserFloat("pi2dxy_e", v0daughters[1].dxyError());
+            b_cand.addUserFloat("pi1dz_e",  v0daughters[0].dzError());
+            b_cand.addUserFloat("pi2dz_e",  v0daughters[1].dzError());
+
+		        b_cand.addUserFloat("mumC2"    , glbTrackM->normalizedChi2() );
+		        b_cand.addUserFloat("mumNHits" , glbTrackM->numberOfValidHits() );
+		        b_cand.addUserFloat("mumNPHits", glbTrackM->hitPattern().numberOfValidPixelHits() );	    
+		        b_cand.addUserFloat("mupC2"    , glbTrackP->normalizedChi2() );
+		        b_cand.addUserFloat("mupNHits" , glbTrackP->numberOfValidHits() );
+		        b_cand.addUserFloat("mupNPHits", glbTrackP->hitPattern().numberOfValidPixelHits() );
+            b_cand.addUserFloat("mumdxy", glbTrackM->dxy(bestVtx.position()) );
+		        b_cand.addUserFloat("mupdxy", glbTrackP->dxy(bestVtx.position()) );
+		        b_cand.addUserFloat("muon_dca" , dca);
+
+		        b_cand.addUserFloat("mumdz" , glbTrackM->dz(bestVtx.position()) );
+		        b_cand.addUserFloat("mupdz" , glbTrackP->dz(bestVtx.position()) );
+
+
+            b_cand.addUserFloat("mu1soft",  iMuon1->isSoftMuon(bestVtx)); 
+            b_cand.addUserFloat("mu1tight", iMuon1->isTightMuon(bestVtx));
+            b_cand.addUserFloat("mu1PF", iMuon1->isPFMuon());
+            b_cand.addUserFloat("mu1loose", muon::isLooseMuon(*iMuon1));
+            b_cand.addUserFloat("mu1medium", muon::isMediumMuon(*iMuon1));
+            b_cand.addUserFloat("mu1global", iMuon1->isGlobalMuon() );
+
+            b_cand.addUserFloat("mu2soft",  iMuon2->isSoftMuon(bestVtx)); 
+            b_cand.addUserFloat("mu2tight", iMuon2->isTightMuon(bestVtx));
+            b_cand.addUserFloat("mu2PF", iMuon2->isPFMuon());
+            b_cand.addUserFloat("mu2loose", muon::isLooseMuon(*iMuon2));
+            b_cand.addUserFloat("mu2medium", muon::isMediumMuon(*iMuon2));
+            b_cand.addUserFloat("mu2global", iMuon2->isGlobalMuon() );     
+
+
+            auto lxy = my_l_xy(b_gp, b_gp_err, *beamspot);
+            b_cand.addUserFloat("B_l_xy", lxy.value());
+            b_cand.addUserFloat("B_l_xy_unc", lxy.error());
+       
+            //compute isolation
+            float l1_iso03 = iMuon1->trackIso();
+            float l2_iso03 = iMuon2->trackIso();
+            float l1_PFiso03 = getMuPFIso03(*iMuon1);
+            float l1_PFiso04 = getMuPFIso04(*iMuon1);
+            float l2_PFiso03 = getMuPFIso03(*iMuon2);
+            float l2_PFiso04 = getMuPFIso04(*iMuon2);
+            b_cand.addUserFloat("l1_iso03", l1_iso03);
+            b_cand.addUserFloat("l1_PFiso03", l1_PFiso03);
+            b_cand.addUserFloat("l1_PFiso04", l1_PFiso04);
+            b_cand.addUserFloat("l2_iso03", l2_iso03);
+            b_cand.addUserFloat("l2_PFiso03", l2_PFiso03);
+            b_cand.addUserFloat("l2_PFiso04", l2_PFiso04);
+
+            // Aqui creemos el boost al CM del dilepton
+            auto dilep = math::XYZTLorentzVector(psi_vFit_noMC->currentState().globalMomentum().x(),
+                                                 psi_vFit_noMC->currentState().globalMomentum().y(),
+                                                 psi_vFit_noMC->currentState().globalMomentum().z(),
+                                                 psi_vFit_noMC->currentState().mass());
                 
-                math::XYZTLorentzVector kaonCM(  cmboost( k0vec )  );
-                math::XYZTLorentzVector dimuCM(cmboost(getTLV(psi_vFit_noMC)));
-                math::XYZTLorentzVector muonCMp, muonCMn; 
-                //where the thetal is the angle between the
-                //direction of the m-(m+) lepton and the K+(K-)
-                //in this case we can calculate three anlges M-/Ks, M+/Ks, Dim/Ks
-                if( mu1CandMC->currentState().particleCharge() > 0){ 
-                    muonCMp = cmboost( getTLV(mu1CandMC) );
-                    muonCMn = cmboost( getTLV(mu2CandMC) );
-                }
-                else {
-                    muonCMp = cmboost( getTLV(mu2CandMC) );
-                    muonCMn = cmboost( getTLV(mu1CandMC) );
-                }
-                float costhetaL = ( muonCMp.x()*muonCMn.x() 
-                                  + muonCMp.y()*muonCMn.y() 
-                                  + muonCMp.z()*muonCMn.z() ) / (muonCMp.P()*muonCMn.P() );
+            auto k0vec = math::XYZTLorentzVector(Ks0CandMC->currentState().globalMomentum().x(),
+                                                 Ks0CandMC->currentState().globalMomentum().y(),
+                                                 Ks0CandMC->currentState().globalMomentum().z(),
+                                                 Ks0CandMC->currentState().mass());
 
-                float costhetaLpKs = ( muonCMp.x()*kaonCM.x() 
-                                     + muonCMp.y()*kaonCM.y() 
-                                     + muonCMp.z()*kaonCM.z() ) / (muonCMp.P()*kaonCM.P() );
-
-                float costhetaLnKs = ( muonCMn.x()*kaonCM.x() 
-                                     + muonCMn.y()*kaonCM.y() 
-                                     + muonCMn.z()*kaonCM.z() ) / (muonCMn.P()*kaonCM.P() );
-
-                float costhetaKsDM = ( dimuCM.x()*kaonCM.x()
-                                     + dimuCM.y()*kaonCM.y()
-                                     + dimuCM.z()*kaonCM.z() ) / (dimuCM.P()*kaonCM.P() );
+            ROOT::Math::Boost cmboost(dilep.BoostToCM());
                 
-                std::vector<float> cosAlpha(4, -2);
-                std::vector<float> lxy_pv(4,-1);
-                std::vector<float> errP(4,-1);
+            math::XYZTLorentzVector kaonCM(  cmboost( k0vec )  );
+            math::XYZTLorentzVector dimuCM(cmboost(getTLV(psi_vFit_noMC)));
+            math::XYZTLorentzVector muonCMp, muonCMn; 
+            //where the thetal is the angle between the
+            //direction of the m-(m+) lepton and the K+(K-)
+            //in this case we can calculate three anlges M-/Ks, M+/Ks, Dim/Ks
+            if( mu1CandMC->currentState().particleCharge() > 0){ 
+                  muonCMp = cmboost( getTLV(mu1CandMC) );
+                  muonCMn = cmboost( getTLV(mu2CandMC) );
+            }
+            else {
+                  muonCMp = cmboost( getTLV(mu2CandMC) );
+                  muonCMn = cmboost( getTLV(mu1CandMC) );
+            }
+            float costhetaL = ( muonCMp.x()*muonCMn.x() 
+                              + muonCMp.y()*muonCMn.y() 
+                              + muonCMp.z()*muonCMn.z() ) / (muonCMp.P()*muonCMn.P() );
+
+            float costhetaLpKs = ( muonCMp.x()*kaonCM.x() 
+                                 + muonCMp.y()*kaonCM.y() 
+                                 + muonCMp.z()*kaonCM.z() ) / (muonCMp.P()*kaonCM.P() );
+
+            float costhetaLnKs = ( muonCMn.x()*kaonCM.x() 
+                                 + muonCMn.y()*kaonCM.y() 
+                                 + muonCMn.z()*kaonCM.z() ) / (muonCMn.P()*kaonCM.P() );
+
+            float costhetaKsDM = ( dimuCM.x()*kaonCM.x()
+                                 + dimuCM.y()*kaonCM.y()
+                                 + dimuCM.z()*kaonCM.z() ) / (dimuCM.P()*kaonCM.P() );
                 
-                b_cand.addUserFloat("costhetaLep", costhetaL);
-                b_cand.addUserFloat("costhetaLpKs", costhetaLpKs);
-                b_cand.addUserFloat("costhetaLnKs", costhetaLnKs);
-                b_cand.addUserFloat("costhetaKsDM", costhetaKsDM);
-                b_cand.addUserFloat("dRm1m2", dRm1m2);
-                // CHEQUEMOS QUE EL CANDIDATO A "B" SATIFAGA LOS CORTES EN COS(ALPHA) Y SIGNIFICANCIA
-                for( unsigned int iPV=0; iPV<dzTrgMu.size(); ++iPV ){ 
-                    //Debemos calcular el vector que une los vertices primario y el ajustado
-                    math::XYZVector vPS(b_gp.x()-vx.at(iPV), b_gp.y()-vy.at(iPV), b_gp.z()-vz.at(iPV));
-                    //Momento espacial del candidato?????????
-                    math::XYZVector Bp(b_gp.x(), b_gp.y(), b_gp.z());
-                    //CosALPHA
-                    cosAlpha[iPV] = vPS.Dot(Bp)/(vPS.R()*Bp.R());
+            std::vector<float> cosAlpha(4, -2);
+            std::vector<float> lxy_pv(4,-1);
+            std::vector<float> errP(4,-1);
+                
+            b_cand.addUserFloat("costhetaLep", costhetaL);
+            b_cand.addUserFloat("costhetaLpKs", costhetaLpKs);
+            b_cand.addUserFloat("costhetaLnKs", costhetaLnKs);
+            b_cand.addUserFloat("costhetaKsDM", costhetaKsDM);
+            b_cand.addUserFloat("dRm1m2", dRm1m2);
+            // CHEQUEMOS QUE EL CANDIDATO A "B" SATIFAGA LOS CORTES EN COS(ALPHA) Y SIGNIFICANCIA
+            for( unsigned int iPV=0; iPV<dzTrgMu.size(); ++iPV ){ 
+              //Debemos calcular el vector que une los vertices primario y el ajustado
+              math::XYZVector vPS(b_gp.x()-vx.at(iPV), b_gp.y()-vy.at(iPV), b_gp.z()-vz.at(iPV));
+              //Momento espacial del candidato?????????
+              math::XYZVector Bp(b_gp.x(), b_gp.y(), b_gp.z());
+              //CosALPHA
+              cosAlpha[iPV] = vPS.Dot(Bp)/(vPS.R()*Bp.R());
         
-                    //Para significancia:  
-                    GlobalError err = b_gp_err;
-                    GlobalPoint delta(b_gp.x()-vx.at(iPV), b_gp.y()-vy.at(iPV), 0.);  
+              //Para significancia:  
+              GlobalError err = b_gp_err;
+              GlobalPoint delta(b_gp.x()-vx.at(iPV), b_gp.y()-vy.at(iPV), 0.);  
 
-                    lxy_pv[iPV] = delta.perp();
-                    errP[iPV] = sqrt(err.rerr(delta));
-                }
+              lxy_pv[iPV] = delta.perp();
+              errP[iPV] = sqrt(err.rerr(delta));
+            }
 
-                b_cand.addUserFloat("cosAlpha0", cosAlpha[0]);
-                b_cand.addUserFloat("cosAlpha1", cosAlpha[1]);
-                b_cand.addUserFloat("cosAlpha2", cosAlpha[2]);
-                b_cand.addUserFloat("cosAlpha3", cosAlpha[3]);
+            b_cand.addUserFloat("cosAlpha0", cosAlpha[0]);
+            b_cand.addUserFloat("cosAlpha1", cosAlpha[1]);
+            b_cand.addUserFloat("cosAlpha2", cosAlpha[2]);
+            b_cand.addUserFloat("cosAlpha3", cosAlpha[3]);
 
-                b_cand.addUserFloat("lxy_pv0", lxy_pv[0]);
-                b_cand.addUserFloat("lxy_pv1", lxy_pv[1]);
-                b_cand.addUserFloat("lxy_pv2", lxy_pv[2]);
-                b_cand.addUserFloat("lxy_pv3", lxy_pv[3]);
+            b_cand.addUserFloat("lxy_pv0", lxy_pv[0]);
+            b_cand.addUserFloat("lxy_pv1", lxy_pv[1]);
+            b_cand.addUserFloat("lxy_pv2", lxy_pv[2]);
+            b_cand.addUserFloat("lxy_pv3", lxy_pv[3]);
 
-                b_cand.addUserFloat("significance0", lxy_pv[0]/errP[0]);
-                b_cand.addUserFloat("significance1", lxy_pv[1]/errP[1]);
-                b_cand.addUserFloat("significance2", lxy_pv[2]/errP[2]);
-                b_cand.addUserFloat("significance3", lxy_pv[3]/errP[3]);
+            b_cand.addUserFloat("significance0", lxy_pv[0]/errP[0]);
+            b_cand.addUserFloat("significance1", lxy_pv[1]/errP[1]);
+            b_cand.addUserFloat("significance2", lxy_pv[2]/errP[2]);
+            b_cand.addUserFloat("significance3", lxy_pv[3]/errP[3]);
                 
-                //life time
-                TVector3 pv, Bvtx, BpT;
+            //life time
+            TVector3 pv, Bvtx, BpT;
 
-                BpT.SetXYZ(bCandMC->currentState().globalMomentum().x(), bCandMC->currentState().globalMomentum().y(),0.0);
-                pv.SetXYZ(vx.at(0),vy.at(0),vz.at(0));
-                Bvtx.SetXYZ(b_gp.x(), b_gp.y(), b_gp.z());
-                TMatrix ESV(3,3);
-                TMatrix EPV(3,3);
-                ESV(0,0) = bDecayVertexMC->error().cxx();
-                ESV(1,1) = bDecayVertexMC->error().cyy();
-                ESV(2,2) = bDecayVertexMC->error().czz();
-                ESV(0,1) = bDecayVertexMC->error().cyx();
-                ESV(0,2) = bDecayVertexMC->error().czx();
-                ESV(1,2) = bDecayVertexMC->error().czy();
-                EPV(0,0) = vertexHandle->front().covariance(0,0);
-                EPV(1,1) = vertexHandle->front().covariance(1,1);
-                EPV(2,2) = vertexHandle->front().covariance(2,2);
-                EPV(0,1) = vertexHandle->front().covariance(0,1);
-                EPV(0,2) = vertexHandle->front().covariance(0,2);
-                EPV(1,2) = vertexHandle->front().covariance(1,2);
-                //Vertice primario y error GAAS
-                b_cand.addUserFloat("PV_x", vertexHandle->front().x());
-                b_cand.addUserFloat("PV_y", vertexHandle->front().y());
-                b_cand.addUserFloat("PV_z", vertexHandle->front().z());
+            BpT.SetXYZ(bCandMC->currentState().globalMomentum().x(), bCandMC->currentState().globalMomentum().y(),0.0);
+            pv.SetXYZ(vx.at(0),vy.at(0),vz.at(0));
+            Bvtx.SetXYZ(b_gp.x(), b_gp.y(), b_gp.z());
+            TMatrix ESV(3,3);
+            TMatrix EPV(3,3);
+            ESV(0,0) = bDecayVertexMC->error().cxx();
+            ESV(1,1) = bDecayVertexMC->error().cyy();
+            ESV(2,2) = bDecayVertexMC->error().czz();
+            ESV(0,1) = bDecayVertexMC->error().cyx();
+            ESV(0,2) = bDecayVertexMC->error().czx();
+            ESV(1,2) = bDecayVertexMC->error().czy();
+            EPV(0,0) = vertexHandle->front().covariance(0,0);
+            EPV(1,1) = vertexHandle->front().covariance(1,1);
+            EPV(2,2) = vertexHandle->front().covariance(2,2);
+            EPV(0,1) = vertexHandle->front().covariance(0,1);
+            EPV(0,2) = vertexHandle->front().covariance(0,2);
+            EPV(1,2) = vertexHandle->front().covariance(1,2);
 
-                b_cand.addUserFloat("PV_ex",  vertexHandle->front().covariance(0,0));
-                b_cand.addUserFloat("PV_ey",  vertexHandle->front().covariance(1,1));
-                b_cand.addUserFloat("PV_ez",  vertexHandle->front().covariance(2,2));
-                b_cand.addUserFloat("PV_eyx", vertexHandle->front().covariance(0,1));
-                b_cand.addUserFloat("PV_ezx", vertexHandle->front().covariance(0,2));
-                b_cand.addUserFloat("PV_ezy", vertexHandle->front().covariance(1,2));
-                //info Ks0 y Piones
-                b_cand.addUserFloat("Ks0_pt1",  Ks0p1vec.perp());
-                b_cand.addUserFloat("Ks0_px1",  Ks0Pi1KP.momentum().x());
-                b_cand.addUserFloat("Ks0_py1",  Ks0Pi1KP.momentum().y());
-                b_cand.addUserFloat("Ks0_pz1",  Ks0Pi1KP.momentum().z());
-                b_cand.addUserFloat("Ks0_px1_track", v0daughters[0].px());
-                b_cand.addUserFloat("Ks0_py1_track", v0daughters[0].py());
-                b_cand.addUserFloat("Ks0_pz1_track", v0daughters[0].pz());
-                b_cand.addUserFloat("Ks0_p1_ch", T1CandMC->currentState().particleCharge());
-                
-                b_cand.addUserFloat("Ks0_pt2",  Ks0p2vec.perp());
-                b_cand.addUserFloat("Ks0_px2",  Ks0Pi2KP.momentum().x());
-                b_cand.addUserFloat("Ks0_py2",  Ks0Pi2KP.momentum().y());
-                b_cand.addUserFloat("Ks0_pz2",  Ks0Pi2KP.momentum().z());
-                b_cand.addUserFloat("Ks0_px2_track", v0daughters[1].px());
-                b_cand.addUserFloat("Ks0_py2_track", v0daughters[1].py());
-                b_cand.addUserFloat("Ks0_pz2_track", v0daughters[1].pz());
-                b_cand.addUserFloat("Ks0_p2_ch", T2CandMC->currentState().particleCharge());
-
-
-                double Bct, Bect;
-                V0_Lifetime(pv, Bvtx, EPV, ESV, 5.27961, BpT, Bct, Bect);
-                b_cand.addUserFloat("B_PDL", Bct);
-                b_cand.addUserFloat("eB_PDL", Bect);
-                
-                TVector3 Kvtx, KpT;
-                KpT.SetXYZ(Ks0CandMC->currentState().globalMomentum().x(), Ks0CandMC->currentState().globalMomentum().y(),0.0);
-                Kvtx.SetXYZ(Ks0_vFit_vertex_noMC->position().x(), Ks0_vFit_vertex_noMC->position().y(), Ks0_vFit_vertex_noMC->position().z());
-                TMatrix EKsV(3,3);
-                EKsV(0,0) = Ks0_vFit_vertex_noMC->error().cxx();
-                EKsV(1,1) = Ks0_vFit_vertex_noMC->error().cyy();
-                EKsV(2,2) = Ks0_vFit_vertex_noMC->error().czz();
-                EKsV(0,1) = Ks0_vFit_vertex_noMC->error().cyx();
-                EKsV(0,2) = Ks0_vFit_vertex_noMC->error().czx();
-                EKsV(1,2) = Ks0_vFit_vertex_noMC->error().czy();
-                double Kct, Kect;
-                V0_Lifetime(Bvtx, Kvtx, ESV, EKsV, 0.49761, KpT, Kct, Kect);
-                b_cand.addUserFloat("K_PDL", Kct);
-                b_cand.addUserFloat("eK_PDL", Kect);
-
-                // Quality Vars 
-                b_cand.addUserFloat("pi1_nValidPixelHits", theDaughterTracks[0].hitPattern().numberOfValidPixelHits());
-                b_cand.addUserFloat("pi1_nPixelLWM",       theDaughterTracks[0].hitPattern().pixelLayersWithMeasurement());
-                b_cand.addUserFloat("pi1_nTrackerLWM",     theDaughterTracks[0].hitPattern().trackerLayersWithMeasurement());
-                b_cand.addUserFloat("pi2_nValidPixelHits", theDaughterTracks[1].hitPattern().numberOfValidPixelHits());
-                b_cand.addUserFloat("pi2_nPixelLWM",       theDaughterTracks[1].hitPattern().pixelLayersWithMeasurement());
-                b_cand.addUserFloat("pi2_nTrackerLWM",     theDaughterTracks[1].hitPattern().trackerLayersWithMeasurement());
-
-                b_cand.addUserFloat("p1_HighPurity",     theDaughterTracks[0].quality(reco::TrackBase::highPurity));
-                b_cand.addUserFloat("p2_HighPurity",     theDaughterTracks[1].quality(reco::TrackBase::highPurity));
-
-                b_cand.addUserFloat("mu1_soft",  iMuon1->isSoftMuon(bestVtx)); 
-                b_cand.addUserFloat("mu1_tight", iMuon1->isTightMuon(bestVtx));
-                b_cand.addUserFloat("mu1_PF", iMuon1->isPFMuon());
-                b_cand.addUserFloat("mu1_loose", muon::isLooseMuon(*iMuon1));
-                b_cand.addUserFloat("mu1_medium", muon::isMediumMuon(*iMuon1));
-                b_cand.addUserFloat("mu1_global", iMuon1->isGlobalMuon() );
-
-                b_cand.addUserFloat("mu2_soft",  iMuon2->isSoftMuon(bestVtx)); 
-                b_cand.addUserFloat("mu2_tight", iMuon2->isTightMuon(bestVtx));
-                b_cand.addUserFloat("mu2_PF", iMuon2->isPFMuon());
-                b_cand.addUserFloat("mu2_loose", muon::isLooseMuon(*iMuon2));
-                b_cand.addUserFloat("mu2_medium", muon::isMediumMuon(*iMuon2));
-                b_cand.addUserFloat("mu2_global", iMuon2->isGlobalMuon() );
-                 
-
-		        b_cand.addUserFloat("mum_C2", glbTrackM->normalizedChi2() );
-		        b_cand.addUserFloat("mum_nValidHits", glbTrackM->numberOfValidHits() );
-		        b_cand.addUserFloat("mum_nValidPixelHits", glbTrackM->hitPattern().numberOfValidPixelHits() );	       
-		        b_cand.addUserFloat("mup_C2", glbTrackP->normalizedChi2() );
-		        b_cand.addUserFloat("mup_nValidHits", glbTrackP->numberOfValidHits() );
-		        b_cand.addUserFloat("mup_nValidPixelHits", glbTrackP->hitPattern().numberOfValidPixelHits() );
-                b_cand.addUserFloat("mum_dxy", glbTrackM->dxy(bestVtx.position()) );
-		        b_cand.addUserFloat("mup_dxy", glbTrackP->dxy(bestVtx.position()) );
-		        b_cand.addUserFloat("mum_dz" , glbTrackM->dz(bestVtx.position()) );
-		        b_cand.addUserFloat("mup_dz" , glbTrackP->dz(bestVtx.position()) );
-		        b_cand.addUserFloat("dimuon_dca" , dca);
             
 
-                ret_val->push_back(b_cand);
+
+            double Bct, Bect;
+            V0_Lifetime(pv, Bvtx, EPV, ESV, 5.27961, BpT, Bct, Bect);
+            b_cand.addUserFloat("B_PDL", Bct);
+            b_cand.addUserFloat("eB_PDL", Bect);
+                
+            TVector3 Kvtx, KpT;
+            KpT.SetXYZ(Ks0CandMC->currentState().globalMomentum().x(), Ks0CandMC->currentState().globalMomentum().y(),0.0);
+            Kvtx.SetXYZ(Ks0_vFit_vertex_noMC->position().x(), Ks0_vFit_vertex_noMC->position().y(), Ks0_vFit_vertex_noMC->position().z());
+            TMatrix EKsV(3,3);
+            EKsV(0,0) = Ks0_vFit_vertex_noMC->error().cxx();
+            EKsV(1,1) = Ks0_vFit_vertex_noMC->error().cyy();
+            EKsV(2,2) = Ks0_vFit_vertex_noMC->error().czz();
+            EKsV(0,1) = Ks0_vFit_vertex_noMC->error().cyx();
+            EKsV(0,2) = Ks0_vFit_vertex_noMC->error().czx();
+            EKsV(1,2) = Ks0_vFit_vertex_noMC->error().czy();
+            double Kct, Kect;
+            V0_Lifetime(Bvtx, Kvtx, ESV, EKsV, 0.49761, KpT, Kct, Kect);
+            b_cand.addUserFloat("K_PDL", Kct);
+            b_cand.addUserFloat("eK_PDL", Kect);
+
+            // Quality Vars 
+            b_cand.addUserFloat("pi1_nValidPixelHits", theDaughterTracks[0].hitPattern().numberOfValidPixelHits());
+            b_cand.addUserFloat("pi1_nPixelLWM",       theDaughterTracks[0].hitPattern().pixelLayersWithMeasurement());
+            b_cand.addUserFloat("pi1_nTrackerLWM",     theDaughterTracks[0].hitPattern().trackerLayersWithMeasurement());
+            b_cand.addUserFloat("pi2_nValidPixelHits", theDaughterTracks[1].hitPattern().numberOfValidPixelHits());
+            b_cand.addUserFloat("pi2_nPixelLWM",       theDaughterTracks[1].hitPattern().pixelLayersWithMeasurement());
+            b_cand.addUserFloat("pi2_nTrackerLWM",     theDaughterTracks[1].hitPattern().trackerLayersWithMeasurement());
+
+            b_cand.addUserFloat("p1_HighPurity",     theDaughterTracks[0].quality(reco::TrackBase::highPurity));
+            b_cand.addUserFloat("p2_HighPurity",     theDaughterTracks[1].quality(reco::TrackBase::highPurity));
+
+
+            
+            ret_val->push_back(b_cand);
+
             }// end V0 Tracks
         }// end if dimuon&& V0Tracks   
         passmu++;
